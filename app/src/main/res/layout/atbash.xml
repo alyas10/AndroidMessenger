@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#170F0F"
+    tools:context=".CeasesActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="16dp"
+        android:text="Шифр Цезаря"
+        android:textColor="#F5FFFFFF"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/inputText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginTop="18dp"
+        android:hint="Введите свой текст"
+        android:padding="16dp"
+        android:textSize="30dp"
+        android:textColor="#FBF6F6"
+        android:textColorHighlight="#009688"
+        android:textColorHint="@color/white" />
+
+    <Button
+        android:id="@+id/encode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inputText"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="75dp"
+        android:background="#009688"
+        android:onClick="encodeText"
+        android:text="Encode"
+        app:backgroundTint="#044b61" />
+
+    <Button
+        android:id="@+id/decode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/inputText"
+        android:layout_marginStart="195dp"
+        android:layout_marginTop="75dp"
+        android:layout_toEndOf="@id/encode"
+        android:background="#009688"
+        android:onClick="decodeText"
+        android:text="Decode"
+        app:backgroundTint="#044b61" />
+    <TextView
+        android:id="@+id/outputText"
+        android:layout_width="match_parent"
+        android:layout_height="197dp"
+        android:layout_below="@id/encode"
+        android:layout_marginTop="29dp"
+        android:hint="Результат"
+        android:textSize="30dp"
+        android:padding="16dp"
+        android:textColor="#F6F5F5"
+        android:textColorHighlight="#009688"
+        android:textColorHint="#FBF6F6"
+        android:textColorLink="#009688" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/outputText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="163dp"
+        android:onClick="goBack"
+        android:text="Back"
+        android:background="#009688"
+        app:backgroundTint="#044b61"
+        android:textColorHighlight="#673AB7"
+        android:textColorLink="#673AB7" />
+
+</RelativeLayout>
