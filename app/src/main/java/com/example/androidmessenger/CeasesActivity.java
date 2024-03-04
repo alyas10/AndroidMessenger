@@ -2,6 +2,7 @@ package com.example.androidmessenger;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,9 +43,9 @@ public class CeasesActivity extends AppCompatActivity {
 
     public void encodeText() {
         String text = inputText.getText().toString();
-        if (text.length() == 0) {
-            Toast toast = Toast.makeText(this, "field is empty!",Toast.LENGTH_LONG);
-            toast.show();
+        if (TextUtils.isEmpty(text)) {
+            inputText.setError("Field is empty!");
+            return;
         } else {
             int shift = Integer.parseInt(shiftAmount.getText().toString());
             String encodedText = "";
@@ -65,9 +66,9 @@ public class CeasesActivity extends AppCompatActivity {
 
     public void decodeText() {
         String text = inputText.getText().toString();
-        if(text.length()==0){
-            Toast toast = Toast.makeText(this, "field is empty!",Toast.LENGTH_LONG);
-            toast.show();
+        if (TextUtils.isEmpty(text)) {
+            inputText.setError("Field is empty!");
+            return;
         }
         else{
         int shift = Integer.parseInt(shiftAmount.getText().toString());
