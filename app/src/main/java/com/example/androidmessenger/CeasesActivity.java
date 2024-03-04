@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,8 +43,12 @@ public class CeasesActivity extends AppCompatActivity {
 
     public void encodeText() {
         String text = inputText.getText().toString();
+        String s = shiftAmount.getText().toString();
         if (TextUtils.isEmpty(text)) {
             inputText.setError("Field is empty!");
+            return;
+        } else if (TextUtils.isEmpty(s)) {
+            shiftAmount.setError("Field is empty!");
             return;
         } else {
             int shift = Integer.parseInt(shiftAmount.getText().toString());
@@ -67,8 +70,13 @@ public class CeasesActivity extends AppCompatActivity {
 
     public void decodeText() {
         String text = inputText.getText().toString();
+        String s = shiftAmount.getText().toString();
         if (TextUtils.isEmpty(text)) {
             inputText.setError("Field is empty!");
+            return;
+        }
+        else if (TextUtils.isEmpty(s)) {
+            shiftAmount.setError("Field is empty!");
             return;
         }
         else{

@@ -30,14 +30,16 @@ public class CodeFragment extends Fragment {
         card2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), AtbashActivity.class);
+                startActivity(intent);
             }
         });
 
         card3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), VigenerActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CodeFragment"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@color/black">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
@@ -119,7 +120,7 @@
         android:layout_width="409dp"
         android:layout_height="212dp"
 
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="1"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="20dp"
