@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="HardcodedText">
-    <group android:checkableBehavior="single">
+
+    <item
+        android:id="@+id/nav_profil"
+        android:icon="@drawable/baseline_account_circle_24"
+        android:title="Профиль" />
+
 
     <item
         android:id="@+id/nav_theory"
-        android:title="Теория" />
+        android:title="Теория"
+        android:icon="@drawable/baseline_book_24"
+        />
 
     <item
         android:id="@+id/nav_code"
-        android:title="Кодирование" />
+        android:title="Шифрование"
+        android:icon="@drawable/baseline_fingerprint_24"
+        />
+
+    <item
+        android:id="@+id/nav_settings"
+        android:title="Настройки"
+        android:icon="@drawable/baseline_settings_24"
+        />
 
     <item
         android:id="@+id/nav_logout"
-        android:title="Выход" />
-    </group>
-
+        android:title="Вход"
+        android:icon="@drawable/baseline_exit_to_app_24"
+        />
 </menu>

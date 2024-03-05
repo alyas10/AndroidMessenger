@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/black"
     android:orientation="vertical"
-    tools:context=".TheoryFragment">
+    tools:context=".MainActivity">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search"
@@ -19,7 +20,8 @@
         android:focusable="false"
         app:closeIcon="@drawable/baseline_clear_24"
         app:iconifiedByDefault="false"
-        app:queryHint="Search..."
+        app:queryHint="Поиск..."
+
         app:searchHintIcon="@null"
         app:searchIcon="@drawable/baseline_search_24" />
 
@@ -28,6 +30,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/search"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:scrollbars="vertical" />
 </RelativeLayout>

@@ -7,7 +7,9 @@
         android:radius="10dp"
         />
     <stroke
-        android:color="@color/green"
         android:width="2dp"/>
-
+    <gradient
+        android:endColor="@color/green"
+        android:centerColor="@color/green"
+        android:startColor="@color/green"/>
 </shape>

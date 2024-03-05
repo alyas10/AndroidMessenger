@@ -61,13 +61,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/shiftAmount"
-        android:layout_marginStart="204dp"
-        android:layout_marginTop="21dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="64dp"
         android:layout_toEndOf="@id/encode"
         android:background="#009688"
-        app:backgroundTint="#044b61"
         android:onClick="decodeText"
-        android:text="Decode" />
+        android:text="Decode"
+        app:backgroundTint="#044b61" />
 
     <TextView
         android:id="@+id/outputText"
