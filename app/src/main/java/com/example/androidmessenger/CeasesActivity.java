@@ -14,6 +14,10 @@ public class CeasesActivity extends AppCompatActivity {
     private EditText inputText, shiftAmount;
     private Button encode,decode;
     private TextView outputText;
+    private static String englishAlphabet = "abcdefghijklmnopqrstuvwxyz";
+    private static String englishAlphabetUpper = englishAlphabet.toUpperCase();
+    private static String russianAlphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+    private static String russianAlphabetUpper = russianAlphabet.toUpperCase();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +60,20 @@ public class CeasesActivity extends AppCompatActivity {
 
             for (int i = 0; i < text.length(); i++) {
                 char c = text.charAt(i);
-                if (Character.isUpperCase(c)) {
+                if (Character.isUpperCase(c)  && Character.isAlphabetic(c) && englishAlphabetUpper.contains(String.valueOf(c))) {
                     encodedText += (char) ('A' + (c - 'A' + shift) % 26);
-                } else if (Character.isLowerCase(c)) {
+                } else if (Character.isLowerCase(c) && Character.isAlphabetic(c) && englishAlphabet.contains(String.valueOf(c))) {
                     encodedText += (char) ('a' + (c - 'a' + shift) % 26);
-                } else {
+                }
+                else if (Character.isUpperCase(c)  && Character.isAlphabetic(c) && russianAlphabetUpper.contains(String.valueOf(c))) {
+                    int index = (russianAlphabetUpper.indexOf(c) + shift) % 32;
+                    encodedText += russianAlphabetUpper.charAt(index);
+                }
+                else if (Character.isLowerCase(c)  && Character.isAlphabetic(c) && russianAlphabet.contains(String.valueOf(c))) {
+                    int index = (russianAlphabet.indexOf(c) + shift) % 32;
+                    encodedText += russianAlphabet.charAt(index);
+                }
+                else {
                     encodedText += c;
                 }
             }
@@ -85,11 +98,20 @@ public class CeasesActivity extends AppCompatActivity {
 
         for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
-            if (Character.isUpperCase(c)) {
+            if (Character.isUpperCase(c)  && Character.isAlphabetic(c) && englishAlphabetUpper.contains(String.valueOf(c))) {
                 decodedText += (char) ('A' + (c - 'A' - shift + 26) % 26);
-            } else if (Character.isLowerCase(c)) {
+            } else if (Character.isLowerCase(c) && Character.isAlphabetic(c) && englishAlphabet.contains(String.valueOf(c))) {
                 decodedText += (char) ('a' + (c - 'a' - shift + 26) % 26);
-            } else {
+            }
+            else if (Character.isUpperCase(c)  && Character.isAlphabetic(c) && russianAlphabetUpper.contains(String.valueOf(c))) {
+                 int index = (russianAlphabetUpper.indexOf(c) - shift + 33) % 33;
+                 decodedText += russianAlphabetUpper.charAt(index);
+                }
+            else if (Character.isLowerCase(c)  && Character.isAlphabetic(c) && russianAlphabet.contains(String.valueOf(c))) {
+                int index = (russianAlphabet.indexOf(c) - shift + 33) % 33;
+                decodedText += russianAlphabet.charAt(index);
+            }
+            else {
                 decodedText += c;
             }
         }
