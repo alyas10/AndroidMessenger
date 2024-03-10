@@ -8,31 +8,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-public class CeasesActivity extends AppCompatActivity {
-
-    private EditText inputText, shiftAmount;
+public class VigenerActivity extends AppCompatActivity {
+    private EditText inputText, key;
     private Button encode,decode;
     private TextView outputText;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.encrypt_and_decrypt);
-
+        setContentView(R.layout.activity_vigener);
         inputText = findViewById(R.id.inputText);
-        shiftAmount = findViewById(R.id.shiftAmount);
+        key = findViewById(R.id.key);
         encode = findViewById(R.id.encode);
         decode = findViewById(R.id.decode);
         outputText = findViewById(R.id.outputText);
-
         encode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 encodeText();
             }
         });
-
         decode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,62 +34,62 @@ public class CeasesActivity extends AppCompatActivity {
             }
         });
     }
-
     public void encodeText() {
         String text = inputText.getText().toString();
-        String s = shiftAmount.getText().toString();
+        String s_key = key.getText().toString();
+        String encodedText = "";
         if (TextUtils.isEmpty(text)) {
             inputText.setError("Field is empty!");
             return;
-        } else if (TextUtils.isEmpty(s)) {
-            shiftAmount.setError("Field is empty!");
+        } else if (TextUtils.isEmpty(s_key)) {
+            key.setError("Field is empty!");
             return;
         } else {
-            int shift = Integer.parseInt(shiftAmount.getText().toString());
-            String encodedText = "";
-
-            for (int i = 0; i < text.length(); i++) {
+            for (int i = 0, j = 0; i < text.length(); i++) {
                 char c = text.charAt(i);
-                if (Character.isUpperCase(c)) {
-                    encodedText += (char) ('A' + (c - 'A' + shift) % 26);
-                } else if (Character.isLowerCase(c)) {
-                    encodedText += (char) ('a' + (c - 'a' + shift) % 26);
+                if (Character.isLetter(c)) {
+                    if (Character.isUpperCase(c)) {
+                        encodedText += (char) ((((c + s_key.toUpperCase().charAt(j) - 2 * 'A') % 26) + 'A'));
+                    } else {
+                        encodedText += (char) ((((c + s_key.toLowerCase().charAt(j) - 2 * 'a') % 26) + 'a'));
+                    }
+                    j = ++j % s_key.length();
                 } else {
                     encodedText += c;
                 }
             }
-
-            outputText.setText(encodedText);}
+        }
+            outputText.setText(encodedText);
     }
 
     public void decodeText() {
         String text = inputText.getText().toString();
-        String s = shiftAmount.getText().toString();
+        String s_key = key.getText().toString();
+        String decodedText = "";
         if (TextUtils.isEmpty(text)) {
             inputText.setError("Field is empty!");
             return;
-        }
-        else if (TextUtils.isEmpty(s)) {
-            shiftAmount.setError("Field is empty!");
+        } else if (TextUtils.isEmpty(s_key)) {
+            key.setError("Field is empty!");
             return;
-        }
-        else{
-        int shift = Integer.parseInt(shiftAmount.getText().toString());
-        String decodedText = "";
-
-        for (int i = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-            if (Character.isUpperCase(c)) {
-                decodedText += (char) ('A' + (c - 'A' - shift + 26) % 26);
-            } else if (Character.isLowerCase(c)) {
-                decodedText += (char) ('a' + (c - 'a' - shift + 26) % 26);
-            } else {
-                decodedText += c;
+        } else {
+            for (int i = 0, j = 0; i < text.length(); i++) {
+                char c = text.charAt(i);
+                if (Character.isLetter(c)) {
+                    if (Character.isUpperCase(c)) {
+                        decodedText += (char) ((((c - s_key.toUpperCase().charAt(j) + 26) % 26) + 'A'));
+                    } else {
+                        decodedText += (char) ((((c - s_key.toLowerCase().charAt(j) + 26) % 26) + 'a'));
+                    }
+                    j = ++j % s_key.length();
+                } else {
+                    decodedText += c;
+                }
             }
         }
-
-        outputText.setText(decodedText);}
+        outputText.setText(decodedText);
     }
+
     public void goBack(View view) {
         finish();
     }

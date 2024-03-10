@@ -17,6 +17,8 @@ public class CodeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         CardView card1 = getView().findViewById(R.id.card1);
+        CardView card2 = getView().findViewById(R.id.card2);
+        CardView card3 = getView().findViewById(R.id.card3);
         card1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CeasesActivity.class);
@@ -25,5 +27,20 @@ public class CodeFragment extends Fragment {
 
         });
 
+        card2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AtbashActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        card3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), VigenerActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#170F0F"
-    tools:context=".CeasesActivity">
+    tools:context=".VigenerActivity">
 
     <TextView
         android:id="@+id/title"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:paddingTop="16dp"
-        android:text="Шифр Цезаря"
+        android:text="Шифр Виженера"
         android:textColor="#F5FFFFFF"
         android:textSize="34sp"
         android:textStyle="bold" />
@@ -32,56 +32,63 @@
         android:textColorHint="@color/white" />
 
     <EditText
-        android:id="@+id/shiftAmount"
+        android:id="@+id/key"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/inputText"
         android:layout_marginTop="39dp"
-
-        android:hint="Введите количество смещений"
+        android:hint="Введите ключ для шифрования"
         android:padding="16dp"
         android:textColor="#FBFAFA"
         android:textColorHint="#F6F3F3" />
 
-    <Button
-        android:id="@+id/encode"
+    <LinearLayout
+        android:id="@+id/buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/shiftAmount"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="22dp"
-        android:onClick="encodeText"
-        android:background="#009688"
-        app:backgroundTint="#044b61"
-        android:text="Encode" />
+        android:layout_below="@+id/key"
+        android:layout_marginTop="19dp">
 
-    <Button
-        android:id="@+id/decode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/shiftAmount"
-        android:layout_marginStart="204dp"
-        android:layout_marginTop="21dp"
-        android:layout_toEndOf="@id/encode"
-        android:background="#009688"
-        app:backgroundTint="#044b61"
-        android:onClick="decodeText"
-        android:text="Decode" />
+        <Button
+            android:id="@+id/encode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/key"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="22dp"
+            android:background="#009688"
+            android:onClick="encodeText"
+            android:text="Encode"
+            app:backgroundTint="#044b61" />
+
+        <Button
+            android:id="@+id/decode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shiftAmount"
+            android:layout_marginStart="204dp"
+            android:layout_marginTop="21dp"
+            android:layout_toEndOf="@id/encode"
+            android:background="#009688"
+            android:onClick="decodeText"
+            android:text="Decode"
+            app:backgroundTint="#044b61" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/outputText"
         android:layout_width="match_parent"
         android:layout_height="197dp"
-        android:layout_below="@id/encode"
-        android:layout_marginTop="29dp"
+        android:layout_below="@+id/buttons"
+        android:layout_marginTop="41dp"
         android:hint="Результат"
-        android:textSize="30dp"
         android:padding="16dp"
         android:textColor="#F6F5F5"
         android:textColorHighlight="#009688"
         android:textColorHint="#FBF6F6"
-        android:textColorLink="#009688" />
+        android:textColorLink="#009688"
+        android:textSize="30dp" />
 
     <Button
         android:id="@+id/backButton"
@@ -89,13 +96,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/outputText"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="163dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="160dp"
+        android:background="#009688"
         android:onClick="goBack"
         android:text="Back"
-        android:background="#009688"
-        app:backgroundTint="#044b61"
         android:textColorHighlight="#673AB7"
-        android:textColorLink="#673AB7" />
+        android:textColorLink="#673AB7"
+        app:backgroundTint="#044b61" />
 
 </RelativeLayout>
