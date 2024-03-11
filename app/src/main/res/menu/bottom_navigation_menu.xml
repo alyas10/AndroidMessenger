@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="HardcodedText">
 
@@ -14,13 +13,19 @@
     <item
         android:id="@+id/nav_theory"
         android:title="Теория"
-        android:icon="@drawable/baseline_book_24"
+        android:icon="@drawable/baseline_menu_book_24"
         />
 
     <item
         android:id="@+id/nav_code"
         android:title="Шифрование"
         android:icon="@drawable/baseline_fingerprint_24"
+        />
+
+    <item
+        android:id="@+id/nav_test"
+        android:title="Проверка знаний"
+        android:icon="@drawable/baseline_book_24"
         />
 
     <item

@@ -48,7 +48,7 @@ public class TheoryFragment extends Fragment {
     dataList.add(androidData);
     androidData = new DataClass("Шифр Атбаш", R.string.atbash, "Уровень 1", R.drawable.cipher_atbash);
     dataList.add(androidData);
-    androidData = new DataClass("Шифр Виженера", R.string.vigener, "Уровень 1", R.drawable.cipher_vigener);
+    androidData = new DataClass("Шифр Виженера", R.string.vigener, "Уровень 1", R.drawable.cipher_2);
     dataList.add(androidData);
     adapter = new MyAdapter(getActivity(), dataList);
     recyclerView.setAdapter(adapter);

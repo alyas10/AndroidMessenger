@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:paddingTop="16dp"
         android:text="Шифр Цезаря"
-        android:textColor="#F5FFFFFF"
+        android:textColor="@color/green"
         android:textSize="34sp"
         android:textStyle="bold" />
 
@@ -24,12 +24,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
         android:layout_marginTop="18dp"
+        android:background="@drawable/search_bkg"
         android:hint="Введите свой текст"
         android:padding="16dp"
-        android:textSize="30dp"
-        android:textColor="#FBF6F6"
-        android:textColorHighlight="#009688"
-        android:textColorHint="@color/white" />
+        android:textSize="20dp"
+        android:textColor="@color/green"
+        android:textColorHint="@color/green"
+        android:textColorHighlight="#00FF00"
+        android:enabled="true"
+        android:textIsSelectable="true"
+        android:focusable="true"
+        android:longClickable="true"/>
 
     <EditText
         android:id="@+id/shiftAmount"
@@ -37,11 +42,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/inputText"
         android:layout_marginTop="39dp"
-
+        android:background="@drawable/search_bkg"
         android:hint="Введите количество смещений"
         android:padding="16dp"
-        android:textColor="#FBFAFA"
-        android:textColorHint="#F6F3F3" />
+        android:textColor="@color/green"
+        android:textColorHighlight="#00FF00"
+        android:enabled="true"
+        android:textIsSelectable="true"
+        android:focusable="true"
+        android:longClickable="true" />
+
 
     <Button
         android:id="@+id/encode"
@@ -52,22 +62,24 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="22dp"
         android:onClick="encodeText"
-        android:background="#009688"
-        app:backgroundTint="#044b61"
-        android:text="Encode" />
+        android:background="@drawable/search_bkg"
+        android:text="Зашифровать"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/green"/>
 
     <Button
         android:id="@+id/decode"
-        android:layout_width="wrap_content"
+        android:layout_width="151dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/shiftAmount"
-        android:layout_marginStart="204dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="21dp"
         android:layout_toEndOf="@id/encode"
-        android:background="#009688"
-        app:backgroundTint="#044b61"
+        android:background="@drawable/search_bkg"
         android:onClick="decodeText"
-        android:text="Decode" />
+        android:text="Расшифровать"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/green" />
 
     <TextView
         android:id="@+id/outputText"
@@ -75,27 +87,29 @@
         android:layout_height="197dp"
         android:layout_below="@id/encode"
         android:layout_marginTop="29dp"
+        android:background="@drawable/search_bkg"
         android:hint="Результат"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:padding="16dp"
-        android:textColor="#F6F5F5"
-        android:textColorHighlight="#009688"
-        android:textColorHint="#FBF6F6"
-        android:textColorLink="#009688" />
+        android:textColor="@color/green"
+        android:textColorHighlight="#00FF00"
+        android:enabled="true"
+        android:textIsSelectable="true"
+        android:focusable="true"
+        android:longClickable="true"
+         />
 
     <Button
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/outputText"
-        android:layout_alignParentEnd="true"
         android:layout_marginTop="68dp"
-        android:layout_marginEnd="163dp"
+        android:layout_marginStart="145dp"
+        android:background="@drawable/search_bkg"
         android:onClick="goBack"
         android:text="Back"
-        android:background="#009688"
-        app:backgroundTint="#044b61"
-        android:textColorHighlight="#673AB7"
-        android:textColorLink="#673AB7" />
+        android:textColor="@color/black"
+        app:backgroundTint="@color/green" />
 
 </RelativeLayout>

@@ -12,10 +12,6 @@ public class AtbashActivity extends AppCompatActivity {
     private EditText inputText;
     private Button encode,decode;
     private TextView outputText;
-    private static String englishAlphabet = "abcdefghijklmnopqrstuvwxyz";
-    private static String englishAlphabetUpper = englishAlphabet.toUpperCase();
-    private static String russianAlphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
-    private static String russianAlphabetUpper = russianAlphabet.toUpperCase();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,21 +52,13 @@ public class AtbashActivity extends AppCompatActivity {
     public String encodeText(String str) {
         String encodedText = "";
             for (char c : str.toCharArray()) {
-                if (Character.isAlphabetic(c) && Character.isLowerCase(c) && englishAlphabet.contains(String.valueOf(c))) {
-                   encodedText += (char) ('z' - c + 'a');
-                }
-                else if (Character.isAlphabetic(c) && Character.isUpperCase(c) && englishAlphabetUpper.contains(String.valueOf(c))) {
-                    encodedText += (char) ('Z' - c + 'А');
-                }
-                else if (Character.isAlphabetic(c) && Character.isLowerCase(c) && russianAlphabet.contains(String.valueOf(c))) {
-                    int index = russianAlphabet.length() - russianAlphabet.indexOf(c) -1;
-                    encodedText += russianAlphabet.charAt(index);
-                }
-                else if (Character.isAlphabetic(c) && Character.isUpperCase(c) && russianAlphabetUpper.contains(String.valueOf(c))) {
-                    int index = russianAlphabetUpper.length() - russianAlphabetUpper.indexOf(c) - 1;
-                    encodedText += russianAlphabetUpper.charAt(index);
-                }
-                else {
+                if (Character.isLetter(c)) {
+                    char newChar = (char) ('z' - (c - 'a') % 26);
+                    if (Character.isUpperCase(c)) {
+                        newChar = Character.toUpperCase(newChar);
+                    }
+                    encodedText += newChar;
+                } else {
                     encodedText += c;
                 }
             }
