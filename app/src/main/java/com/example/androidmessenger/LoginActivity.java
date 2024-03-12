@@ -5,7 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,37 +22,62 @@ import com.example.androidmessenger.databinding.ActivityLoginBinding;
 
 
 public class LoginActivity extends AppCompatActivity {
-    private ActivityLoginBinding binding;
+    private EditText email, password;
+
+    private TextView goToRegister;
+    Button login_btn;
+
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        binding.loginBtn.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_login);
+
+        auth = FirebaseAuth.getInstance();
+
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        password.setInputType(129);
+
+        login_btn = findViewById(R.id.login_btn);
+
+        goToRegister = findViewById(R.id.go_to_register_activity_tv);
+
+        login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (binding.email.getText().toString().isEmpty() || binding.password.getText().toString().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Fields cannot be empty", Toast.LENGTH_SHORT).show();
-                } else {
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(binding.email.getText().toString(), binding.password.getText().toString())
+                String txt_email = email.getText().toString();
+                String txt_password = password.getText().toString();
+                if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)) {
+                    Toast.makeText(LoginActivity.this, "Поле не может быть пустым", Toast.LENGTH_SHORT).show();
+            }
+                else {
+                    auth.signInWithEmailAndPassword(txt_email,txt_password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    else {
+                                        Toast.makeText(LoginActivity.this, "Аутентификация провалена, попробуйте еще раз", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                 }
-            }
-        });
+        }
+     });
 
-        binding.goToRegisterActivityTv.setOnClickListener(new View.OnClickListener() {
+
+        goToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
-    }
+   }
 }

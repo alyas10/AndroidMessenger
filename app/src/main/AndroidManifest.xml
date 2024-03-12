@@ -24,7 +24,7 @@
             android:name=".VigenerActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".SplashActivity"
             android:exported="false" />
         <activity
             android:name=".CeasesActivity"
@@ -33,7 +33,7 @@
             android:name=".DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".RegisterActivity"
             android:exported="false" />
 
         <meta-data
