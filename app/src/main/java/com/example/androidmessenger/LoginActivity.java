@@ -18,9 +18,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-import com.example.androidmessenger.databinding.ActivityLoginBinding;
-
-
 public class LoginActivity extends AppCompatActivity {
     private EditText email, password;
 
