@@ -7,11 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
 public class VigenerActivity extends AppCompatActivity {
     private EditText inputText, key;
     private Button encode,decode;
     private TextView outputText;
+    private static String englishAlphabet = "abcdefghijklmnopqrstuvwxyz";
+    private static String englishAlphabetUpper = englishAlphabet.toUpperCase();
+    private static String russianAlphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+    private static String russianAlphabetUpper = russianAlphabet.toUpperCase();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +52,18 @@ public class VigenerActivity extends AppCompatActivity {
             for (int i = 0, j = 0; i < text.length(); i++) {
                 char c = text.charAt(i);
                 if (Character.isLetter(c)) {
-                    if (Character.isUpperCase(c)) {
+                    if  (Character.isUpperCase(c) && englishAlphabetUpper.contains(String.valueOf(c))) {
                         encodedText += (char) ((((c + s_key.toUpperCase().charAt(j) - 2 * 'A') % 26) + 'A'));
-                    } else {
+                    } else if (Character.isLowerCase(c) && englishAlphabet.contains(String.valueOf(c))) {
                         encodedText += (char) ((((c + s_key.toLowerCase().charAt(j) - 2 * 'a') % 26) + 'a'));
+                    }
+                    else if (Character.isUpperCase(c) && russianAlphabetUpper.contains(String.valueOf(c))) {
+                        int index = (russianAlphabetUpper.indexOf(c) + russianAlphabetUpper.indexOf(s_key.toUpperCase().charAt(j))) % 33;
+                        encodedText += russianAlphabetUpper.charAt(index);
+                    }
+                    else if (Character.isLowerCase(c) && russianAlphabet.contains(String.valueOf(c))) {
+                        int index = (russianAlphabet.indexOf(c) + russianAlphabet.indexOf(s_key.toLowerCase().charAt(j))) % 33;
+                        encodedText += russianAlphabet.charAt(index);
                     }
                     j = ++j % s_key.length();
                 } else {
@@ -76,10 +88,17 @@ public class VigenerActivity extends AppCompatActivity {
             for (int i = 0, j = 0; i < text.length(); i++) {
                 char c = text.charAt(i);
                 if (Character.isLetter(c)) {
-                    if (Character.isUpperCase(c)) {
+                    if (Character.isUpperCase(c) && englishAlphabetUpper.contains(String.valueOf(c))) {
                         decodedText += (char) ((((c - s_key.toUpperCase().charAt(j) + 26) % 26) + 'A'));
-                    } else {
+                    } else if (Character.isLowerCase(c) && englishAlphabet.contains(String.valueOf(c))){
                         decodedText += (char) ((((c - s_key.toLowerCase().charAt(j) + 26) % 26) + 'a'));
+                    } else if (Character.isUpperCase(c) && russianAlphabetUpper.contains(String.valueOf(c))) {
+                        int index = (russianAlphabetUpper.indexOf(c) - russianAlphabetUpper.indexOf(s_key.toUpperCase().charAt(j)) + 33) % 33;
+                        decodedText += russianAlphabetUpper.charAt(index);
+                    }
+                    else if (Character.isLowerCase(c) && russianAlphabet.contains(String.valueOf(c))) {
+                        int index =  (russianAlphabet.indexOf(c) - russianAlphabet.indexOf(s_key.toLowerCase().charAt(j)) + 33) % 33;
+                        decodedText += russianAlphabet.charAt(index);
                     }
                     j = ++j % s_key.length();
                 } else {

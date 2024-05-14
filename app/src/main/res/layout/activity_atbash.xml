@@ -103,7 +103,7 @@
         android:layout_marginStart="145dp"
         android:background="@drawable/search_bkg"
         android:onClick="goBack"
-        android:text="Back"
+        android:text="Назад"
         android:textColor="@color/black"
         app:backgroundTint="@color/green" />
 

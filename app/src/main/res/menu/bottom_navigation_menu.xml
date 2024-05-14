@@ -5,7 +5,7 @@
     tools:ignore="HardcodedText">
 
     <item
-        android:id="@+id/nav_profil"
+        android:id="@+id/nav_profile"
         android:icon="@drawable/baseline_account_circle_24"
         android:title="Профиль" />
 
@@ -32,6 +32,21 @@
         android:id="@+id/nav_settings"
         android:title="Настройки"
         android:icon="@drawable/baseline_settings_24"
+        />
+    <item
+        android:id="@+id/nav_users"
+        android:title="Пользователи"
+        android:icon="@drawable/baseline_person_2_24"
+        />
+    <item
+        android:id="@+id/nav_chats"
+        android:title="Сообщения"
+        android:icon="@drawable/baseline_chat_24"
+        />
+    <item
+        android:id="@+id/nav_userLogout"
+        android:title="Сменить пользователя"
+        android:icon="@drawable/baseline_account_circle_24"
         />
 
     <item

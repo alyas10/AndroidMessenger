@@ -1,4 +1,11 @@
 package com.example.androidmessenger;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -7,15 +14,25 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
+import com.example.androidmessenger.Fragments.ChatsFragment;
+import com.example.androidmessenger.Fragments.CodeFragment;
+import com.example.androidmessenger.Fragments.TheoryFragment;
+import com.example.androidmessenger.Fragments.UserProfileFragment;
+import com.example.androidmessenger.Fragments.UsersFragment;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
 
+    FirebaseUser firebaseUser;
+    DatabaseReference reference;
+
+    TextView username;
+
+    ImageView profile_image;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_acivity);
@@ -51,11 +68,23 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         int id = item.getItemId();
 
-        if (id == R.id.nav_theory) {
+        if(id == R.id.nav_profile){
+            fragmentClass = UserProfileFragment.class;
+        }
+        else if (id == R.id.nav_theory) {
             fragmentClass = TheoryFragment.class;
         }
         else if (id == R.id.nav_code) {
-            fragmentClass = CodeFragment.class;
+            fragmentClass = SpinnerFragment.class;
+        } else if (id == R.id.nav_users) {
+            fragmentClass = UsersFragment.class;}
+        else if (id == R.id.nav_chats) {
+             fragmentClass = ChatsFragment.class;
+        } else if (id == R.id.nav_userLogout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         }
         else if (id == R.id.nav_logout)
         {

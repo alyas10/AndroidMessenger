@@ -7,9 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class SplashActivity extends AppCompatActivity {
     private ProgressBar progressBar;
-    private static int SPLASH_TIME_OUT = 5000;
+    FirebaseUser firebaseUser;
+    private static int SPLASH_TIME_OUT = 10500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +21,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setMax(100);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -32,9 +37,16 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 }
 
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                if (firebaseUser == null) {
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         }, SPLASH_TIME_OUT);
     }
