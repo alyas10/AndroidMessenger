@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -60,6 +61,10 @@ public class UserProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_user_profile, container, false);
+        return view;
+    }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle("Профиль");
 
@@ -70,7 +75,9 @@ public class UserProfileFragment extends Fragment {
         mobile = view.findViewById(R.id.textView_show_mobile);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = firebaseUser.getUid();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
         email.setText(firebaseUser.getEmail());
 
         profileImageView = view.findViewById(R.id.imageView_profile_dp);
@@ -82,11 +89,13 @@ public class UserProfileFragment extends Fragment {
                 User user = snapshot.getValue(User.class);
                 fullName.setText(user.getUsername());
                 welcome.setText("Добро пожаловать, " + user.getUsername());
-                if (user.getImageURL().equals("default")) {
-                    profileImageView.setImageResource(R.drawable.baseline_account_circle_24);
-                } else {
+                if (user != null && user.getImageURL() != null && !user.getImageURL().equals("default")) {
                     Glide.with(getContext()).load(user.getImageURL()).into(profileImageView);
+                } else {
+                    // Здесь код для случая, когда user или user.getImageURL() равны null или imageURL равен "default"
+                    profileImageView.setImageResource(R.drawable.baseline_account_circle_24);
                 }
+
             }
 
             @Override
@@ -102,7 +111,6 @@ public class UserProfileFragment extends Fragment {
                 openImage();
             }
         });
-        return view;
     }
 
     private void openImage() {
