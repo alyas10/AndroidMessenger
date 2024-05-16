@@ -35,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseDatabase database;
     private User user;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
@@ -42,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        password.setInputType (129);
+        password.setInputType(129);
 
         register_btn = findViewById(R.id.sign_up_btn);
         back_btn = findViewById(R.id.back_btn);
@@ -62,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (isValidPassword(txt_password) != true) {
                     Toast.makeText(RegisterActivity.this, "Пароль должен содержать 1 цифру, 1 заглавную латинскую букву, 1 спецсимвол, не содержать пробелов", Toast.LENGTH_SHORT).show();
                 } else {
-                    register(txt_username,txt_email, txt_password);
+                    register(txt_username, txt_email, txt_password);
                 }
             }
         });
@@ -74,40 +75,41 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+
     private void register(final String username, String email, String password){
-            auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                FirebaseUser firebaseUser = auth.getCurrentUser();
-                                database = FirebaseDatabase.getInstance();
-                                assert firebaseUser != null;
-                                String userid = firebaseUser.getUid();
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser firebaseUser = auth.getCurrentUser();
+                            database = FirebaseDatabase.getInstance();
+                            assert firebaseUser != null;
+                            String userid = firebaseUser.getUid();
 
-                                reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
-                                HashMap<String, String> hashMap = new HashMap<>();
-                                hashMap.put("id", userid);
-                                hashMap.put("username", username);
-                                hashMap.put("ImageURL", "default");
-                                reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()){
-
-                                Toast.makeText(RegisterActivity.this, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                                        }
+                            reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put("id", userid);
+                            hashMap.put("username", username);
+                            hashMap.put("ImageURL", "default");
+                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        Toast.makeText(RegisterActivity.this, "Вы будете направлены на страницу атворизации", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                     }
-                                });
-                            } else {
-                                Toast.makeText(RegisterActivity.this, "Регистрация под таким логином или паролем недоступна", Toast.LENGTH_SHORT).show();
-                            }
-
+                                }
+                            });
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Регистрация под таким логином или паролем недоступна", Toast.LENGTH_SHORT).show();
                         }
-                    });
-         }
+
+                    }
+                });
+    }
+
 
 
          public boolean isValidPassword(String password) {
@@ -119,4 +121,4 @@ public class RegisterActivity extends AppCompatActivity {
              Matcher matcher = pattern.matcher(password);
              return matcher.matches();
          }
-}
+    }

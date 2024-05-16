@@ -17,6 +17,7 @@ public class AtbashActivity extends AppCompatActivity {
     private static String englishAlphabetUpper = englishAlphabet.toUpperCase();
     private static String russianAlphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
     private static String russianAlphabetUpper = russianAlphabet.toUpperCase();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +26,6 @@ public class AtbashActivity extends AppCompatActivity {
         encode = findViewById(R.id.encode);
         decode = findViewById(R.id.decode);
         outputText = findViewById(R.id.outputText);
-
         encode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,10 +48,10 @@ public class AtbashActivity extends AppCompatActivity {
                 }
                 else {
                     outputText.setText(encodeText(text));
-                    ;
                 }
             }
         });
+
     }
 
     public String encodeText(String str) {

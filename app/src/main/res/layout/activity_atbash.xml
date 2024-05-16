@@ -50,7 +50,7 @@
 
         <Button
             android:id="@+id/encode"
-            android:layout_width="141dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/shiftAmount"
             android:layout_alignParentStart="true"
@@ -64,7 +64,7 @@
 
         <Button
             android:id="@+id/decode"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/shiftAmount"
             android:layout_marginStart="60dp"
@@ -98,9 +98,14 @@
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/outputText"
-        android:layout_marginTop="100dp"
-        android:layout_marginStart="145dp"
+        android:layout_below="@+id/outputText"
+        android:layout_alignParentBottom="true"
+
+        android:layout_centerInParent="true"
+        android:layout_marginStart="86dp"
+        android:layout_marginLeft="106dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="66dp"
         android:background="@drawable/search_bkg"
         android:onClick="goBack"
         android:text="Назад"

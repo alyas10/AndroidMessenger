@@ -10,20 +10,22 @@
     tools:context=".MainActivity"
     tools:openDrawer="start">
 
-        <include
-            layout="@layout/app_bar_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <!-- Панель навигации -->
+    <include
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="@color/black"
-            app:headerLayout="@layout/nav_header"
-            app:itemIconSize="35dp"
-            app:itemIconTint="@color/green"
-            app:itemTextColor="@color/green"
-            app:menu="@menu/bottom_navigation_menu" />
-    </androidx.drawerlayout.widget.DrawerLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/black"
+        app:headerLayout="@layout/nav_header"
+        app:itemIconSize="35dp"
+        app:itemIconTint="@color/green"
+        app:itemTextColor="@color/green"
+        app:menu="@menu/bottom_navigation_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

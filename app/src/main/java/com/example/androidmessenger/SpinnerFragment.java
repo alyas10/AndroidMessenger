@@ -17,7 +17,10 @@ public class SpinnerFragment extends Fragment {
     public SpinnerFragment() {
         super(R.layout.activity_spinner);
     }
+
     private Spinner spinner;
+
+    String[] Ciphers = {"Шифр Атбаш", "Шифр Цезаря", "Шифр Виженера", "Аффинный шифр"};
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -27,9 +30,16 @@ public class SpinnerFragment extends Fragment {
         spinner = getView().findViewById(R.id.spinner);
         Button buttonGo = getView().findViewById(R.id.button_go);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+
+
+        /*ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.cipher_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
+        // Подключаем свой шаблон с разными значками
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.custom_spinner_items, R.id.C_id, Ciphers);
+
+
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -48,8 +58,8 @@ public class SpinnerFragment extends Fragment {
         });
 
         buttonGo.setOnClickListener(v -> {
-            int position = spinner.getSelectedItemPosition();
             Intent intent;
+            int position = spinner.getSelectedItemPosition();
             switch (position) {
                 case 0: // Атбаш
                     intent = new Intent(getActivity(), AtbashActivity.class);

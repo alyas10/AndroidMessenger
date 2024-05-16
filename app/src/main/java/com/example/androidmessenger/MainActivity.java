@@ -13,12 +13,13 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.androidmessenger.Fragments.ChatsFragment;
-import com.example.androidmessenger.Fragments.CodeFragment;
 import com.example.androidmessenger.Fragments.TheoryFragment;
 import com.example.androidmessenger.Fragments.UserProfileFragment;
 import com.example.androidmessenger.Fragments.UsersFragment;
+import com.example.androidmessenger.Fragments.WelcomeFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        username = findViewById(R.id.username_bar);
+        profile_image = findViewById(R.id.profile_image_nav);
+
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_open,
                 R.string.nav_close);
@@ -48,9 +52,31 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        //Подгрузка начального экрана
+        Fragment welcomeFragment = new WelcomeFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, welcomeFragment);
+        fragmentTransaction.commit();
 
+        //reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        /*reference.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                username.setText(user.getUsername());
+                /*if (user.getImageURL().equals("default")) {
+                    profile_image.setImageResource(R.drawable.baseline_account_circle_24);
+                } else {
+                    Glide.with(MainActivity.this).load(user.getImageURL()).into(profile_image);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
     }
-
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {

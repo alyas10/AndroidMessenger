@@ -50,7 +50,7 @@ public class ChatsFragment extends Fragment {
        userList = new ArrayList<>();
 
        reference = FirebaseDatabase.getInstance().getReference("Chats");
-       reference.addValueEventListener(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                userList.clear();
@@ -58,19 +58,13 @@ public class ChatsFragment extends Fragment {
                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                    Chat chat = snapshot.getValue(Chat.class);
 
-                   if (chat != null) {
-                       if (chat.getSender() != null && chat.getSender().equals(firebaseUser.getUid())) {
-                           if (chat.getReceiver() != null) {
+                       if (chat.getSender().equals(firebaseUser.getUid())) {
                                userList.add(chat.getReceiver());
                            }
-                       }
-                       if (chat.getReceiver() != null && chat.getReceiver().equals(firebaseUser.getUid())) {
-                           if (chat.getSender() != null) {
+                       if (chat.getReceiver().equals(firebaseUser.getUid())) {
                                userList.add(chat.getSender());
-                           }
                        }
                    }
-               }
                readChats();
            }
 

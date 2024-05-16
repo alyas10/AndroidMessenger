@@ -17,4 +17,5 @@
         <item>Шифр Виженера</item>
         <item>Аффинный шифр</item>
     </string-array>
+    <string name="Welcome">"Добро пожаловать в HackProof Academy! Для старта перейдите в боковое меню.</string>
 </resources>

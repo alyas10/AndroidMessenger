@@ -16,7 +16,7 @@
         android:layout_marginTop="16dp"
         android:padding="8dp"
         android:text="Вам нужно выбрать для шифрования нужный шифр из списка и нажать кнопку 'Перейти', чтобы зашифровать текст."
-        android:textColor="@color/white"
+        android:textColor="@color/green"
         android:textSize="28dp"
         android:textStyle="bold" />
 
@@ -44,4 +44,11 @@
         app:backgroundTint="@color/green"
         android:textColor="@color/black"
         android:text="Перейти" />
+
+    <ImageView
+        android:layout_width="368dp"
+        android:layout_height="205dp"
+        android:layout_below="@id/button_go"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/cat" />
 </RelativeLayout>
