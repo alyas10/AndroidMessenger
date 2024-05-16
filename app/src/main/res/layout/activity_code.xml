@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CodeFragment"
+    tools:context=".Fragments.CodeFragment"
     android:orientation="horizontal"
     android:background="@color/black"
     tools:ignore="MissingDefaultResource">

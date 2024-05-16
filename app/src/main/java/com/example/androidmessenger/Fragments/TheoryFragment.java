@@ -1,4 +1,4 @@
-package com.example.androidmessenger;
+package com.example.androidmessenger.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,6 +9,10 @@ import android.widget.Toast;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.androidmessenger.DataClass;
+import com.example.androidmessenger.MyAdapter;
+import com.example.androidmessenger.R;
 
 import java.util.ArrayList;
 import java.util.List;

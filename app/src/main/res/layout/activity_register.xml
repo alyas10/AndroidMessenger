@@ -44,6 +44,7 @@
 
     <EditText
         android:id="@+id/email"
+        android:inputType="textEmailAddress"
         android:layout_width="242dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -76,32 +77,31 @@
         android:id="@+id/password"
         android:layout_width="242dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/ubuntu_light"
         android:hint="Пароль"
+        android:inputType="textPassword"
         android:minHeight="48dp"
-        android:textColorHint="@color/white"
         android:textColor="@color/white"
+        android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
+        app:layout_constraintTop_toBottomOf="@+id/username"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/sign_up_btn"
         android:layout_width="268dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:backgroundTint="#02774A"
         android:fontFamily="@font/ubuntu_light"
         android:text="Регистрация"
         android:textColor="#090000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.291" />
+        app:layout_constraintVertical_bias="0.479" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,5 @@
 package com.example.androidmessenger;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,13 +9,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-
-import com.example.androidmessenger.databinding.ActivityLoginBinding;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -29,12 +29,15 @@ public class LoginActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
 
+    FirebaseUser firebaseUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         auth = FirebaseAuth.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
@@ -51,9 +54,11 @@ public class LoginActivity extends AppCompatActivity {
                 String txt_password = password.getText().toString();
                 if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)) {
                     Toast.makeText(LoginActivity.this, "Поле не может быть пустым", Toast.LENGTH_SHORT).show();
-            }
-                else {
-                    auth.signInWithEmailAndPassword(txt_email,txt_password)
+                } /*else if (!firebaseUser.isEmailVerified()) {
+                    sendEmailVerification();
+                    Toast.makeText(LoginActivity.this, "Для входа на вашу почту были высланы инструкции для подтверждения.", Toast.LENGTH_SHORT).show();
+                } */else {
+                    auth.signInWithEmailAndPassword(txt_email, txt_password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -61,23 +66,43 @@ public class LoginActivity extends AppCompatActivity {
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent);
                                         finish();
-                                    }
-                                    else {
+                                    } else {
                                         Toast.makeText(LoginActivity.this, "Аутентификация провалена, попробуйте еще раз", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                 }
-        }
-     });
 
 
-        goToRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
+                goToRegister.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                        startActivity(intent);
+                    }
+                });
             }
         });
-   }
+    }
+
+    private void sendEmailVerification() {
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+        firebaseUser.sendEmailVerification()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(LoginActivity.this, "На вашу почту были высланы инструкции для подтверждения регистрации", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(LoginActivity.this, "Возникла ошибка отправки, попробуйте еще раз "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
 }

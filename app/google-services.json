@@ -2,7 +2,8 @@
   "project_info": {
     "project_number": "235352104434",
     "project_id": "androidmessenger-3f5ca",
-    "storage_bucket": "androidmessenger-3f5ca.appspot.com"
+    "storage_bucket": "androidmessenger-3f5ca.appspot.com",
+    "firebase_url":"https://androidmessenger-3f5ca-default-rtdb.europe-west1.firebasedatabase.app/"
   },
   "client": [
     {

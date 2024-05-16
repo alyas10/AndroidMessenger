@@ -1,8 +1,5 @@
 package com.example.androidmessenger;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,7 +9,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.androidmessenger.databinding.ActivityRegisterBinding;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,6 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import Chats.User;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText username, email, password;
@@ -29,6 +32,9 @@ public class RegisterActivity extends AppCompatActivity {
     ImageButton back_btn;
     FirebaseAuth auth;
     DatabaseReference reference;
+    private DatabaseReference mDatabase;
+    private FirebaseDatabase database;
+    private User user;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        password.setInputType (129);
+        password.setInputType(129);
 
         register_btn = findViewById(R.id.sign_up_btn);
         back_btn = findViewById(R.id.back_btn);
@@ -54,12 +60,13 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Поле не может быть пустым", Toast.LENGTH_SHORT).show();
                 } else if (txt_password.length() < 8) {
                     Toast.makeText(RegisterActivity.this, "Пароль должен содержать 8 символов", Toast.LENGTH_SHORT).show();
+                } else if (isValidPassword(txt_password) != true) {
+                    Toast.makeText(RegisterActivity.this, "Пароль должен содержать 1 цифру, 1 заглавную латинскую букву, 1 спецсимвол, не содержать пробелов", Toast.LENGTH_SHORT).show();
                 } else {
-                    register(txt_email, txt_username, txt_password);
+                    register(txt_username, txt_email, txt_password);
                 }
             }
         });
-
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,35 +75,50 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-        private void register(String email, String username, String password){
-            auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                FirebaseUser firebaseUser = auth.getCurrentUser();
-                                assert firebaseUser != null;
-                                String userid = firebaseUser.getUid();
 
-                                reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
-                                HashMap<String, String> hashMap = new HashMap<>();
-                                hashMap.put("id", userid);
-                                hashMap.put("username", username);
-                                hashMap.put("ImageURL", "default");
-                                reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
+    private void register(final String username, String email, String password){
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser firebaseUser = auth.getCurrentUser();
+                            database = FirebaseDatabase.getInstance();
+                            assert firebaseUser != null;
+                            String userid = firebaseUser.getUid();
+
+                            reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put("id", userid);
+                            hashMap.put("username", username);
+                            hashMap.put("ImageURL", "default");
+                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        Toast.makeText(RegisterActivity.this, "Вы будете направлены на страницу атворизации", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                        startActivity(intent);
+                                        finish();
                                     }
-                                });
-                            } else {
-                                Toast.makeText(RegisterActivity.this, "Регистрация под таким логином или паролем недоступна", Toast.LENGTH_SHORT).show();
-                            }
+                                }
+                            });
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Регистрация под таким логином или паролем недоступна", Toast.LENGTH_SHORT).show();
                         }
-                    });
-        }
+
+                    }
+                });
+    }
+
+
+
+         public boolean isValidPassword(String password) {
+             String regex = "^(?=.*[0-9])"
+                     + "(?=.*[a-z])(?=.*[A-Z])"
+                     + "(?=.*[@#$%^&+=?!])"
+                     + "(?=\\S+$).{8,20}$";
+             Pattern pattern = Pattern.compile(regex);
+             Matcher matcher = pattern.matcher(password);
+             return matcher.matches();
+         }
     }
