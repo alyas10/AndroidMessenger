@@ -40,6 +40,7 @@ android {
             }
         }
     }
+
 }
 
 dependencies {
@@ -58,4 +59,5 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.android.material:material:1.12.0-alpha03")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

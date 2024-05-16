@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         else if (id == R.id.nav_code) {
             fragmentClass = CodeFragment.class;
         }
+        else if(id == R.id.nav_test) {
+            fragmentClass = HomeFragment.class;
+        }
         else if (id == R.id.nav_logout)
         {
             finish();
