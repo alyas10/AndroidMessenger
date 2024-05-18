@@ -60,7 +60,7 @@ public class MessageActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+              startActivity(new Intent(MessageActivity.this, MessageActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
 
@@ -123,6 +123,7 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("message",message);
 
         reference.child("Chats").push().setValue(hashMap);
+
     }
 
     private void readMessages(String myid, String userid, String imageurl) {
@@ -149,5 +150,20 @@ public class MessageActivity extends AppCompatActivity {
 
            }
        });
+    }
+    private void status(String status) {
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("status",status);
+        reference.updateChildren(hashMap);
+    }
+    protected void onResume() {
+        super.onResume();
+        status("online");
+    }
+    protected void onPause() {
+        super.onPause();
+        status("offline");
     }
 }

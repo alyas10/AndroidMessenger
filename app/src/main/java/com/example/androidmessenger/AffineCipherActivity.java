@@ -1,6 +1,8 @@
 package com.example.androidmessenger;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +18,13 @@ public class AffineCipherActivity extends AppCompatActivity {
     private Button buttonEncrypt;
     private Button buttonDecrypt;
 
-    private Button goBackbtn;
+    private Button backButton;
+    private Button hack_btn;
     private TextView outputText;
     private static String ENGLISH_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
     private static String RUSSIAN_ALPHABET = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,11 +59,19 @@ public class AffineCipherActivity extends AppCompatActivity {
             }
         });
 
-        Button backButton = findViewById(R.id.backButton);
+        backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        hack_btn = findViewById(R.id.button_hack);
+        hack_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               affineBreak();
             }
         });
     }
@@ -111,5 +124,47 @@ public class AffineCipherActivity extends AppCompatActivity {
         }
         return ENGLISH_ALPHABET; // Default to English if no match found
     }
+
+    private void affineBreak() {
+        StringBuilder allShiftsDecoded = new StringBuilder();
+        int m = 26;
+        String text = inputText.getText().toString();
+        if (TextUtils.isEmpty(text)) {
+            inputText.setError("Field is empty!");
+            return;
+        }
+        text = text.toLowerCase();
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (ENGLISH_ALPHABET.contains(String.valueOf(c))) {
+                m = 26;
+            } else if (RUSSIAN_ALPHABET.contains(String.valueOf(c))) {
+                m = 33;
+            }
+            for (int a = 0; a < m; a++) {
+                if (gcd(a, m) == 1) {
+                    for (int b = 1; b < m; b++) {
+                        try {
+                            String decryptedText = affineDecrypt(text, a, b);
+                            allShiftsDecoded.append(a).append(" a: ").append(b).append(" b: ").append(decryptedText).append("\n");
+                        } catch (Exception e) {
+                            // Обработка исключения
+                        }
+                    }
+                }
+            }
+        }
+        outputText.setText(allShiftsDecoded.toString());
+    }
+
+    private int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
 
 }

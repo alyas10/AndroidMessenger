@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -35,6 +36,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 
@@ -60,17 +63,23 @@ public class UserProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_user_profile, container, false);
+        return view;
+    }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle("Профиль");
 
         welcome = view.findViewById(R.id.textView_show_welcome);
         fullName = view.findViewById(R.id.textView_show_full_name);
         email = view.findViewById(R.id.textView_show_email);
-        gender = view.findViewById(R.id.textView_show_gender);
-        mobile = view.findViewById(R.id.textView_show_mobile);
+        //gender = view.findViewById(R.id.textView_show_gender);
+        //mobile = view.findViewById(R.id.textView_show_mobile);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = firebaseUser.getUid();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
         email.setText(firebaseUser.getEmail());
 
         profileImageView = view.findViewById(R.id.imageView_profile_dp);
@@ -82,11 +91,13 @@ public class UserProfileFragment extends Fragment {
                 User user = snapshot.getValue(User.class);
                 fullName.setText(user.getUsername());
                 welcome.setText("Добро пожаловать, " + user.getUsername());
-                if (user.getImageURL().equals("default")) {
-                    profileImageView.setImageResource(R.drawable.baseline_account_circle_24);
-                } else {
+                if (user != null && user.getImageURL() != null && !user.getImageURL().equals("default")) {
                     Glide.with(getContext()).load(user.getImageURL()).into(profileImageView);
+                } else {
+                    // Здесь код для случая, когда user или user.getImageURL() равны null или imageURL равен "default"
+                    profileImageView.setImageResource(R.drawable.baseline_account_circle_24);
                 }
+
             }
 
             @Override
@@ -102,7 +113,6 @@ public class UserProfileFragment extends Fragment {
                 openImage();
             }
         });
-        return view;
     }
 
     private void openImage() {
@@ -163,13 +173,28 @@ public class UserProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null){
+                && data != null && data.getData() != null) {
             imageUri = data.getData();
 
-            if (uploadTask != null && uploadTask.isInProgress()){
-                Toast.makeText(getContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
-            } else {
+            // Запуск активности обрезки изображения
+            CropImage.activity(imageUri)
+                    .setAspectRatio(1, 1) // Установите соотношение сторон для круглого изображения
+                    .setCropShape(CropImageView.CropShape.OVAL) // Установите форму обрезки как OVAL
+                    .setGuidelines(CropImageView.Guidelines.ON) // Включите руководства обрезки
+                    .start(getContext(), this);
+        }
+
+        // Обработка результата обрезки изображения
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+
+                // Загрузка обрезанного изображения в Firebase
                 uploadImageToFirebase();
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                Toast.makeText(getContext(), "Ошибка обрезки: " + error, Toast.LENGTH_SHORT).show();
             }
         }
     }

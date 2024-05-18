@@ -149,7 +149,7 @@
                     android:layout_below="@id/RL_email"
                     android:background="@android:color/darker_gray"/>
 
-                <RelativeLayout
+            <!--    <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/RL_dob"
@@ -250,7 +250,7 @@
                         android:layout_marginTop="20dp"
                         android:textColorHint="@color/white"
                         android:hint="loading"/>
-                </RelativeLayout>
+                </RelativeLayout> -->
 
                 <ProgressBar
                     android:id="@+id/progress_bar"

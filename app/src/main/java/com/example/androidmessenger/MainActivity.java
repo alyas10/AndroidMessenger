@@ -3,9 +3,11 @@ package com.example.androidmessenger;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.androidmessenger.Fragments.ChatsFragment;
 import com.example.androidmessenger.Fragments.TheoryFragment;
 import com.example.androidmessenger.Fragments.UserProfileFragment;
@@ -23,7 +26,14 @@ import com.example.androidmessenger.Fragments.WelcomeFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import Chats.User;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
@@ -33,7 +43,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     TextView username;
 
-    ImageView profile_image;
+    CircleImageView profile_image;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_acivity);
@@ -59,23 +69,30 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         fragmentTransaction.replace(R.id.fragment_container, welcomeFragment);
         fragmentTransaction.commit();
 
-        //reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-        /*reference.addValueEventListener(new ValueEventListener() {
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                username.setText(user.getUsername());
-                /*if (user.getImageURL().equals("default")) {
-                    profile_image.setImageResource(R.drawable.baseline_account_circle_24);
-                } else {
-                    Glide.with(MainActivity.this).load(user.getImageURL()).into(profile_image);
-                }
-            }
-
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                // Обновление NavigationView
+                NavigationView navigationView = findViewById(R.id.nav_view);
+                View headerView = navigationView.getHeaderView(0);
+                ImageView profileImageView = headerView.findViewById(R.id.profile_image_nav);
+                TextView usernameTextView = headerView.findViewById(R.id.username_bar);
 
+                if (user.getImageURL().equals("default")) {
+                    profileImageView.setImageResource(R.drawable.baseline_account_circle_24);
+                } else {
+                    Glide.with(getApplicationContext()).load(user.getImageURL()).into(profileImageView);
+                }
+                usernameTextView.setText(user.getUsername());
             }
-        });*/
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Обработка ошибки
+            }
+        });
+
     }
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -122,6 +139,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
