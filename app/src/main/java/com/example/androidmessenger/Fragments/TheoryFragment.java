@@ -54,11 +54,11 @@ public class TheoryFragment extends Fragment {
     GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1);
     recyclerView.setLayoutManager(gridLayoutManager);
     dataList = new ArrayList<>();
-    androidData = new DataClass("Шифр Цезаря", R.string.cezar, "Уровень 1", R.drawable.ciphercezhar);
+    androidData = new DataClass("Шифр Цезаря", R.string.cezar, "Уровень 1", R.drawable.cezar,R.drawable.slide_13);
     dataList.add(androidData);
-    androidData = new DataClass("Шифр Атбаш", R.string.atbash, "Уровень 1", R.drawable.cipher_atbash);
+    androidData = new DataClass("Шифр Атбаш", R.string.atbash, "Уровень 1", R.drawable.atbash,R.drawable.slide_12);
     dataList.add(androidData);
-    androidData = new DataClass("Шифр Виженера", R.string.vigener, "Уровень 1", R.drawable.cipher_2);
+    androidData = new DataClass("Шифр Виженера", R.string.vigener, "Уровень 1", R.drawable.vigener,R.drawable.slide_11);
     dataList.add(androidData);
     adapter = new MyAdapter(getActivity(), dataList);
     recyclerView.setAdapter(adapter);

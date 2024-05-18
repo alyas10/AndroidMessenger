@@ -129,6 +129,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             startActivity(intent);
             finish();
         }
+        else if(id == R.id.nav_test) {
+            fragmentClass = HomeFragment.class;
+        }
         else if (id == R.id.nav_logout)
         {
             finish();

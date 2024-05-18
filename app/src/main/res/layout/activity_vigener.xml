@@ -108,11 +108,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/outputText"
+        android:layout_marginTop="68dp"
         android:layout_marginStart="145dp"
-        android:layout_marginTop="24dp"
         android:background="@drawable/search_bkg"
         android:onClick="goBack"
-        android:text="Назад"
+        android:text="Выйти"
         android:textColor="@color/black"
         app:backgroundTint="@color/green" />
 
