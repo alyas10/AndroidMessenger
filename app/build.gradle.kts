@@ -60,4 +60,10 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.android.material:material:1.12.0-alpha03")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    implementation ("com.google.android.material:material:1.2.1")
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.22")
+    implementation("com.theartofdev.edmodo:android-image-cropper:2.8.0")
+    implementation("com.google.firebase:firebase-storage:21.0.0")
 }
