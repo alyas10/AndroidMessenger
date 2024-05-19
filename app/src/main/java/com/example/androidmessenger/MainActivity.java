@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     TextView username;
 
     CircleImageView profile_image;
+
+    private Intent intent;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_acivity);
@@ -69,30 +72,38 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         fragmentTransaction.replace(R.id.fragment_container, welcomeFragment);
         fragmentTransaction.commit();
 
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
+        FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                // Обновление NavigationView
-                NavigationView navigationView = findViewById(R.id.nav_view);
-                View headerView = navigationView.getHeaderView(0);
-                ImageView profileImageView = headerView.findViewById(R.id.profile_image_nav);
-                TextView usernameTextView = headerView.findViewById(R.id.username_bar);
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            User user = dataSnapshot.getValue(User.class);
+                            // Обновление NavigationView
+                            NavigationView navigationView = findViewById(R.id.nav_view);
+                            View headerView = navigationView.getHeaderView(0);
+                            ImageView profileImageView = headerView.findViewById(R.id.profile_image_nav);
+                            TextView usernameTextView = headerView.findViewById(R.id.username_bar);
 
-                if (user.getImageURL().equals("default")) {
-                    profileImageView.setImageResource(R.drawable.baseline_account_circle_24);
-                } else {
-                    Glide.with(getApplicationContext()).load(user.getImageURL()).into(profileImageView);
+                            if (user.getImageURL().equals("default")) {
+                                profileImageView.setImageResource(R.drawable.baseline_account_circle_24);
+                            } else {
+                                Glide.with(getApplicationContext()).load(user.getImageURL()).into(profileImageView);
+                            }
+                            usernameTextView.setText(user.getUsername());
+                        }
+
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // Обработка ошибки
+                        }
+                    });
+
                 }
-                usernameTextView.setText(user.getUsername());
-            }
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Обработка ошибки
             }
         });
-
     }
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

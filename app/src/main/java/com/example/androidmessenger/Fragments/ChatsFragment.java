@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import Chats.Chat;
+import Chats.Chatlist;
 import Chats.User;
 import Chats.UserAdapter;
 public class ChatsFragment extends Fragment {
@@ -38,7 +38,7 @@ public class ChatsFragment extends Fragment {
     FirebaseUser firebaseUser;
     DatabaseReference reference;
 
-    private List <String> userList;
+    private List<Chatlist> userList;;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,77 +56,53 @@ public class ChatsFragment extends Fragment {
 
        userList = new ArrayList<>();
 
-       reference = FirebaseDatabase.getInstance().getReference("Chats");
-        Log.d("ChatsFragment", "FirebaseDatabase инициализирована");
-        reference.addValueEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-               Log.d("ChatsFragment", "onDataChange: метод вызван");
-               userList.clear();
-
-               for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                   Chat chat = snapshot.getValue(Chat.class);
-
-                   assert chat != null;
-                   if (chat.getSender().equals(firebaseUser.getUid())) {
-                           if (!userList.contains(chat.getReceiver())) {
-                               userList.add(chat.getReceiver());
-                           }
-                       }
-                       if (chat.getReceiver().equals(firebaseUser.getUid())) {
-                           if (!userList.contains(chat.getSender())) {
-                               userList.add(chat.getSender());
-                           }
-                       }
-                   }
-               readChats();
-           }
-
-           @Override
-           public void onCancelled(@NonNull DatabaseError error) {
-               Log.d("ChatsFragment", "onCancelled: метод вызван");
-
-           }
-       });
-       return  view;
-
-    }
-    private void readChats () {
-        Log.d("ChatsFragment", "Метод readChats() вызван");
-        mUsers = new ArrayList<>();
-
-        reference = FirebaseDatabase.getInstance().getReference("Users");
-
+        reference = FirebaseDatabase.getInstance().getReference("Chatlist").child(firebaseUser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            mUsers.clear();
+                userList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Chatlist chatlist = snapshot.getValue(Chatlist.class);
+                    userList.add(chatlist);
+                }
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                chatList();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        return view;
+    }
+
+    private void chatList() {
+        mUsers = new ArrayList<>();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mUsers.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     User user = snapshot.getValue(User.class);
-                    if (user != null && userList.contains(user.getId())) {
-                        // Проверяем, не добавлен ли уже этот пользователь в mUsers
-                        boolean isAdded = false;
-                        for (User userInList : mUsers) {
-                            if (userInList.getId().equals(user.getId())) {
-                                isAdded = true;
-                                break;
-                            }
-                        }
-                        if (!isAdded) {
+                    for (Chatlist chatlist : userList){
+                        if (user.getId().equals(chatlist.getId())){
                             mUsers.add(user);
                         }
                     }
                 }
-
-            userAdapter = new UserAdapter(getContext(),mUsers,true);
-            recyclerView.setAdapter(userAdapter);
+                userAdapter = new UserAdapter(getContext(), mUsers, true);
+                recyclerView.setAdapter(userAdapter);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
     }
+
 }

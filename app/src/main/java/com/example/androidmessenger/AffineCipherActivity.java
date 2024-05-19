@@ -40,22 +40,42 @@ public class AffineCipherActivity extends AppCompatActivity {
         buttonEncrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int a = Integer.parseInt(editTextA.getText().toString());
-                int b = Integer.parseInt(editTextB.getText().toString());
                 String plainText = inputText.getText().toString();
-                String encryptedText = affineEncrypt(plainText, a, b);
-                outputText.setText(encryptedText);
+                if (TextUtils.isEmpty(plainText)) {
+                    inputText.setError("Field is empty!");
+                } else if (TextUtils.isEmpty(editTextA.getText().toString())) {
+                    editTextA.setError("Field is empty!");
+                }
+                else if (TextUtils.isEmpty(editTextB.getText().toString())){
+                    editTextB.setError("Field is empty!");
+                }
+                else {
+                    int a = Integer.parseInt(editTextA.getText().toString());
+                    int b = Integer.parseInt(editTextB.getText().toString());
+                    String encryptedText = affineEncrypt(plainText, a, b);
+                    outputText.setText(encryptedText);
+                }
             }
         });
 
         buttonDecrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int a = Integer.parseInt(editTextA.getText().toString());
-                int b = Integer.parseInt(editTextB.getText().toString());
                 String cipherText = inputText.getText().toString();
-                String decryptedText = affineDecrypt(cipherText, a, b);
-                outputText.setText(decryptedText);
+                if (TextUtils.isEmpty(cipherText)) {
+                    inputText.setError("Field is empty!");
+                } else if (TextUtils.isEmpty(editTextA.getText().toString())) {
+                    editTextA.setError("Field is empty!");
+                }
+                else if (TextUtils.isEmpty(editTextB.getText().toString())){
+                    editTextB.setError("Field is empty!");
+                }
+                else {
+                    int a = Integer.parseInt(editTextA.getText().toString());
+                    int b = Integer.parseInt(editTextB.getText().toString());
+                    String decryptedText = affineDecrypt(cipherText, a, b);
+                    outputText.setText(decryptedText);
+                }
             }
         });
 
