@@ -3,6 +3,8 @@ package com.example.androidmessenger;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText username, email, password;
     Button register_btn;
     ImageButton back_btn;
+    ImageButton ShowHide_btn;
     FirebaseAuth auth;
     DatabaseReference reference;
     private DatabaseReference mDatabase;
@@ -48,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         register_btn = findViewById(R.id.sign_up_btn);
         back_btn = findViewById(R.id.back_btn);
 
+        ShowHide_btn = findViewById(R.id.showHideBtn);
         auth = FirebaseAuth.getInstance();
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +71,22 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+        ShowHide_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Переключение между показом и скрытием пароля
+                if (password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                    // Показать пароль
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ShowHide_btn.setImageResource(R.drawable.baseline_check_24);
+                } else {
+                    // Скрыть пароль
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ShowHide_btn.setImageResource(R.drawable.baseline_remove_red_eye_24);
+                }
+            }
+        });
+
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

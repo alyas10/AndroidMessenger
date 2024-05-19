@@ -1,11 +1,15 @@
 package com.example.androidmessenger;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +30,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView goToRegister;
     Button login_btn;
-
+    ImageButton ShowHide_btn;
     FirebaseAuth auth;
 
     FirebaseUser firebaseUser;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +51,8 @@ public class LoginActivity extends AppCompatActivity {
         login_btn = findViewById(R.id.login_btn);
 
         goToRegister = findViewById(R.id.go_to_register_activity_tv);
+        ShowHide_btn = findViewById(R.id.showHideBtn);
+
 
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +88,21 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
+            }
+        });
+        ShowHide_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Переключение между показом и скрытием пароля
+                if (password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                    // Показать пароль
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ShowHide_btn.setImageResource(R.drawable.baseline_check_24);
+                } else {
+                    // Скрыть пароль
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ShowHide_btn.setImageResource(R.drawable.baseline_remove_red_eye_24);
+                }
             }
         });
     }
