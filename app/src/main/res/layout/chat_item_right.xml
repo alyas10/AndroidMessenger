@@ -16,16 +16,27 @@
         android:visibility="gone">
     </de.hdodenhof.circleimageview.CircleImageView>
 
-        <TextView
-            android:id="@+id/show_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/background_right"
-            android:padding="8dp"
-            android:text="привет"
-            android:textColor="@color/white">
+    <TextView
+        android:id="@+id/show_message"
+        android:layout_width="127dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/background_right"
+        android:padding="8dp"
+        android:text="привет"
+        android:textColor="@color/white">
 
-        </TextView>
+    </TextView>
+
+    <ImageView
+        android:id="@+id/img_seen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/show_message"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-28dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp" />
 
 </RelativeLayout>

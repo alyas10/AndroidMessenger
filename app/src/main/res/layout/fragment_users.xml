@@ -9,8 +9,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".Fragments.UsersFragment">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="Поиск пользователя"
+            android:id="@+id/search_users">
+
+        </EditText>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@id/search_users"
             android:id="@+id/recycle_view_users"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

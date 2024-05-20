@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,6 +55,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
       }else {
           Glide.with(mContext).load(imageUrl).into(holder.profile_image);
       }
+      if(position == mChats.size()-1) {
+          if(chat.isIsseen()){
+              holder.img_seen.setImageResource(R.drawable.baseline_beenhere_24);
+          } else {
+              holder.img_seen.setImageResource(R.drawable.baseline_check_24);
+          }
+      } else {
+          holder.img_seen.setVisibility(View.GONE);
+      }
     }
 
     @Override
@@ -65,10 +75,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         public TextView show_message;
         public CircleImageView profile_image;
+        public ImageView img_seen;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             show_message = itemView.findViewById(R.id.show_message);
             profile_image = itemView.findViewById(R.id.profile_image);
+            img_seen = itemView.findViewById(R.id.img_seen);
         }
     }
 
