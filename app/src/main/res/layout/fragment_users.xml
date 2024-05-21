@@ -9,13 +9,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".Fragments.UsersFragment">
+
         <EditText
+            android:id="@+id/search_users"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/search_bkg"
             android:hint="Поиск пользователя"
-            android:id="@+id/search_users">
-
+            android:minHeight="48dp">
         </EditText>
 
         <androidx.recyclerview.widget.RecyclerView

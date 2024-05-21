@@ -1,4 +1,4 @@
-package com.example.androidmessenger;
+package com.example.androidmessenger.Ciphers;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.androidmessenger.R;
 
 public class CeasesActivity extends AppCompatActivity {
 
@@ -47,7 +49,7 @@ public class CeasesActivity extends AppCompatActivity {
         hack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shiftAmount.getText().clear();
+                //shiftAmount.getText().clear();
                 bruteForceCaesar();
             }
         });

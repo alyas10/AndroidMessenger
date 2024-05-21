@@ -9,10 +9,10 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.example.androidmessenger.AtbashActivity;
-import com.example.androidmessenger.CeasesActivity;
+import com.example.androidmessenger.Ciphers.AtbashActivity;
+import com.example.androidmessenger.Ciphers.CeasesActivity;
 import com.example.androidmessenger.R;
-import com.example.androidmessenger.VigenerActivity;
+import com.example.androidmessenger.Ciphers.VigenerActivity;
 
 public class CodeFragment extends Fragment {
     public CodeFragment() {

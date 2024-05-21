@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#170F0F"
-    tools:context=".VigenerActivity">
+    tools:context=".Ciphers.VigenerActivity">
 
     <TextView
         android:id="@+id/title"
@@ -108,11 +108,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/outputText"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="20dp"
         android:layout_marginStart="145dp"
         android:background="@drawable/search_bkg"
         android:onClick="goBack"
-        android:text="Выйти"
+        android:text="Назад"
         android:textColor="@color/black"
         app:backgroundTint="@color/green" />
 

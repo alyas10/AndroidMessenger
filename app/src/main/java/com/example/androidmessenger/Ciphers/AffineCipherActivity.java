@@ -1,4 +1,4 @@
-package com.example.androidmessenger;
+package com.example.androidmessenger.Ciphers;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.androidmessenger.R;
 
 public class AffineCipherActivity extends AppCompatActivity {
 

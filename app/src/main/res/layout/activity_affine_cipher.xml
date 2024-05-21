@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#170F0F"
-    tools:context=".AffineCipherActivity">
+    tools:context=".Ciphers.AffineCipherActivity">
 
     <TextView
         android:id="@+id/title"

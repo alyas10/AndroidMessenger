@@ -252,6 +252,8 @@
         <item>Шифр Цезаря</item>
         <item>Шифр Виженера</item>
         <item>Аффинный шифр</item>
+        <item>Шифр RSA</item>
+        <item>Шифр гаммирования (XOR)</item>
     </string-array>
     <string name="Welcome">"Добро пожаловать в HackProof Academy! Для старта перейдите в боковое меню.</string>
 </resources>

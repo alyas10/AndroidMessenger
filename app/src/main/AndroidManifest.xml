@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -17,14 +17,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidMessenger"
         tools:targetApi="31">
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+        <activity
+            android:name=".Ciphers.XORActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Ciphers.RsaActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"
             tools:ignore="MissingClass" /> <!-- optional (needed if default theme has no action bar) -->
         <activity
-            android:name=".AffineCipherActivity"
+            android:name=".Ciphers.AffineCipherActivity"
             android:exported="false" />
         <activity
-            android:name=".SpinnerFragment"
+            android:name=".Ciphers.SpinnerFragment"
             android:exported="false" />
         <activity
             android:name=".MessageActivity"
@@ -39,16 +46,16 @@
             android:name=".SplashActivity"
             android:exported="false" />
         <activity
-            android:name=".AtbashActivity"
+            android:name=".Ciphers.AtbashActivity"
             android:exported="false" />
         <activity
-            android:name=".VigenerActivity"
+            android:name=".Ciphers.VigenerActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".CeasesActivity"
+            android:name=".Ciphers.CeasesActivity"
             android:exported="false" />
         <activity
             android:name=".DetailActivity"

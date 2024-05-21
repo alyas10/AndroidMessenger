@@ -1,4 +1,4 @@
-package com.example.androidmessenger;
+package com.example.androidmessenger.Ciphers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.androidmessenger.R;
+
 public class SpinnerFragment extends Fragment {
     public SpinnerFragment() {
         super(R.layout.activity_spinner);
@@ -22,7 +24,7 @@ public class SpinnerFragment extends Fragment {
 
     private Spinner spinner;
 
-    String[] Ciphers = {"Шифр Атбаш", "Шифр Цезаря", "Шифр Виженера", "Аффинный шифр"};
+    String[] Ciphers = {"Шифр Атбаш", "Шифр Цезаря", "Шифр Виженера", "Аффинный шифр","RSA", "Шифр гаммирования (XOR)"};
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -80,6 +82,14 @@ public class SpinnerFragment extends Fragment {
                     break;
                 case 3:
                     intent = new Intent(getActivity(), AffineCipherActivity.class);
+                    startActivity(intent);
+                    break;
+                case 4:
+                    intent = new Intent(getActivity(), RsaActivity.class);
+                    startActivity(intent);
+                    break;
+                case 5:
+                    intent = new Intent(getActivity(), XORActivity.class);
                     startActivity(intent);
                     break;
                 default:

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#170F0F"
-    tools:context=".CeasesActivity">
+    tools:context=".Ciphers.CeasesActivity">
 
     <TextView
         android:id="@+id/title"

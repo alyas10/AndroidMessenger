@@ -1,4 +1,4 @@
-package com.example.androidmessenger;
+package com.example.androidmessenger.Ciphers;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.androidmessenger.R;
 
 public class VigenerActivity extends AppCompatActivity {
     private EditText inputText, key;

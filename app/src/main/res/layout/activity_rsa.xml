@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#170F0F"
-    tools:context=".Ciphers.AtbashActivity">
+    tools:context=".Ciphers.RsaActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <TextView
         android:id="@+id/title"
@@ -14,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:paddingTop="16dp"
-        android:text="Шифр Атбаш"
+        android:text="Шифр RSA"
         android:textColor="@color/green"
         android:textSize="34sp"
         android:textStyle="bold" />
@@ -52,7 +56,6 @@
             android:id="@+id/encode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/shiftAmount"
             android:layout_alignParentStart="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="22dp"
@@ -66,7 +69,6 @@
             android:id="@+id/decode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/shiftAmount"
             android:layout_marginStart="60dp"
             android:layout_marginTop="22dp"
             android:layout_toEndOf="@id/encode"
@@ -98,13 +100,44 @@
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/outputText"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/search_bkg"
         android:onClick="goBack"
         android:text="Назад"
         android:textColor="@color/black"
         app:backgroundTint="@color/green" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/showPublicKeyButton"
+            android:layout_width="134dp"
+            android:layout_height="71dp"
+            android:layout_below="@+id/outputText"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginRight="-24dp"
+            android:background="@drawable/search_bkg"
+            android:text="Показать открытый ключ"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/green" />
+
+        <Button
+            android:id="@+id/showPrivateKeyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/outputText"
+            android:layout_alignParentEnd="true"
+
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="65dp"
+            android:layout_marginEnd="-1dp"
+            android:layout_toRightOf="@id/backButton"
+            android:background="@drawable/search_bkg"
+            android:text="Показать закрытый ключ"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/green" />
+    </RelativeLayout>
+
+</ScrollView>
