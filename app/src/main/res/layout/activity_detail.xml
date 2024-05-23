@@ -45,12 +45,7 @@
                 android:textColor="@color/green"
                 android:textSize="18sp"
                 android:id="@+id/detailDesc"/>
-            <ImageView
-                android:id="@+id/detailImage1"
-                android:layout_width="420dp"
-                android:layout_height="250dp"
-                android:padding="15dp"
-                android:layout_gravity="center"/>
+
 
 
 

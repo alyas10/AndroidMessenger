@@ -10,14 +10,14 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="294dp"
-        android:layout_height="267dp"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/image" />
+        app:srcCompat="@drawable/reg" />
 
     <TextView
         android:id="@+id/login_title"
@@ -26,7 +26,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/ubuntu_medium"
         android:text="Войти"
-        android:textColor="@color/white"
+        android:textColor="@color/green"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
@@ -40,9 +40,9 @@
         android:layout_marginTop="30dp"
         android:fontFamily="@font/ubuntu_light"
         android:hint="Почта"
-        android:textColor="@color/white"
+        android:textColor="@color/green"
         android:minHeight="48dp"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_title"
@@ -55,18 +55,19 @@
         android:layout_marginTop="30dp"
         android:fontFamily="@font/ubuntu_light"
         android:hint="Пароль"
-        android:textColor="@color/white"
+        android:textColor="@color/green"
         android:minHeight="48dp"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email"
         tools:ignore="MissingConstraints" />
+
     <ImageButton
         android:id="@+id/showHideBtn"
         android:layout_width="37dp"
         android:layout_height="32dp"
-        android:layout_marginStart="192dp"
+        android:layout_marginStart="204dp"
         android:background="@color/black"
         android:contentDescription="@android:string/untitled"
         android:contextClickable="true"
@@ -75,6 +76,7 @@
         app:layout_constraintLeft_toRightOf="@id/password"
         app:layout_constraintStart_toStartOf="@+id/password"
         app:layout_constraintTop_toTopOf="@+id/password"
+        app:layout_constraintVertical_bias="0.437"
         tools:ignore="MissingConstraints,TouchTargetSizeCheck" />
 
     <Button
@@ -82,7 +84,7 @@
         android:layout_width="268dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:backgroundTint="#02774A"
+        android:backgroundTint="@color/green"
         android:fontFamily="@font/ubuntu_light"
         android:text="Войти"
         android:textColor="#090000"
@@ -107,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Впервые здесь?"
-            android:textColor="@color/white"
+            android:textColor="@color/grey"
             android:textSize="20sp" />
 
         <TextView
@@ -116,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
             android:text="Регистрация"
-            android:textColor="#009688"
+            android:textColor="@color/green"
             android:textSize="20sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

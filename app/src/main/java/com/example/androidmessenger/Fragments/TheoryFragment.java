@@ -23,7 +23,7 @@ public class TheoryFragment extends Fragment {
     RecyclerView recyclerView;
     List<DataClass> dataList;
     MyAdapter adapter;
-    DataClass androidData;
+    DataClass androidData = new DataClass("Афинный шифр", R.string.afin, "Уровень 1", R.drawable.afin);
     SearchView searchView;
 
     public TheoryFragment() {
@@ -54,11 +54,17 @@ public class TheoryFragment extends Fragment {
     GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1);
     recyclerView.setLayoutManager(gridLayoutManager);
     dataList = new ArrayList<>();
-    androidData = new DataClass("Шифр Цезаря", R.string.cezar, "Уровень 1", R.drawable.cezar,R.drawable.slide_13);
+    androidData = new DataClass("Шифр Цезаря", R.string.cezar, "Уровень 1", R.drawable.cezar);
     dataList.add(androidData);
-    androidData = new DataClass("Шифр Атбаш", R.string.atbash, "Уровень 1", R.drawable.atbash,R.drawable.slide_12);
+    androidData = new DataClass("Шифр Атбаш", R.string.atbash, "Уровень 1", R.drawable.atbash);
     dataList.add(androidData);
-    androidData = new DataClass("Шифр Виженера", R.string.vigener, "Уровень 1", R.drawable.vigener,R.drawable.slide_11);
+    androidData = new DataClass("Шифр Виженера", R.string.vigener, "Уровень 1", R.drawable.vigener);
+    dataList.add(androidData);
+    androidData = new DataClass("Афинный шифр", R.string.afin, "Уровень 1", R.drawable.afin);
+    dataList.add(androidData);
+    androidData = new DataClass("Шифр XOR", R.string.gamma, "Уровень 2", R.drawable.gamma);
+    dataList.add(androidData);
+    androidData = new DataClass("Шифр RSA", R.string.rsa, "Уровень 3", R.drawable.rsa1);
     dataList.add(androidData);
     adapter = new MyAdapter(getActivity(), dataList);
     recyclerView.setAdapter(adapter);

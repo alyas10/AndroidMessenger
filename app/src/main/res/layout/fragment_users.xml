@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:background="@drawable/search_bkg"
-            android:hint="Поиск пользователя"
+            android:hint="     Поиск пользователя"
             android:minHeight="48dp">
         </EditText>
 

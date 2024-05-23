@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         } else if (id == R.id.nav_users) {
             fragmentClass = UsersFragment.class;}
         else if (id == R.id.nav_chats) {
-             fragmentClass = ChatsFragment.class;
+            fragmentClass = ChatsFragment.class;
         } else if (id == R.id.nav_userLogout) {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);

@@ -32,6 +32,7 @@
 
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_marginTop="20dp"
                         android:id="@+id/imageView_profile_dp"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
@@ -59,13 +60,15 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="30dp"
                     android:hint="loading"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/black"
+                    android:background="@drawable/search_bkg_3"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/black" />
             </RelativeLayout>
 
             <RelativeLayout
+                android:background="@drawable/search_bkg_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
@@ -89,7 +92,7 @@
                         android:id="@+id/ic_profile"
                         android:contentDescription="loading"
                         android:background="@drawable/baseline_person_2_24"
-                        android:backgroundTint="@color/white"/>
+                        android:backgroundTint="@color/black"/>
 
                     <TextView
                         android:id="@+id/textView_show_full_name"
@@ -99,8 +102,8 @@
                         android:layout_alignStart="@id/ic_profile"
                         android:layout_marginStart="50dp"
                         android:hint="Имя"
-                        android:textColorHint="@color/white"
-                        android:textColor="@color/white"/>
+                        android:textColorHint="@color/black"
+                        android:textColor="@color/black"/>
                 </RelativeLayout>
 
                 <View
@@ -108,7 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_below="@id/RL_name"
-                    android:background="@android:color/darker_gray"/>
+                    android:background="@android:color/black"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -125,7 +128,7 @@
                         android:id="@+id/ic_email"
                         android:layout_centerVertical="true"
                         android:background = "@drawable/ic_email"
-                        android:backgroundTint="@color/white"
+                        android:backgroundTint="@color/black"
                        />
 
                     <TextView
@@ -137,8 +140,8 @@
                         android:layout_marginTop="20dp"
                         android:layout_centerVertical="true"
                         android:hint="loading"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/white"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
                         />
                 </RelativeLayout>
 
@@ -147,7 +150,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_below="@id/RL_email"
-                    android:background="@android:color/darker_gray"/>
+                    android:background="@android:color/black"/>
 
             <!--    <RelativeLayout
                     android:layout_width="match_parent"

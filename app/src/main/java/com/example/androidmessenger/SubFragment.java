@@ -13,6 +13,7 @@ import com.example.androidmessenger.AddapterClass.SubAdapter;
 import com.example.androidmessenger.databinding.FragmentHomeBinding;
 import com.example.androidmessenger.databinding.FragmentSubBinding;
 import com.example.androidmessenger.modelClass.HomeModel;
+import com.example.androidmessenger.modelClass.QuizModel;
 import com.example.androidmessenger.modelClass.SubModel;
 
 import java.util.ArrayList;
@@ -48,11 +49,12 @@ public class SubFragment extends Fragment {
                 list.add(new SubModel("Тест по шифру Цезаря", "Тесты по шифрованию" ));
                 list.add(new SubModel("Тест по шифру Атбаш", "Тесты по шифрованию"));
                 list.add(new SubModel("Тест по шифру Виженера", "Тесты по шифрованию"));
+                list.add(new SubModel("Тест по Афинному шифру", "Тесты по шифрованию" ));
+                list.add(new SubModel("Тест по шифру Гаммирования", "Тесты по шифрованию"));
+                list.add(new SubModel("Тест по шифру RSA", "Тесты по шифрованию"));
                 break;
         }
             adapter = new SubAdapter(getContext(), list);
             binding.rcv.setAdapter(adapter);
-
-
     }
 }

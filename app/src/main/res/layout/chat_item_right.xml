@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@color/black"
     android:padding="8dp"
     android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true"
@@ -21,10 +22,10 @@
         android:layout_width="127dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:background="@drawable/background_right"
+        android:background="@drawable/search_bkg_3"
         android:padding="8dp"
         android:text="привет"
-        android:textColor="@color/white">
+        android:textColor="@color/black">
 
     </TextView>
 
