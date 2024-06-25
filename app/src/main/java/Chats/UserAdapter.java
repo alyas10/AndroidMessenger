@@ -26,6 +26,13 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * Класс UserAdapter отвечает за управление списком пользователей в RecyclerView.
+ * Он отображает информацию о пользователе, такую как имя пользователя, изображение профиля,
+ * статус в сети и последнее сообщение.
+ * @author Алевтина Ильина
+ * @version 1.0
+ */
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     private Context mContext;
@@ -34,13 +41,24 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private  boolean ischat;
 
     String theLastMessage;
-
+    /**
+     * Конструктор для класса UserAdapter.
+     * @param mContext - контекст действия.
+     * @param mUsers - список отображаемых пользователей.
+     * @param ischat Указывает, находится ли пользователь в данный момент в чате.
+     */
     public UserAdapter(Context mContext, List<User> mUsers, boolean ischat) {
         this.mContext = mContext;
         this.mUsers = mUsers;
         this.ischat = ischat;
     }
 
+    /**
+     * Вызывается, когда RecyclerView требуется новый ViewHolder данного типа для представления элемента.
+     * @param parent - родительская группа ViewGroup, в которую будет добавлено новое представление.
+     * @param viewType - Тип представления для нового View.
+     * @return  новый ViewHolder, который содержит View данного типа.
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,6 +66,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return new UserAdapter.ViewHolder(view);
     }
 
+    /**
+     * Вызывается RecyclerView для отображения данных в указанной позиции.
+     * @param holder - ViewHolder , который должен быть обновлен, чтобы отображать содержимое элемента в заданной позиции в наборе данных.
+     * @param position Определяет положение элемента в наборе данных адаптера.
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         User user = mUsers.get(position);
@@ -86,11 +109,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         });
     }
 
+    /**
+     * * Возвращает общее количество элементов в наборе данных, хранящемся в адаптере.
+     * @return  общее количество элементов в адаптере.
+     */
     @Override
     public int getItemCount() {
         return mUsers.size();
     }
 
+    /**
+     * Класс ViewHolder описывает представление элемента и данные о его месте в RecyclerView.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView username;
@@ -107,6 +137,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             last_msg = itemView.findViewById(R.id.last_msg);
         }
     }
+
+    /**
+     * Получение последнего сообщения в чате
+     * @param userid - Идентификатор пользователя, для которого будет получено последнее сообщение.
+     * @param last_msg - Текстовое представление для отображения последнего сообщения.
+     */
 private  void lastMessage(String userid, TextView last_msg) {
 theLastMessage = "";
     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();

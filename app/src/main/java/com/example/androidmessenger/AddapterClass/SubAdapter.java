@@ -12,23 +12,37 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidmessenger.QuizFragment;
 import com.example.androidmessenger.R;
-import com.example.androidmessenger.SubFragment;
-import com.example.androidmessenger.modelClass.HomeModel;
 import com.example.androidmessenger.modelClass.SubModel;
 
 import java.util.ArrayList;
-
+/**
+ * Адаптер для отображения элементов в RecyclerView.
+ * @author Иван Минаев
+ * @version 1.0.
+ */
 public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
 
     Context context;
     ArrayList<SubModel> list;
 
-
+    /**
+     * Конструктор адаптера.
+     *
+     * @param context контекст приложения
+     * @param list массив  данных
+     */
     public SubAdapter(Context context, ArrayList<SubModel> list) {
         this.context = context;
         this.list = list;
     }
 
+    /**
+     * Создает новый ViewHolder и связывает его с макетом элемента списка.
+     *
+     * @param parent родительский ViewGroup
+     * @param viewType тип элемента списка
+     * @return новый ViewHolder
+     */
     @NonNull
     @Override
     public SubAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -36,6 +50,12 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    /**
+     * Привязывает данные модели к элементу списка.
+     *
+     * @param holder ViewHolder
+     * @param position позиция элемента в списке
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     SubModel model = list.get(position);
@@ -46,11 +66,19 @@ public class SubAdapter extends RecyclerView.Adapter<SubAdapter.ViewHolder> {
     });
     }
 
+    /**
+     * Возвращает общее количество элементов в списке.
+     *
+     * @return количество элементов
+     */
     @Override
     public int getItemCount() {
         return list.size();
     }
 
+    /**
+     * ViewHolder для элемента списка.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         public ViewHolder(@NonNull View itemView) {

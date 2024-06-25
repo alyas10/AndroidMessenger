@@ -12,17 +12,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.androidmessenger.R;
 
+/**
+ * Реализация функций шифрования, дешифрования и взлома аффинного шифра.
+ * @author Алевтина Ильина
+ * @version 1.0
+ */
+
 public class AffineCipherActivity extends AppCompatActivity {
-
+    /** Текстовое поле для ввода текста */
     private EditText inputText;
+    /** Текстовое поле для ввода числа a */
     private EditText editTextA;
+    /** Текстовое поле для ввода числа b */
     private EditText editTextB;
+    /** Кнопка для шифрования */
     private Button buttonEncrypt;
+    /** Кнопка для дешифрования */
     private Button buttonDecrypt;
-
+    /** Кнопка для возврата на предыдущую активити*/
     private Button backButton;
+    /** Кнопка для взлома */
     private Button hack_btn;
+    /** Текстовое поле для вывода рещультата */
     private TextView outputText;
+    /** Константы для английского и русского алфавитов*/
     private static String ENGLISH_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
     private static String RUSSIAN_ALPHABET = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
 
@@ -31,7 +44,7 @@ public class AffineCipherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_affine_cipher);
-
+        // Инициализация элементов интерфейса
         inputText = findViewById(R.id.inputText);
         editTextA = findViewById(R.id.editTextA);
         editTextB = findViewById(R.id.editTextB);
@@ -39,17 +52,18 @@ public class AffineCipherActivity extends AppCompatActivity {
         buttonDecrypt = findViewById(R.id.decode);
         outputText = findViewById(R.id.outputText);
 
+        // Обработчик нажатия кнопки "Зашифровать"
         buttonEncrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String plainText = inputText.getText().toString();
                 if (TextUtils.isEmpty(plainText)) {
-                    inputText.setError("Field is empty!");
+                    inputText.setError("Поле не заполнено!");
                 } else if (TextUtils.isEmpty(editTextA.getText().toString())) {
-                    editTextA.setError("Field is empty!");
+                    editTextA.setError("Поле не заполнено!");
                 }
                 else if (TextUtils.isEmpty(editTextB.getText().toString())){
-                    editTextB.setError("Field is empty!");
+                    editTextB.setError("Поле не заполнено!");
                 }
                 else {
                     int a = Integer.parseInt(editTextA.getText().toString());
@@ -59,18 +73,18 @@ public class AffineCipherActivity extends AppCompatActivity {
                 }
             }
         });
-
+        // Обработчик нажатия кнопки "Расшифровать"
         buttonDecrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String cipherText = inputText.getText().toString();
                 if (TextUtils.isEmpty(cipherText)) {
-                    inputText.setError("Field is empty!");
+                    inputText.setError("Поле не заполнено!");
                 } else if (TextUtils.isEmpty(editTextA.getText().toString())) {
-                    editTextA.setError("Field is empty!");
+                    editTextA.setError("Поле не заполнено!");
                 }
                 else if (TextUtils.isEmpty(editTextB.getText().toString())){
-                    editTextB.setError("Field is empty!");
+                    editTextB.setError("Поле не заполнено!");
                 }
                 else {
                     int a = Integer.parseInt(editTextA.getText().toString());
@@ -80,7 +94,7 @@ public class AffineCipherActivity extends AppCompatActivity {
                 }
             }
         });
-
+        // Обработчик нажатия кнопки "Назад"
         backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +102,7 @@ public class AffineCipherActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        // Обработчик нажатия кнопки "Взлом"
         hack_btn = findViewById(R.id.button_hack);
         hack_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,14 +112,39 @@ public class AffineCipherActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Шифрует введенный текст с помощью аффинного шифра.
+     *
+     * @param text - текст, подлежащий шифрованию.
+     * @param a - первое значение ключа (коэффициент a).
+     * @param b - второе значение ключа (константа b).
+     * @return   текст после шифрования.
+     */
     private String affineEncrypt(String text, int a, int b) {
         return processAffineCipher(text, a, b, true);
     }
 
+    /**
+     * Расшифровывает введенный текст с помощью аффинного шифра.
+     *
+     * @param text - Зашифрованный текст, который необходимо расшифровать.
+     * @param a - первое значение ключа (коэффициент).
+     * @param b - второе значение ключа (константа).
+     * @return  текст после расшифровки.
+     */
     private String affineDecrypt(String text, int a, int b) {
         return processAffineCipher(text, a, b, false);
     }
 
+    /**
+     * Применяет аффинный шифр к входному тексту.
+     *
+     * @param text - входной текст (открытый текст или зашифрованный текст).
+     * @param a - первое ключевое значение (коэффициент).
+     * @param b - второе ключевое значение (константа).
+     * @param  encrypt Определяет, следует ли выполнять шифрование (true) или расшифровку (false).
+     * @return  преобразованный текст.
+     */
     private String processAffineCipher(String text, int a, int b, boolean encrypt) {
         StringBuilder result = new StringBuilder();
         String alphabet = determineAlphabet(text);
@@ -127,6 +166,14 @@ public class AffineCipherActivity extends AppCompatActivity {
         return result.toString();
     }
 
+    /**
+     * Вычисляет элемент, обратный целому числу 'a' по отношению к заданному модулю 'm'.
+     *
+     * @param  a - целое число, для которого вычисляется обратный элемент.
+     * @param  m - модуль.
+     * @return  обратный элемент к a по модулю m.
+     * @throws IllegalArgumentException, если обратный элемент не существует.
+     */
     private int modInverse(int a, int m) {
         a = a % m;
         for (int x = 1; x < m; x++) {
@@ -136,6 +183,13 @@ public class AffineCipherActivity extends AppCompatActivity {
         }
         throw new IllegalArgumentException("Обратный элемент не существует");
     }
+
+    /**
+     * Определяет алфавит (английский или русский) на основе введенного текста.
+     *
+     * @param  text - вводимый текст.
+     * @return  соответствующий алфавит (ENGLISH_ALPHABET или RUSSIAN_ALPHABET).
+     */
     private String determineAlphabet(String text) {
         for (char character : text.toCharArray()) {
             if (ENGLISH_ALPHABET.indexOf(Character.toLowerCase(character)) != -1) {
@@ -147,6 +201,9 @@ public class AffineCipherActivity extends AppCompatActivity {
         return ENGLISH_ALPHABET; // Default to English if no match found
     }
 
+    /**
+     * Пытается взломать аффинный шифр c помощью брутфорса (перебора всех возможных комбинаций).
+     */
     private void affineBreak() {
         StringBuilder allShiftsDecoded = new StringBuilder();
         int m = 26;
@@ -179,6 +236,13 @@ public class AffineCipherActivity extends AppCompatActivity {
         outputText.setText(allShiftsDecoded.toString());
     }
 
+    /**
+     * Вычисляет наибольший общий делитель (НОД) двух целых чисел.
+     *
+     * @param a - первое целое число.
+     * @param b - второе целое число.
+     * @return  НОД 'a' и 'b'.
+     */
     private int gcd(int a, int b) {
         while (b != 0) {
             int temp = b;
@@ -187,6 +251,4 @@ public class AffineCipherActivity extends AppCompatActivity {
         }
         return a;
     }
-
-
 }

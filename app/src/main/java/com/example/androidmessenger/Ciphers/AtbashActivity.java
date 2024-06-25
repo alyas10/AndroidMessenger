@@ -11,10 +11,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.androidmessenger.R;
 
+/**
+ * Реализация функций шифрования, дешифрования шифра Атбаш.
+ * @author Алевтина Ильина
+ * @version 1.0
+ */
+
 public class AtbashActivity extends AppCompatActivity {
+    /** Текстовое поле для ввода текста */
     private EditText inputText;
+    /** Кнопки для шифрования и дешифрования */
     private Button encode,decode;
+    /** Текстовое поле для вывода рещультата */
     private TextView outputText;
+    /** Константы для английского и русского алфавитов*/
     private static String englishAlphabet = "abcdefghijklmnopqrstuvwxyz";
     private static String englishAlphabetUpper = englishAlphabet.toUpperCase();
     private static String russianAlphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
@@ -24,29 +34,31 @@ public class AtbashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atbash);
+        // Инициализация элементов интерфейса
         inputText = findViewById(R.id.inputText);
         encode = findViewById(R.id.encode);
         decode = findViewById(R.id.decode);
         outputText = findViewById(R.id.outputText);
+        // Обработчик нажатия кнопки "Зашифровать"
         encode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String text = inputText.getText().toString();
                 if (TextUtils.isEmpty(text)) {
-                    inputText.setError("Field is empty!");
+                    inputText.setError("Поле не заполнено!");
                 }
                 else {
                     outputText.setText(encodeText(text));
                 }
             }
         });
-
+        // Обработчик нажатия кнопки "Расшифровать"
         decode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String text = inputText.getText().toString();
                 if (TextUtils.isEmpty(text)) {
-                    inputText.setError("Field is empty!");
+                    inputText.setError("Поле не заполнено!");
                 }
                 else {
                     outputText.setText(encodeText(text));
@@ -56,6 +68,12 @@ public class AtbashActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Шифрует и дешифрует введенный текст, используя шифр Atbash.
+     *
+     * @param  str - входной текст.
+     * @return  шифрованный или расшифрованный текст.
+     */
     public String encodeText(String str) {
         String encodedText = "";
         for (char c : str.toCharArray()) {
@@ -80,6 +98,9 @@ public class AtbashActivity extends AppCompatActivity {
         return encodedText;
     }
 
+    /**
+     * Завершает текущее действие и возвращается к предыдущей активити.
+     */
     public void goBack(View view) {
         finish();
     }

@@ -79,6 +79,7 @@ public class ChatsFragment extends Fragment {
         return view;
     }
 
+
     private void chatList() {
         mUsers = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Users");

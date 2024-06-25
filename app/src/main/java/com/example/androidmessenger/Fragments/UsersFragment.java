@@ -30,7 +30,16 @@ import java.util.List;
 
 import Chats.User;
 import Chats.UserAdapter;
-
+/**
+ * Фрагмент для отображения списка пользователей.
+ * Позволяет осуществлять поиск пользователей по имени пользователя.
+ - Этот фрагмент отвечает за отображение списка пользователей в RecyclerView.
+ - - Он использует "UserAdapter" для управления данными в RecyclerView.
+ - Это позволяет выполнять поиск пользователей по имени пользователя с помощью
+ "TextWatcher" в редактируемом тексте "search_users".
+ * @author Алевтина Ильина
+ * @version 1.0
+ */
 public class UsersFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -43,16 +52,20 @@ public class UsersFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        // Заголовок для  ActionBar
         actionBar.setTitle("Пользователи");
 
         View view = inflater.inflate(R.layout.fragment_users, container, false);
+        // Инициализация RecyclerView
         recyclerView = view.findViewById(R.id.recycle_view_users);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mUsers = new ArrayList<>();
-
+        // Создание и задание  UserAdapter
         userAdapter = new UserAdapter(getContext(),mUsers,false);
         recyclerView.setAdapter(userAdapter);
+
+        // Чтение пользователей из Firebase Database
         readUsers();
         search_users = view.findViewById(R.id.search_users);
         search_users.addTextChangedListener(new TextWatcher() {
@@ -73,6 +86,13 @@ public class UsersFragment extends Fragment {
         });
         return view;
     }
+    /**
+     * Поиск пользователей на основе заданного поискового запроса.
+     - Запрашивает в базе данных Firebase пользователей, чьи имена начинаются с поискового запроса.
+     - Очищает существующий список пользователей и добавляет соответствующих пользователей в список "mUsers".
+     - Обновляет адаптер RecyclerView для отображения нового списка пользователей.
+     * @param s - поисковый запрос.
+     */
     private void searchUsers(String s) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("search")
@@ -100,6 +120,12 @@ public class UsersFragment extends Fragment {
             }
         });
     }
+
+    /**
+     * Чтение всех пользователей из Firebase Database.
+     - - Считывает всех пользователей из базы данных Firebase и добавляет их в список "mUsers".
+     - Обновляет адаптер RecyclerView для отображения нового списка пользователей.
+     */
     private void readUsers() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");

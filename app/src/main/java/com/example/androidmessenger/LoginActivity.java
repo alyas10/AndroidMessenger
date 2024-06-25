@@ -55,30 +55,32 @@ public class LoginActivity extends AppCompatActivity {
 
 
         login_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String txt_email = email.getText().toString();
-                String txt_password = password.getText().toString();
-                if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)) {
-                    Toast.makeText(LoginActivity.this, "Поле не может быть пустым", Toast.LENGTH_SHORT).show();
-                } /*else if (!firebaseUser.isEmailVerified()) {
+                                         @Override
+                                         public void onClick(View v) {
+                                             String txt_email = email.getText().toString();
+                                             String txt_password = password.getText().toString();
+                                             if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)) {
+                                                 Toast.makeText(LoginActivity.this, "Поле не может быть пустым", Toast.LENGTH_SHORT).show();
+                                             } /*else if (!firebaseUser.isEmailVerified()) {
                     sendEmailVerification();
                     Toast.makeText(LoginActivity.this, "Для входа на вашу почту были высланы инструкции для подтверждения.", Toast.LENGTH_SHORT).show();
-                } */else {
-                    auth.signInWithEmailAndPassword(txt_email, txt_password)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    } else {
-                                        Toast.makeText(LoginActivity.this, "Аутентификация провалена, попробуйте еще раз", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
+                } */ else {
+                                                 auth.signInWithEmailAndPassword(txt_email, txt_password)
+                                                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                             @Override
+                                                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                                                 if (task.isSuccessful()) {
+                                                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                                     startActivity(intent);
+                                                                     finish();
+                                                                 } else {
+                                                                     Toast.makeText(LoginActivity.this, "Аутентификация провалена, попробуйте еще раз", Toast.LENGTH_SHORT).show();
+                                                                 }
+                                                             }
+                                                         });
+                                             }
+                                         }
+                                     });
 
 
                 goToRegister.setOnClickListener(new View.OnClickListener() {
@@ -88,8 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-            }
-        });
+
         ShowHide_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

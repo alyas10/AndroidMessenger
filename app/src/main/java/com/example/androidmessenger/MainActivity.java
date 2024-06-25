@@ -83,18 +83,20 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             User user = dataSnapshot.getValue(User.class);
-                            // Обновление NavigationView
-                            NavigationView navigationView = findViewById(R.id.nav_view);
-                            View headerView = navigationView.getHeaderView(0);
-                            ImageView profileImageView = headerView.findViewById(R.id.profile_image_nav);
-                            TextView usernameTextView = headerView.findViewById(R.id.username_bar);
+                            if (user != null) {
+                                // Обновление NavigationView
+                                NavigationView navigationView = findViewById(R.id.nav_view);
+                                View headerView = navigationView.getHeaderView(0);
+                                ImageView profileImageView = headerView.findViewById(R.id.profile_image_nav);
+                                TextView usernameTextView = headerView.findViewById(R.id.username_bar);
 
-                            if (user.getImageURL().equals("default")) {
-                                profileImageView.setImageResource(R.drawable.baseline_account_circle_24);
-                            } else {
-                                Glide.with(getApplicationContext()).load(user.getImageURL()).into(profileImageView);
+                                if (user.getImageURL().equals("default")) {
+                                    profileImageView.setImageResource(R.drawable.baseline_account_circle_24);
+                                } else {
+                                    Glide.with(getApplicationContext()).load(user.getImageURL()).into(profileImageView);
+                                }
+                                usernameTextView.setText(user.getUsername());
                             }
-                            usernameTextView.setText(user.getUsername());
                         }
 
                         public void onCancelled(@NonNull DatabaseError databaseError) {
