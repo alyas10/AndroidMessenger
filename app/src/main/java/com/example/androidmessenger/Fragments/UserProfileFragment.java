@@ -91,7 +91,7 @@ public class UserProfileFragment extends Fragment {
                 User user = snapshot.getValue(User.class);
                 fullName.setText(user.getUsername());
                 welcome.setText("Добро пожаловать, " + user.getUsername());
-                if (user != null && user.getImageURL() != null && !user.getImageURL().equals("default")) {
+                if (user != null && user.getImageURL() != null && !user.getImageURL().equals("default") && isAdded()){
                     Glide.with(getContext()).load(user.getImageURL()).into(profileImageView);
                 } else {
                     // Здесь код для случая, когда user или user.getImageURL() равны null или imageURL равен "default"
