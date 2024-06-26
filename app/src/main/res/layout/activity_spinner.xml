@@ -13,11 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:layout_marginTop="5dp"
         android:padding="8dp"
         android:text="Вам нужно выбрать для шифрования нужный шифр из списка и нажать кнопку 'Перейти', чтобы зашифровать текст."
         android:textColor="@color/green"
-        android:textSize="28dp"
+        android:textSize="26dp"
         android:textStyle="bold" />
 
     <Spinner
@@ -25,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/textViewDescription"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="22dp"
         android:background="@color/white"
         android:contextClickable="true"
         android:dropDownWidth="wrap_content"
@@ -41,14 +40,14 @@
         android:layout_below="@id/spinner"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        app:backgroundTint="@color/green"
+        android:text="Перейти"
         android:textColor="@color/black"
-        android:text="Перейти" />
+        app:backgroundTint="@color/green" />
 
     <ImageView
-        android:layout_width="368dp"
-        android:layout_height="205dp"
-        android:layout_below="@id/button_go"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/shifr" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="400dp"
+        android:src="@drawable/shifr"
+        android:scaleType="centerCrop"/>
 </RelativeLayout>

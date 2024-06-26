@@ -1,6 +1,7 @@
 package com.example.androidmessenger;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,11 +50,14 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     private Intent intent;
 
     protected void onCreate(Bundle savedInstanceState) {
+        // Установите ориентацию экрана в портретный режим
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_acivity);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         username = findViewById(R.id.username_bar);
         profile_image = findViewById(R.id.profile_image_nav);

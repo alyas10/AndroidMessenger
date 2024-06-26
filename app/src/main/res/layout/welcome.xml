@@ -24,11 +24,14 @@
             android:textStyle="bold" />
 
         <!-- Изображение -->
-        <ImageView
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="368dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/main1" />
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/welcome" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
