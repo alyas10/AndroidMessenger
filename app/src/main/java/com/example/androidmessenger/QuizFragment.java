@@ -1,36 +1,32 @@
 package com.example.androidmessenger;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.example.androidmessenger.databinding.FragmentQuizBinding;
-import com.example.androidmessenger.modelClass.HomeModel;
 import com.example.androidmessenger.modelClass.QuizModel;
-import com.example.androidmessenger.modelClass.SubModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
-
+/**
+ * Фрагмент, где подгружаются вопросы и ответы для тестирования
+ * Реализована опция сохранения результатов
+ *
+ * @author Иван Минаев
+ * @version 2.0
+ */
 public class QuizFragment extends Fragment {
     int AllQuestion;
     String listSize;
@@ -61,16 +57,37 @@ public class QuizFragment extends Fragment {
     private DatabaseReference reference;
 
 
-
+    /**
+     * Конструктор без параметров для создания фрагмента.
+     *
+     */
     public QuizFragment() {
-        // Required empty public constructor
     }
 
+    /**
+     * Конструктор фрагмента.
+     *
+     * @param category  Категория теста.
+     * @param title Заголовок.
+     */
     public QuizFragment(String category, String title) {
         this.category = category;
         this.title = title;
 
     }
+
+    /**
+     *
+     * @param inflater - объект LayoutInflater, который можно использовать для расширения
+     * любых представлений во фрагменте,
+     * Контейнер @param, если значение не равно null, является родительским представлением, к которому должен быть привязан пользовательский интерфейс фрагмента
+     *Фрагмент не должен добавлять само представление,
+     *но это может быть использовано для генерации параметров компоновки представления.
+     * @param savedInstanceState Если значение не равно null, этот фрагмент создается заново
+     * из предыдущего сохраненного состояния, как указано здесь.
+     *
+     * Создает в БД раздел для каждого теста, где хранит информацию об ответах
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentQuizBinding.inflate(getLayoutInflater());
@@ -211,7 +228,7 @@ public class QuizFragment extends Fragment {
         return binding.getRoot();
 
     }
-
+    // Метод для проверки следующего вопроса
     private void checkNext() {
         if (position == AllQuestion){
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(right, wrong, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
@@ -220,7 +237,7 @@ public class QuizFragment extends Fragment {
 
         }
     }
-
+    // Метод для очистки вариантов ответов
     private void ClearOption() {
         binding.option1Con.setBackgroundResource(R.drawable.search_bkg_4);
         binding.option2Con.setBackgroundResource(R.drawable.search_bkg_4);
@@ -230,7 +247,7 @@ public class QuizFragment extends Fragment {
 
     }
 
-
+    // Метод для включения вариантов ответов
     private void EnableOption() {
         binding.option1Con.setEnabled(true);
         binding.option2Con.setEnabled(true);
@@ -239,6 +256,9 @@ public class QuizFragment extends Fragment {
         binding.nextBtn.setEnabled(false);
     }
 
+    /**
+     * Загрузка вопросов и ответов
+     */
     private void LoadQuestion() {
         switch (title) {
             case "Тест по шифру Цезаря":
@@ -415,7 +435,7 @@ public class QuizFragment extends Fragment {
         optionCheckUp();
 
     }
-
+    // Метод для проверки ответов
     private void optionCheckUp() {
 
 
@@ -476,7 +496,7 @@ public class QuizFragment extends Fragment {
         } );
     }
 
-
+    // Метод для отключения вариантов ответов
     private void DisableOption() {
         binding.option1Con.setEnabled(false);
         binding.option2Con.setEnabled(false);
@@ -484,7 +504,7 @@ public class QuizFragment extends Fragment {
         binding.option4Con.setEnabled(false);
         binding.nextBtn.setEnabled(true);
     }
-
+    // Метод для отображения правильного ответа
     private void ShowRightAns() {
         if (Objects.equals(quizModel.getOp1(),quizModel.getCorrectsAns())){
             binding.option1Con.setBackgroundResource(R.drawable.right_bg);

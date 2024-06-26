@@ -25,9 +25,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import Chats.User;
-
+/**
+ * Активность для регистрации новых пользователей.
+ *
+ * @author Алевтина Ильина
+ * @version 1.0
+ */
 public class RegisterActivity extends AppCompatActivity {
     private EditText username, email, password;
     Button register_btn;
@@ -37,8 +40,13 @@ public class RegisterActivity extends AppCompatActivity {
     DatabaseReference reference;
     private DatabaseReference mDatabase;
     private FirebaseDatabase database;
-    private User user;
 
+    /**
+     * Вызывается при создании активности. Инициализирует компоненты пользовательского интерфейса,
+     * настраивает обработчики событий и выполняет другие операции инициализации.
+     *
+     * @param savedInstanceState Сохраненное состояние активности (если есть).
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
@@ -53,13 +61,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         ShowHide_btn = findViewById(R.id.showHideBtn);
         auth = FirebaseAuth.getInstance();
+        // Обработчик нажатия на кнопку регистрации
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String txt_username = username.getText().toString();
                 String txt_email = email.getText().toString();
                 String txt_password = password.getText().toString();
-
+                // Валидация введенных данных
                 if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_username) || TextUtils.isEmpty(txt_password)) {
                     Toast.makeText(RegisterActivity.this, "Поле не может быть пустым", Toast.LENGTH_SHORT).show();
                 } else if (txt_password.length() < 8) {
@@ -67,10 +76,12 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (isValidPassword(txt_password) != true) {
                     Toast.makeText(RegisterActivity.this, "Пароль должен содержать 1 цифру, 1 заглавную латинскую букву, 1 спецсимвол, не содержать пробелов", Toast.LENGTH_SHORT).show();
                 } else {
+                    // Регистрация пользователя
                     register(txt_username, txt_email, txt_password);
                 }
             }
         });
+        // Обработчик нажатия на кнопку "Показать/Скрыть пароль"
         ShowHide_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,8 +97,9 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
+        // Обработчик нажатия на кнопку "Назад"
         back_btn.setOnClickListener(new View.OnClickListener() {
+            // Закрытие текущей активности и возврат к предыдущей
             @Override
             public void onClick(View v) {
                 finish();
@@ -96,6 +108,13 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Регистрирует нового пользователя в Firebase.
+     *
+     * @param username Имя пользователя.
+     * @param email    Адрес электронной почты.
+     * @param password Пароль.
+     */
     private void register(final String username, String email, String password){
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
@@ -104,16 +123,19 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser firebaseUser = auth.getCurrentUser();
                             database = FirebaseDatabase.getInstance();
+                            //Проверка на существование пользователя
                             assert firebaseUser != null;
                             String userid = firebaseUser.getUid();
-
+                            //Получение данных из базы данных
                             reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+                            //Обновление записей в БД
                             HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put("id", userid);
                             hashMap.put("username", username);
                             hashMap.put("imageURL", "default");
                             hashMap.put("search",username.toLowerCase());
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                //Переход к странице авторизации в случае успешной регистрации
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()){
                                         Toast.makeText(RegisterActivity.this, "Вы будете направлены на страницу атворизации", Toast.LENGTH_SHORT).show();

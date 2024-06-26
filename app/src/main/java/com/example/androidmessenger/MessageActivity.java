@@ -31,7 +31,11 @@ import Chats.Chat;
 import Chats.MessageAdapter;
 import Chats.User;
 import de.hdodenhof.circleimageview.CircleImageView;
-
+/**
+ * Активность для отображения и отправки сообщений.
+ * @author Алевтина Ильина
+ * @version 1.0
+ */
 public class MessageActivity extends AppCompatActivity {
 
     CircleImageView profile_image;
@@ -50,8 +54,13 @@ public class MessageActivity extends AppCompatActivity {
     Intent intent;
     String userid;
     List<Chat> mchat;
-
+    // Слушатель для прочтения сообщений
     ValueEventListener seenListener;
+
+    /**
+     * Метод, вызываемый при создании активности.
+     * @param savedInstanceState сохраненное состояние активности
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +70,7 @@ public class MessageActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //Обработчик toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +93,7 @@ public class MessageActivity extends AppCompatActivity {
         intent = getIntent();
         userid = intent.getStringExtra("userid");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        //Обработчик кнопки нажатия для отправки сообщения
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,13 +107,14 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-
+        //Получения знаяения из базы данных
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 username.setText(user.getUsername());
+                //Проверка наличия изображения профиля пользователя
                 if(user.getImageURL()==null) {
                     profile_image.setImageResource(R.drawable.baseline_account_circle_24);
                 } else {
@@ -116,16 +128,23 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });
+        //Вызов метода для отображения: было ли просмотрено или получено сообщение
         seenMessage(userid);
     }
 
+    /**
+     * Метод для отметки сообщений как просмотренных.
+     * @param userid ID пользователя
+     */
     private  void seenMessage(String userid) {
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         seenListener = reference.addValueEventListener(new ValueEventListener() {
+            //Проход по всем сохраненным чатам в БД Firebase
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Chat chat = snapshot.getValue(Chat.class);
+                    //Проверка для избежания ошибки NullPointerException
                     if(chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userid)){
                         HashMap<String,Object> hashMap = new HashMap<>();
                         hashMap.put("isseen",true);
@@ -142,6 +161,13 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Отправляет сообщение в базу данных.
+     *
+     * @param sender    ID отправителя сообщения.
+     * @param receiver  ID получателя сообщения.
+     * @param message   Текст сообщения.
+     */
     private void sendMessage(String sender, String receiver, String message) {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -150,9 +176,9 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("receiver",receiver);
         hashMap.put("message",message);
         hashMap.put("isseen",false);
-
+        // Добавление сообщения в узел "Chats" базы данных
         reference.child("Chats").push().setValue(hashMap);
-
+        // Обновление списка чатов пользователя
         DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist")
                 .child(firebaseUser.getUid())
                 .child(userid);
@@ -172,6 +198,13 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Загружает сообщения из базы данных и отображает их в RecyclerView.
+     *
+     * @param myid     ID текущего пользователя.
+     * @param userid    ID собеседника.
+     * @param imageurl URL изображения профиля собеседника.
+     */
     private void readMesagges(final String myid, final String userid, final String imageurl){
         mchat = new ArrayList<>();
 
@@ -199,6 +232,11 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Обновляет статус пользователя в базе данных.
+     *
+     * @param status Новый статус пользователя ("online" или "offline").
+     */
     private void status(String status) {
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
@@ -206,10 +244,17 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("status",status);
         reference.updateChildren(hashMap);
     }
+    /**
+     * Вызывается при возобновлении активности. Устанавливает статус пользователя "online".
+     */
     protected void onResume() {
         super.onResume();
         status("online");
     }
+    /**
+     * Вызывается при приостановке активности. Устанавливает статус пользователя "offline"
+     * и удаляет слушатель seenListener.
+     */
     protected void onPause() {
         super.onPause();
         reference.removeEventListener(seenListener);

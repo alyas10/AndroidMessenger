@@ -24,7 +24,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
+/**
+ * Активность для авторизации пользователей в приложение.
+ * Используется Firebase
+ *
+ * @author Алевтина Ильина
+ * @version 1.0
+ */
 public class LoginActivity extends AppCompatActivity {
     private EditText email, password;
 
@@ -34,7 +40,13 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth auth;
 
     FirebaseUser firebaseUser;
-
+    /**
+     * Вызывается при создании активности. Инициализирует компоненты пользовательского
+     * интерфейса, настраивает обработчики событий и проверяет, выполнен ли вход
+     * пользователя.
+     *
+     * @param savedInstanceState Сохраненное состояние активности (если есть).
+     */
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         goToRegister = findViewById(R.id.go_to_register_activity_tv);
         ShowHide_btn = findViewById(R.id.showHideBtn);
 
-
+        // Обработчик нажатия на кнопку входа
         login_btn.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
@@ -61,10 +73,12 @@ public class LoginActivity extends AppCompatActivity {
                                              String txt_password = password.getText().toString();
                                              if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)) {
                                                  Toast.makeText(LoginActivity.this, "Поле не может быть пустым", Toast.LENGTH_SHORT).show();
-                                             } /*else if (!firebaseUser.isEmailVerified()) {
+                                             }//Разработка опции для проверки почты
+                                             /*else if (!firebaseUser.isEmailVerified()) {
                     sendEmailVerification();
                     Toast.makeText(LoginActivity.this, "Для входа на вашу почту были высланы инструкции для подтверждения.", Toast.LENGTH_SHORT).show();
                 } */ else {
+                                                 // Выполнение входа с помощью Firebase
                                                  auth.signInWithEmailAndPassword(txt_email, txt_password)
                                                          .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                                              @Override
@@ -82,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                                          }
                                      });
 
-
+        // Обработчик нажатия на текст "Зарегистрироваться"
                 goToRegister.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -90,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-
+        // Обработчик нажатия на кнопку "Показать/Скрыть пароль"
         ShowHide_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
+     //Будущая опция для проверки почты
     private void sendEmailVerification() {
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();

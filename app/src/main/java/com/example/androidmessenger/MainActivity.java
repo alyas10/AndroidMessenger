@@ -37,10 +37,16 @@ import com.google.firebase.database.ValueEventListener;
 import Chats.User;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * Главная активность с боковым меню и менеджером по переключению между фрагментами
+ *
+ * @author Алевтина Ильина
+ * @author Иван Минаев
+ * @version 2.0
+ */
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
 
-    FirebaseUser firebaseUser;
     DatabaseReference reference;
 
     TextView username;
@@ -49,6 +55,14 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     private Intent intent;
 
+    /**
+     * Создание активити
+     *
+     * @param savedInstanceState Если действие повторно инициализируется после того, как
+     * ранее было завершено, то этот пакет содержит данные, которые были наиболее
+     * недавно предоставлены в {@link #onSaveInstanceState}.  <b><i>Примечание: в противном случае значение равно нулю.</i></b>
+     *
+     */
     protected void onCreate(Bundle savedInstanceState) {
         // Установите ориентацию экрана в портретный режим
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -61,7 +75,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         username = findViewById(R.id.username_bar);
         profile_image = findViewById(R.id.profile_image_nav);
-
+        //Загрузка бокового меню и его компонентов
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_open,
                 R.string.nav_close);
@@ -72,11 +86,14 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         navigationView.setNavigationItemSelectedListener(this);
         //Подгрузка начального экрана
         Fragment welcomeFragment = new WelcomeFragment();
+        //Установка менеджера фрагментов
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, welcomeFragment);
         fragmentTransaction.commit();
-
+        /**
+         * Проверка входа пользователя в систему и подгрузка фото в боковое меню
+         */
         FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -112,6 +129,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             }
         });
     }
+    //Открытие и закрытие бокового меню
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -121,7 +139,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         }
     }
 
-
+    //Переход между фрагментами
     public boolean onNavigationItemSelected(MenuItem item) {
 
         Fragment fragment = null;
