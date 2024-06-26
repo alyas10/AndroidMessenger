@@ -16,16 +16,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.androidmessenger.R;
-
+/**
+ * Фрагмент, содержащий элемент выплывающего списка Spinner для выбора доступных шифров.
+ * @author Алевтина Ильина
+ * @version 1.0
+ */
 public class SpinnerFragment extends Fragment {
+    /**
+     * Конструктор для SpinnerFragment.
+     */
     public SpinnerFragment() {
         super(R.layout.activity_spinner);
     }
 
+    //Spinner для выбора шифров
     private Spinner spinner;
 
+    //Массив доступных шифров
     String[] Ciphers = {"Шифр Атбаш", "Шифр Цезаря", "Шифр Виженера", "Аффинный шифр","RSA", "Шифр гаммирования (XOR)"};
 
+    /**
+     * Вызывается сразу после возврата функции onCreateView(), в которой для фрагмента устанавливается окончательная иерархия представлений.
+     * @param view возвращается функцией onCreateView().
+     * @param savedInstanceState Если значение не равно null, этот фрагмент создается заново из предыдущего сохраненного состояния.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -33,15 +47,10 @@ public class SpinnerFragment extends Fragment {
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle("Шифрование");
 
-
+        //Инициализация списка
         spinner = getView().findViewById(R.id.spinner);
         Button buttonGo = getView().findViewById(R.id.button_go);
 
-
-
-        /*ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.cipher_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
         // Подключаем свой шаблон с разными значками
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.custom_spinner_items, R.id.C_id, Ciphers);
@@ -63,7 +72,7 @@ public class SpinnerFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
+        //Обработчик кнопки для перехода к активити после выбора шифра
         buttonGo.setOnClickListener(v -> {
             Intent intent;
             int position = spinner.getSelectedItemPosition();
@@ -80,15 +89,15 @@ public class SpinnerFragment extends Fragment {
                     intent = new Intent(getActivity(), VigenerActivity.class);
                     startActivity(intent);
                     break;
-                case 3:
+                case 3: //Аффинный
                     intent = new Intent(getActivity(), AffineCipherActivity.class);
                     startActivity(intent);
                     break;
-                case 4:
+                case 4://RSA
                     intent = new Intent(getActivity(), RsaActivity.class);
                     startActivity(intent);
                     break;
-                case 5:
+                case 5://XOR
                     intent = new Intent(getActivity(), XORActivity.class);
                     startActivity(intent);
                     break;

@@ -28,17 +28,32 @@ import java.util.List;
 import Chats.Chatlist;
 import Chats.User;
 import Chats.UserAdapter;
+/**
+ * Фрагмент для отображения списка чатов пользователя.
+ * @author Алевтина Ильина
+ * @version 1.0
+ */
 public class ChatsFragment extends Fragment {
 
+    // RecyclerView для отображения списка чатов
     private RecyclerView recyclerView;
-
+    // Адаптер для управления данными списка чатов
     private UserAdapter userAdapter;
+    //Список для отображения пользователей
     private List<User> mUsers;
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
+    //Список для хранения чатов
+    private List<Chatlist> userList;
 
-    private List<Chatlist> userList;;
+    /**
+     * Вызывается для создания фрагменто.
+     * @param inflater объект LayoutInflater, который можно использовать для расширения любых видов во фрагменте.
+     * @param container, если значение не равно null, это родительское представление, к которому должен быть подключен пользовательский интерфейс фрагмента.
+     * @param savedInstanceState, если значение не равно null, этот фрагмент создается заново из предыдущего сохраненного состояния.
+     * @return представление пользовательского интерфейса фрагмента или значение null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,7 +94,10 @@ public class ChatsFragment extends Fragment {
         return view;
     }
 
-
+    /**
+     * Этот метод извлекает и фильтрует список пользователей из узла "Users" в базе данных Firebase
+     * Затем он настраивает пользовательский адаптер для RecyclerView.
+     */
     private void chatList() {
         mUsers = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Users");

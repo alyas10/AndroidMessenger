@@ -16,15 +16,30 @@ import com.example.androidmessenger.modelClass.HomeModel;
 
 import java.util.ArrayList;
 
+/**
+ * Фрагмент для вкладки с тестированием.
+ * @author Иван Минаев
+ * @version 1.0
+ */
 public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
     ArrayList<HomeModel> list = new ArrayList<>();
     HomeAdapter adapter;
 
+    /**
+     * Конструктор без параметров.
+     */
     public HomeFragment() {
-        // Обязательный пустой конструктор
     }
 
+    /**
+     * Создает и настраивает представление фрагмента.
+     *
+     * @param inflater Инфлейтер для создания представления из XML-файла макета.
+     * @param container Родительский контейнер представления, к которому будет прикреплено представление фрагмента.
+     * @param savedInstanceState Сохраненное состояние фрагмента (если есть).
+     * @return Сформированное представление фрагмента.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -34,6 +49,10 @@ public class HomeFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Загружает данные в RecyclerView.
+     * В данном случае добавляет один элемент "Тесты по шифрованию".
+     */
     private void LoadData() {
         binding.rcv.setLayoutManager(new LinearLayoutManager(getContext()));
         list.clear();

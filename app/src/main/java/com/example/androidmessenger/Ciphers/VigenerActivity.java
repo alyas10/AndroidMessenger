@@ -1,6 +1,5 @@
 package com.example.androidmessenger.Ciphers;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,8 +7,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.androidmessenger.R;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.androidmessenger.R;
+/**
+ * Реализация функций шифрования, дешифрования с помощью шифра Виженера.
+ * @author Алевтина Ильина
+ * @version 1.0
+ */
 public class VigenerActivity extends AppCompatActivity {
     private EditText inputText, key;
     private Button encode,decode;
@@ -40,6 +45,11 @@ public class VigenerActivity extends AppCompatActivity {
             }
         });
     }
+    /**
+     * Кодирует вводимый текст с помощью шифра Виженера и отображает закодированный текст.
+     * Для данного алгоритма складываются позиции буквы ключа и исходного текста
+     * и делится по модулю алфавита
+     */
     public void encodeText() {
         String text = inputText.getText().toString();
         String s_key = key.getText().toString();
@@ -76,6 +86,11 @@ public class VigenerActivity extends AppCompatActivity {
             outputText.setText(encodedText);
     }
 
+    /**
+     * Кодирует вводимый текст с помощью шифра Виженера и отображает закодированный текст.
+     * Для данного алгоритма вычитается позиция буквы ключа из позиции зашифрованного текста
+     * и делится по модулю алфавита
+     */
     public void decodeText() {
         String text = inputText.getText().toString();
         String s_key = key.getText().toString();
@@ -110,7 +125,9 @@ public class VigenerActivity extends AppCompatActivity {
         }
         outputText.setText(decodedText);
     }
-
+    /**
+     * Завершение текущей активити и переход к предыдущей
+     */
     public void goBack(View view) {
         finish();
     }

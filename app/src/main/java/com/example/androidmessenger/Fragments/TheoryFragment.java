@@ -19,6 +19,11 @@ import com.example.androidmessenger.R;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * Фрагмент, который отображает карточки шифров с их описаниями и позволяет выполнять поиск.
+ * @author Иван Минаев
+ * @version 1.0
+ */
 public class TheoryFragment extends Fragment {
     RecyclerView recyclerView;
     List<DataClass> dataList;
@@ -26,10 +31,20 @@ public class TheoryFragment extends Fragment {
     DataClass androidData = new DataClass("Афинный шифр", R.string.afin, "Уровень 1", R.drawable.afin);
     SearchView searchView;
 
+    /**
+     * Конструктор для фрагмента. Задает макет для фрагмента.
+     */
     public TheoryFragment() {
         super(R.layout.activity_theory);
     }
 
+    /**
+     * Вызывается сразу после возврата функции onCreateView(), где для фрагмента устанавливается окончательная иерархия представлений.
+     * Этот метод инициализирует представления, настраивает RecyclerView, заполняет список данных и настраивает функциональность поиска.
+     *
+     * @param view представления, возвращаемого функцией onCreateView().
+     * @param savedInstanceState Если значение не равно null, этот фрагмент создается заново из предыдущего сохраненного состояния.
+     */
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -70,6 +85,11 @@ public class TheoryFragment extends Fragment {
     recyclerView.setAdapter(adapter);
 
     }
+    /**
+     * Фильтрует список шифров на основе введенного текста для поиска.
+     *
+     * @param text - текст для поиска, введенный пользователем.
+     */
     private void searchList(String text){
         List<DataClass> dataSearchList = new ArrayList<>();
         for (DataClass data : dataList){
@@ -78,7 +98,7 @@ public class TheoryFragment extends Fragment {
             }
         }
         if (dataSearchList.isEmpty()){
-            Toast.makeText(getActivity(), "Not Found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Не найдено", Toast.LENGTH_SHORT).show();
         } else {
             adapter.setSearchList(dataSearchList);
         }

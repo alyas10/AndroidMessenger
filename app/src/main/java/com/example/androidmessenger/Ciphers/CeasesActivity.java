@@ -10,7 +10,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.androidmessenger.R;
-
+/**
+ * Реализация функций шифрования, дешифрования и взлома шифра Цезаря.
+ * @author Алевтина Ильина
+ * @version 1.0
+ */
 public class CeasesActivity extends AppCompatActivity {
 
     private EditText inputText, shiftAmount;
@@ -56,6 +60,11 @@ public class CeasesActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Кодирует текст, введенный в поле inputText, используя шифр Цезаря со сдвигом
+     * значение, указанное в поле shiftAmount.
+     * Затем закодированный текст отображается в поле outputText.
+     */
     public void encodeText() {
         String text = inputText.getText().toString();
         String s = shiftAmount.getText().toString();
@@ -92,6 +101,11 @@ public class CeasesActivity extends AppCompatActivity {
             outputText.setText(encodedText);}
     }
 
+    /**
+     * Расшифровывает текст, введенный в поле inputText, используя шифр Цезаря со сдвигом
+     * число сдвигов - shiftAmount.
+     * Затем расшифрованный текст отображается в поле outputText.
+     */
     public void decodeText() {
         String text = inputText.getText().toString();
         String s = shiftAmount.getText().toString();
@@ -129,6 +143,11 @@ public class CeasesActivity extends AppCompatActivity {
 
         outputText.setText(decodedText);}
     }
+
+    /**
+     * Выполняет атаку методом перебора на шифр Цезаря, перепробовав все возможные варианты сдвига
+     * Отображает результаты в поле outputText.
+     */
     private  void bruteForceCaesar() {
             String text = inputText.getText().toString();
             if (TextUtils.isEmpty(text)) {
@@ -136,7 +155,7 @@ public class CeasesActivity extends AppCompatActivity {
                 return;
             }
 
-            // Предполагаем, что englishAlphabetUpper и russianAlphabetUpper уже определены в вашем классе
+
             StringBuilder allShiftsDecoded = new StringBuilder();
 
             // Перебор всех возможных сдвигов для английского и русского алфавитов
@@ -166,6 +185,9 @@ public class CeasesActivity extends AppCompatActivity {
 
             outputText.setText(allShiftsDecoded.toString());
         }
+    /**
+     * Завершает текущее действие и возвращается к предыдущей активити.
+     */
     public void goBack(View view) {
         finish();
     }

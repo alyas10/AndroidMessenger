@@ -21,7 +21,11 @@ import java.security.PublicKey;
 import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
-
+/**
+ * Реализация функций шифрования, дешифрования шифра RSA.
+ * @author Алевтина Ильина
+ * @version 1.0
+ */
 public class RsaActivity extends AppCompatActivity {
     private EditText inputText;
     private Button encryptButton, decryptButton,back_btn,showPublicKeyButton, showPrivateKeyButton;
@@ -30,6 +34,13 @@ public class RsaActivity extends AppCompatActivity {
     private PrivateKey privateKey;
     private byte[] encryptedData;
 
+    /**
+     * Инициализирует активити.
+     * генерирует пару ключей RSA и настраивает прослушиватели нажатий для кнопок.
+     *
+     * @param savedInstanceState Если действие повторно инициализируется после предыдущего завершения,
+     * этот пакет содержит данные, которые оно в последний раз предоставляло в onSaveInstanceState(пакет).
+     */
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +54,7 @@ public class RsaActivity extends AppCompatActivity {
         back_btn = findViewById(R.id.backButton);
         showPublicKeyButton = findViewById(R.id.showPublicKeyButton);
         showPrivateKeyButton = findViewById(R.id.showPrivateKeyButton);
+        //Генерирует пару ключей (открытый и закрытый)
         try {
             KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
             generator.initialize(1024, new SecureRandom());
@@ -53,6 +65,13 @@ public class RsaActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         encryptButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Шифрует текст, введенный в поле inputText, с помощью сгенерированного открытого ключа RSA.
+             * Зашифрованные данные хранятся в переменной EncryptedData, а зашифрованная строка
+             * (в кодировке Base64) отображается в текстовом представлении resultText.
+             *
+             * @param  - v, нажатие по которому обрабатывается.
+             */
             @Override
             public void onClick(View v) {
                 String input = inputText.getText().toString();
@@ -69,6 +88,12 @@ public class RsaActivity extends AppCompatActivity {
         });
 
         decryptButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Расшифровывает зашифрованные данные, хранящиеся в переменной EncryptedData, с помощью сгенерированного закрытого ключа RSA.
+             * Затем расшифрованный текст отображается в текстовом представлении resultText.
+             *
+             * @param  - v, по которому было сделано нажатие.
+             */
             @Override
             public void onClick(View v) {
                 try {
@@ -84,6 +109,10 @@ public class RsaActivity extends AppCompatActivity {
             }
         });
         showPublicKeyButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Отображает строковое представление сгенерированного открытого ключа
+             * в resultText.
+             */
             @Override
             public void onClick(View v) {
                 resultText.setText(publicKey.toString());
@@ -91,12 +120,19 @@ public class RsaActivity extends AppCompatActivity {
         });
 
         showPrivateKeyButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Отображает строковое представление сгенерированного закрытого ключа
+             * в resultText.
+             */
             @Override
             public void onClick(View v) {
                 resultText.setText(privateKey.toString());
             }
         });
 
+        /**
+         * Завершает текущее действие и возвращается к предыдущей активити.
+         */
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

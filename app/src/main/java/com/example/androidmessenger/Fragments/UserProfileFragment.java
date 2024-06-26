@@ -43,6 +43,11 @@ import java.util.HashMap;
 
 import Chats.User;
 import de.hdodenhof.circleimageview.CircleImageView;
+/**
+ * Фрагмент для отображения профиля пользователя и управления им.
+ * @version 1.0
+ * @author Алевтина Ильина
+ */
 
 public class UserProfileFragment extends Fragment {
 
@@ -59,12 +64,27 @@ public class UserProfileFragment extends Fragment {
     private StorageTask uploadTask;
 
 
+    /**
+     * Вызывается для создания фрагментом экземпляра представления пользовательского интерфейса.
+     *
+     * @param inflater - объект LayoutInflater, который может использоваться для расширения любых представлений во фрагменте.
+     * @param container, если значение не равно null, это родительское представление, к которому должен быть подключен пользовательский интерфейс фрагмента.
+     * @param savedInstanceState, если значение не равно null, этот фрагмент создается заново из предыдущего сохраненного состояния.
+     * @return представление пользовательского интерфейса фрагмента или значение null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_user_profile, container, false);
         return view;
     }
+
+    /**
+     * Вызывается сразу после возврата функции onCreateView(), где для фрагмента устанавливается окончательная иерархия представлений.
+     *
+     * @param view  - представление,возвращаемое функцией onCreateView().
+     * @param savedInstanceState Если значение не равно null, этот фрагмент создается заново из предыдущего сохраненного состояния.
+     */
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -73,8 +93,6 @@ public class UserProfileFragment extends Fragment {
         welcome = view.findViewById(R.id.textView_show_welcome);
         fullName = view.findViewById(R.id.textView_show_full_name);
         email = view.findViewById(R.id.textView_show_email);
-        //gender = view.findViewById(R.id.textView_show_gender);
-        //mobile = view.findViewById(R.id.textView_show_mobile);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String uid = firebaseUser.getUid();
@@ -84,7 +102,7 @@ public class UserProfileFragment extends Fragment {
 
         profileImageView = view.findViewById(R.id.imageView_profile_dp);
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
-
+        // Загрузка данных пользователя из Firebase database
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -115,6 +133,9 @@ public class UserProfileFragment extends Fragment {
         });
     }
 
+    /**
+     * Открывает окно, позволяющее пользователю выбрать изображение со своего устройства.
+     */
     private void openImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -122,18 +143,28 @@ public class UserProfileFragment extends Fragment {
         startActivityForResult(intent, IMAGE_REQUEST);
     }
 
+    /**
+     * Возвращает расширение файла из заданного URI.
+     *
+     * @param uri - это URI файла.
+     * @return  расширение файла в виде строки.
+     */
     private String getFileExtension(Uri uri) {
         ContentResolver contentResolver = getContext().getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
+    /**
+     * Загружает выбранное изображение в Firebase storage.
+     */
     private void uploadImageToFirebase() {
         if (imageUri != null) {
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis()
                     + "." + getFileExtension(imageUri));
 
             uploadTask = fileReference.putFile(imageUri);
+            // Cоздание цепочки задач, чтобы получить URL-адрес для загрузки загруженного изображения
             uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -144,6 +175,7 @@ public class UserProfileFragment extends Fragment {
                     return fileReference.getDownloadUrl();
                 }
             }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                //Обновление HashMap после загрузки изображения
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
@@ -156,9 +188,10 @@ public class UserProfileFragment extends Fragment {
                         reference.updateChildren(map);
 
                     } else {
-                        Toast.makeText(getContext(), "Failed!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Ошибка!", Toast.LENGTH_SHORT).show();
                     }
                 }
+                //Обработка ошибок
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
@@ -166,9 +199,10 @@ public class UserProfileFragment extends Fragment {
                 }
             });
         } else {
-            Toast.makeText(getContext(), "No image selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Изображение не выбрано!", Toast.LENGTH_SHORT).show();
         }
     }
+    //Получение данных url при успешной загрузке изображения
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
