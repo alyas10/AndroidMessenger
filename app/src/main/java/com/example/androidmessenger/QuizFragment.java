@@ -33,7 +33,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-
+/**
+ * Фрагмент, где подгружаются вопросы и ответы для тестирования
+ * Реализована опция сохранения результатов
+ *
+ * @author Иван Минаев
+ * @version 2.0
+ */
+//Задание класса с необходимыми полями для вкладки тестов
 public class QuizFragment extends Fragment {
     int AllQuestion;
     String listSize;
@@ -67,17 +74,38 @@ public class QuizFragment extends Fragment {
     private int totalQuestions = 10; // Общее количество вопросов
 
 
+    
 
+    /**
+     * Конструктор без параметров для создания фрагмента.
+     *
+     */
     public QuizFragment() {
-        // Required empty public constructor
     }
-
+    /**
+     * Конструктор фрагмента.
+     *
+     * @param category  Категория теста.
+     * @param title Заголовок.
+     */
     public QuizFragment(String category, String title) {
         this.category = category;
         this.title = title;
 
     }
     @Override
+     /**
+     *
+     * @param inflater - объект LayoutInflater, который можно использовать для расширения
+     * любых представлений во фрагменте,
+     * Контейнер @param, если значение не равно null, является родительским представлением, к которому должен быть привязан пользовательский интерфейс фрагмента
+     *Фрагмент не должен добавлять само представление,
+     *но это может быть использовано для генерации параметров компоновки представления.
+     * @param savedInstanceState Если значение не равно null, этот фрагмент создается заново
+     * из предыдущего сохраненного состояния, как указано здесь.
+     *
+     * Создает в БД раздел для каждого теста, где хранит информацию об ответах
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentQuizBinding.inflate(getLayoutInflater());
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -97,7 +125,7 @@ public class QuizFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (!task.isSuccessful()) {
-                            Log.e("firebase", "Error getting data", task.getException());
+                            Log.e("firebase", "Ошибка в получении данных", task.getException());
                         } else {
                             s1 = String.valueOf(task.getResult().getValue());
                             String[] s2 = s1.split(",");
@@ -482,7 +510,7 @@ public class QuizFragment extends Fragment {
         optionCheckUp();
 
     }
-
+//Проверка ответов
     private void optionCheckUp() {
 
 
@@ -543,7 +571,7 @@ public class QuizFragment extends Fragment {
         } );
     }
 
-
+//Скрытие опции
     private void DisableOption() {
         binding.option1Con.setEnabled(false);
         binding.option2Con.setEnabled(false);
@@ -551,7 +579,7 @@ public class QuizFragment extends Fragment {
         binding.option4Con.setEnabled(false);
         binding.nextBtn.setEnabled(true);
     }
-
+//Показ правильных ответов
     private void ShowRightAns() {
         if (Objects.equals(quizModel.getOp1(),quizModel.getCorrectsAns())){
             binding.option1Con.setBackgroundResource(R.drawable.right_bg);
