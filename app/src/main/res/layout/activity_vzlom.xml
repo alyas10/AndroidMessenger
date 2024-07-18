@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/black"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/inputImageButton"
+            android:layout_width="169dp"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/search_bkg_3"
+            android:drawableStart="@drawable/baseline_add_a_photo_24"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Распознать изображение"
+            android:textColor="@color/black"
+            app:cornerRadius="5dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/recognizedTextBtn"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/search_bkg_3"
+            android:drawableStart="@drawable/baseline_document_scanner_24"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Распознать текст с фото"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/imageIv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_add_photo_alternate_1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/green"
+                android:text="Шифр с фото"
+                android:textSize="24dp"
+                android:layout_gravity="center"/>
+            <EditText
+                android:id="@+id/recognizedTextEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:enabled="true"
+                android:textIsSelectable="true"
+                android:focusable="true"
+                android:longClickable="true"
+                android:hint="Текст"/>
+
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

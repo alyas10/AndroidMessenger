@@ -21,6 +21,11 @@
         android:title="Шифрование"
         android:icon="@drawable/baseline_fingerprint_24"
         />
+    <item
+        android:id="@+id/nav_vzlom"
+        android:title="Взлом камерой"
+        android:icon="@drawable/baseline_add_a_photo_25"
+        />
 
     <item
         android:id="@+id/nav_test"

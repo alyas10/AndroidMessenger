@@ -25,6 +25,7 @@ import com.example.androidmessenger.Fragments.TheoryFragment;
 import com.example.androidmessenger.Fragments.UserProfileFragment;
 import com.example.androidmessenger.Fragments.UsersFragment;
 import com.example.androidmessenger.Fragments.WelcomeFragment;
+import com.example.androidmessenger.modelClass.ScannerActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -155,7 +156,15 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         }
         else if (id == R.id.nav_code) {
             fragmentClass = SpinnerFragment.class;
-        } else if (id == R.id.nav_users) {
+        }
+        else if (id == R.id.nav_vzlom) {
+            // Открываем ScannerActivity
+            Intent intent = new Intent(MainActivity.this, com.example.androidmessenger.modelClass.ScannerActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        else if (id == R.id.nav_users) {
             fragmentClass = UsersFragment.class;}
         else if (id == R.id.nav_chats) {
             fragmentClass = ChatsFragment.class;

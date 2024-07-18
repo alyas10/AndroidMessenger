@@ -57,6 +57,20 @@
             tools:layout_editor_absoluteY="2dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="320dp"
+            android:layout_marginLeft="16dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search_bkg"
+            android:progressTint="@color/green"
+            android:progressBackgroundTint="@color/black"
+            android:indeterminateTint="@color/green"
+            android:indeterminateTintMode="src_atop"
+            />
+
+
     <TextView
         android:id="@+id/questionCon"
         android:layout_width="match_parent"
@@ -117,6 +131,6 @@
             android:text="Далее"
             android:textColor="@color/black"
             android:layout_margin="16dp"/>
-    
+
 </LinearLayout>
 </ScrollView>

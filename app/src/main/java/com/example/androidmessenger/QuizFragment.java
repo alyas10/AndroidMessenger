@@ -1,32 +1,39 @@
 package com.example.androidmessenger;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.view.View;
-import android.view.ViewGroup;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
 import com.example.androidmessenger.databinding.FragmentQuizBinding;
+import com.example.androidmessenger.modelClass.HomeModel;
 import com.example.androidmessenger.modelClass.QuizModel;
+import com.example.androidmessenger.modelClass.SubModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
-/**
- * Фрагмент, где подгружаются вопросы и ответы для тестирования
- * Реализована опция сохранения результатов
- *
- * @author Иван Минаев
- * @version 2.0
- */
+
 public class QuizFragment extends Fragment {
     int AllQuestion;
     String listSize;
@@ -55,64 +62,60 @@ public class QuizFragment extends Fragment {
 
     String category, title;
     private DatabaseReference reference;
+    private ProgressBar progressBar;
+    private int currentPosition = 0;
+    private int totalQuestions = 10; // Общее количество вопросов
 
 
-    /**
-     * Конструктор без параметров для создания фрагмента.
-     *
-     */
+
     public QuizFragment() {
+        // Required empty public constructor
     }
 
-    /**
-     * Конструктор фрагмента.
-     *
-     * @param category  Категория теста.
-     * @param title Заголовок.
-     */
     public QuizFragment(String category, String title) {
         this.category = category;
         this.title = title;
 
     }
-
-    /**
-     *
-     * @param inflater - объект LayoutInflater, который можно использовать для расширения
-     * любых представлений во фрагменте,
-     * Контейнер @param, если значение не равно null, является родительским представлением, к которому должен быть привязан пользовательский интерфейс фрагмента
-     *Фрагмент не должен добавлять само представление,
-     *но это может быть использовано для генерации параметров компоновки представления.
-     * @param savedInstanceState Если значение не равно null, этот фрагмент создается заново
-     * из предыдущего сохраненного состояния, как указано здесь.
-     *
-     * Создает в БД раздел для каждого теста, где хранит информацию об ответах
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentQuizBinding.inflate(getLayoutInflater());
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        // Получаем ссылку на прогресс-бар из макета
+        progressBar = binding.progressBar;
+
+        // Устанавливаем начальное значение прогресс-бара
+        progressBar.setProgress(0);
+
+        // Устанавливаем значение максимального прогресса
+        progressBar.setMax(totalQuestions);
         reference = FirebaseDatabase.getInstance().getReference().child("Result");
         switch (title) {
             case "Тест по шифру Цезаря":
                 reference.child("CezarCategory").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                } else {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase", "Error getting data", task.getException());
+                        } else {
+                            s1 = String.valueOf(task.getResult().getValue());
+                            String[] s2 = s1.split(",");
+                            cezar = Integer.parseInt(String.valueOf(s2[0].charAt(s2[0].length() - 1)));
+                            cezar1 = AllQuestion - cezar;
 
-                    s1 = String.valueOf(task.getResult().getValue());
-                    String[] s2 = s1.split(",");
 
-                    cezar = Integer.parseInt(String.valueOf(s2[0].charAt(s2[0].length() - 1)));
-                    cezar1 = AllQuestion - cezar;
-                }
-                if (cezar != 0 && cezar1 != 0){
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(cezar, cezar1, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
-                }
-            }
-        });
+                            // Проверка значений cezar и cezar1 выполняется после присвоения
+                            if (cezar != 0 && cezar1 != 0) {
+                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(cezar, cezar1, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
+                                    DatabaseReference resultsRef = db.child("Result/" + "CezarCategory");
+                                    TestResult testResult1 = new TestResult(cezar, cezar1);
+                                    String CaesarcategoryKey = userId;
+                                    resultsRef.child(CaesarcategoryKey).setValue(testResult1);
+                                }
+                            }
+                        }
+                });
                 break;
             case "Тест по шифру Атбаш":
                 reference.child("AtbashCategory").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -121,15 +124,21 @@ public class QuizFragment extends Fragment {
                         if (!task.isSuccessful()) {
                             Log.e("firebase", "Error getting data", task.getException());
                         } else {
-
                             s2 = String.valueOf(task.getResult().getValue());
                             String[] s3 = s2.split(",");
-
                             atbash = Integer.parseInt(String.valueOf(s3[0].charAt(s3[0].length() - 1)));
                             atbash1 = AllQuestion - atbash;
                         }
                         if (atbash != 0 && atbash1 != 0){
                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(atbash, atbash1, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
+                            DatabaseReference resultsRef1 = db.child("Result/" + "AtbashCategory");
+                            String userId1 = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
+                            TestResult testResult2 = new TestResult(atbash, AllQuestion - atbash);
+                            // Задайте уникальный ключ для вашей категории (например, "caesarCategory")
+                            String AtbashcategoryKey = userId1;
+                            // Обновите значения для этого ключа
+                            resultsRef1.child(AtbashcategoryKey).setValue(testResult2);
                         }
                     }
                 });
@@ -141,15 +150,21 @@ public class QuizFragment extends Fragment {
                         if (!task.isSuccessful()) {
                             Log.e("firebase", "Error getting data", task.getException());
                         } else {
-
                             s3 = String.valueOf(task.getResult().getValue());
                             String[] s4 = s3.split(",");
-
                             vigener = Integer.parseInt(String.valueOf(s4[0].charAt(s4[0].length() - 1)));
                             vigener1 = AllQuestion - vigener;
                         }
                         if (vigener != 0 && vigener1 != 0){
                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(vigener, vigener1, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
+                            DatabaseReference resultsRef2 = db.child("Result/" + "VigenerCategory");
+                            String userId2 = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
+                            TestResult testResult3 = new TestResult(vigener, AllQuestion - vigener);
+                            // Задайте уникальный ключ для вашей категории (например, "caesarCategory")
+                            String VigenerСategoryKey = userId2;
+                            // Обновите значения для этого ключа
+                            resultsRef2.child(VigenerСategoryKey).setValue(testResult3);
                         }
                     }
                 });
@@ -161,15 +176,21 @@ public class QuizFragment extends Fragment {
                         if (!task.isSuccessful()) {
                             Log.e("firebase", "Error getting data", task.getException());
                         } else {
-
                             s4 = String.valueOf(task.getResult().getValue());
                             String[] s5 = s4.split(",");
-
                             afin = Integer.parseInt(String.valueOf(s5[0].charAt(s5[0].length() - 1)));
                             afin1 = AllQuestion - afin;
                         }
                         if (afin != 0 && afin1 != 0){
                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(afin, afin1, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
+                            DatabaseReference resultsRef3 = db.child("Result/" + "AfinCategory");
+                            String userId3 = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
+                            TestResult testResult4 = new TestResult(afin, AllQuestion - afin);
+                            // Задайте уникальный ключ для вашей категории (например, "caesarCategory")
+                            String AfinСategoryKey = userId3;
+                            // Обновите значения для этого ключа
+                            resultsRef3.child(AfinСategoryKey).setValue(testResult4);
                         }
                     }
                 });
@@ -181,15 +202,21 @@ public class QuizFragment extends Fragment {
                         if (!task.isSuccessful()) {
                             Log.e("firebase", "Error getting data", task.getException());
                         } else {
-
                             s5 = String.valueOf(task.getResult().getValue());
                             String[] s6 = s5.split(",");
-
                             gamma = Integer.parseInt(String.valueOf(s6[0].charAt(s6[0].length() - 1)));
                             gamma1 = AllQuestion - gamma;
                         }
                         if (gamma != 0 && gamma1 != 0){
                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(gamma, gamma1, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
+                            DatabaseReference resultsRef4 = db.child("Result/" + "GammaCategory");
+                            String userId4 = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
+                            TestResult testResult5 = new TestResult(gamma, AllQuestion - gamma);
+                            // Задайте уникальный ключ для вашей категории (например, "caesarCategory")
+                            String GammaСategoryKey = userId4;
+                            // Обновите значения для этого ключа
+                            resultsRef4.child(GammaСategoryKey).setValue(testResult5);
                         }
                     }
                 });
@@ -201,15 +228,21 @@ public class QuizFragment extends Fragment {
                         if (!task.isSuccessful()) {
                             Log.e("firebase", "Error getting data", task.getException());
                         } else {
-
                             s6 = String.valueOf(task.getResult().getValue());
                             String[] s7 = s6.split(",");
-
                             rsa = Integer.parseInt(String.valueOf(s7[0].charAt(s7[0].length() - 1)));
                             rsa1 = AllQuestion - rsa;
                         }
                         if (rsa != 0 && rsa1 != 0){
                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(rsa, rsa1, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
+                            DatabaseReference resultsRef5 = db.child("Result/" + "RSACategory");
+                            String userId5 = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
+                            TestResult testResult6 = new TestResult(rsa, AllQuestion - rsa);
+                            // Задайте уникальный ключ для вашей категории (например, "caesarCategory")
+                            String RsaСategoryKey = userId5;
+                            // Обновите значения для этого ключа
+                            resultsRef5.child(RsaСategoryKey).setValue(testResult6);
                         }
                     }
                 });
@@ -220,6 +253,11 @@ public class QuizFragment extends Fragment {
         ClearOption();
         binding.nextBtn.setOnClickListener(v->{
             position++;
+            // Увеличиваем текущую позицию
+            currentPosition++;
+
+            // Обновляем прогресс-бар
+            updateProgressBar();
             LoadQuestion();
             EnableOption();
             ClearOption();
@@ -228,7 +266,16 @@ public class QuizFragment extends Fragment {
         return binding.getRoot();
 
     }
-    // Метод для проверки следующего вопроса
+    private void updateProgressBar() {
+        // Обновляем значение прогресс-бара
+        progressBar.setProgress(currentPosition);
+
+        // Проверяем, достигнут ли конец теста
+        if (currentPosition == totalQuestions) {
+            // Все вопросы пройдены, можно закрыть или перейти к другому экрану
+        }
+    }
+
     private void checkNext() {
         if (position == AllQuestion){
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(right, wrong, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
@@ -237,7 +284,7 @@ public class QuizFragment extends Fragment {
 
         }
     }
-    // Метод для очистки вариантов ответов
+
     private void ClearOption() {
         binding.option1Con.setBackgroundResource(R.drawable.search_bkg_4);
         binding.option2Con.setBackgroundResource(R.drawable.search_bkg_4);
@@ -247,7 +294,7 @@ public class QuizFragment extends Fragment {
 
     }
 
-    // Метод для включения вариантов ответов
+
     private void EnableOption() {
         binding.option1Con.setEnabled(true);
         binding.option2Con.setEnabled(true);
@@ -256,12 +303,10 @@ public class QuizFragment extends Fragment {
         binding.nextBtn.setEnabled(false);
     }
 
-    /**
-     * Загрузка вопросов и ответов
-     */
     private void LoadQuestion() {
         switch (title) {
             case "Тест по шифру Цезаря":
+
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     list.add(new QuizModel("1. Какой римский император дал название шифру, который основан на сдвиге алфавита?", "Наполеон", "Гай Юлий Цезарь", "Александр Македонский", "Юлий Цезарь", "Гай Юлий Цезарь"));
                     list.add(new QuizModel("2. Что представляет собой ключ шифра Цезаря?", "Количество повторений", "Число шагов сдвига алфавита", "Случайный текст", "Длина сообщения", "Число шагов сдвига алфавита"));
@@ -416,6 +461,8 @@ public class QuizFragment extends Fragment {
 
         if (position != AllQuestion){
             positionNo = String.valueOf(position + 1);
+            int currentProgress = progressBar.getProgress();
+            progressBar.setProgress(currentProgress + 1);
             binding.qNo.setText(positionNo);
         }
         else {
@@ -435,7 +482,7 @@ public class QuizFragment extends Fragment {
         optionCheckUp();
 
     }
-    // Метод для проверки ответов
+
     private void optionCheckUp() {
 
 
@@ -496,7 +543,7 @@ public class QuizFragment extends Fragment {
         } );
     }
 
-    // Метод для отключения вариантов ответов
+
     private void DisableOption() {
         binding.option1Con.setEnabled(false);
         binding.option2Con.setEnabled(false);
@@ -504,7 +551,7 @@ public class QuizFragment extends Fragment {
         binding.option4Con.setEnabled(false);
         binding.nextBtn.setEnabled(true);
     }
-    // Метод для отображения правильного ответа
+
     private void ShowRightAns() {
         if (Objects.equals(quizModel.getOp1(),quizModel.getCorrectsAns())){
             binding.option1Con.setBackgroundResource(R.drawable.right_bg);
