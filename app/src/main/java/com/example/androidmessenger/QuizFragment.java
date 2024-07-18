@@ -42,10 +42,26 @@ import java.util.Objects;
  */
 //Задание класса с необходимыми полями для вкладки тестов
 public class QuizFragment extends Fragment {
+    
+    /**
+     * Общее количество вопросов.
+     */
     int AllQuestion;
+    /**
+     * Размер списка вопросов.
+     */
     String listSize;
+     /**
+     * Привязка к макету фрагмента.
+     */
     FragmentQuizBinding binding;
+     /**
+     * Список моделей вопросов.
+     */
     ArrayList<QuizModel> list = new ArrayList<>();
+    /**
+     * Счетчики правильных ответов для каждого шифра.
+     */
     public int cezar = 0;
     public int atbash = 0;
     public int vigener = 0;
@@ -58,13 +74,32 @@ public class QuizFragment extends Fragment {
     public int gamma1 = 0;
     public int rsa = 0;
     public int rsa1 = 0;
+    /**
+     * Текущая позиция вопроса в списке.
+     */
     private int position = 0;
+    /**
+     * Счетчик правильных ответов.
+     */
     public int right = 0;
+     /**
+     * Счетчик неправильных ответов.
+     */
     public int wrong = 0;
     public int cezar1 = 0;
     String s1,s2,s3,s4,s5,s6;
+    
+    /**
+     * Правильный ответ на вопрос (значение null по умолчанию).
+     */
     private static String answer =null;
+     /**
+     * Номер позиции вопроса.
+     */
     String positionNo;
+    /**
+     * Модель текущего вопроса.
+     */
     QuizModel quizModel;
 
     String category, title;
