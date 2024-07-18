@@ -19,21 +19,37 @@ import com.example.androidmessenger.modelClass.SubModel;
 
 import java.util.ArrayList;
 
-
+/**
+ * Фрагмент для отображения списка подкатегорий, относящихся к выбранной категории.
+ * @author Иван Минаев
+ * @version 2.0
+ */
 public class SubFragment extends Fragment {
     FragmentSubBinding binding;
     ArrayList<SubModel> list = new ArrayList<>();
     SubAdapter adapter;
     String title;
+    /**
+     * Обязательный пустой конструктор фрагмента.
+     */
     public SubFragment() {
-        // Required empty public constructor
     }
+    /**
+     * Конструктор фрагмента, принимающий название категории.
+     *
+     * @param title Название категории, подкатегории которой будут отображаться.
+     */
     public SubFragment(String title) {
         this.title = title;
     }
-
-
-
+  /**
+     * Создает и настраивает представление фрагмента.
+     *
+     * @param inflater Инфлейтер для создания представления из XML-файла макета.
+     * @param container Родительский контейнер представления, к которому будет прикреплено представление фрагмента.
+     * @param savedInstanceState Сохраненное состояние фрагмента (если есть).
+     * @return Сформированное представление фрагмента.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,12 +57,15 @@ public class SubFragment extends Fragment {
         LoadData();
         return binding.getRoot();
     }
-
+/**
+     * Загружает данные в RecyclerView в зависимости от выбранной категории тестов.
+     */
     private void LoadData() {
         binding.rcv.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Проверяем, есть ли уже категории в списке
         if (list.isEmpty()) {
+             // Заполнение списка элементов в зависимости от заголовка (категории)
             switch (title) {
                 case "Тесты по шифрованию":
                     list.add(new SubModel("Тест по шифру Цезаря", "Тесты по шифрованию"));
@@ -58,7 +77,7 @@ public class SubFragment extends Fragment {
                     break;
             }
         }
-
+       //Создание адаптера
         adapter = new SubAdapter(getContext(), list);
         binding.rcv.setAdapter(adapter);
     }
