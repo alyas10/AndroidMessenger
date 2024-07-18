@@ -43,7 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  *
  * @author Алевтина Ильина
  * @author Иван Минаев
- * @version 2.0
+ * @version 2.1
  */
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawerLayout;
@@ -140,6 +140,12 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         }
     }
 
+    /*
+ * Обрабатывает нажатие на элемент меню навигации.
+ *
+ * @param item Элемент меню навигации, который был нажат.
+ * @return true, если обработка была успешной, иначе false.
+ */
     //Переход между фрагментами
     public boolean onNavigationItemSelected(MenuItem item) {
 
@@ -147,25 +153,28 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         Class fragmentClass = null;
 
         int id = item.getItemId();
-
+        //Фрагмент профиля
         if(id == R.id.nav_profile){
             fragmentClass = UserProfileFragment.class;
         }
+        //Фрагмент с теоретическим материалом
         else if (id == R.id.nav_theory) {
             fragmentClass = TheoryFragment.class;
         }
+        //Фрагмент списка с выбором шифров
         else if (id == R.id.nav_code) {
             fragmentClass = SpinnerFragment.class;
         }
         else if (id == R.id.nav_vzlom) {
-            // Открываем ScannerActivity
+            //Будущая опция для считывания текста с помощью камеры
             Intent intent = new Intent(MainActivity.this, com.example.androidmessenger.modelClass.ScannerActivity.class);
             startActivity(intent);
             return true;
         }
-
+        //Фрагмент пользователей
         else if (id == R.id.nav_users) {
             fragmentClass = UsersFragment.class;}
+        //Фрагмент чатов
         else if (id == R.id.nav_chats) {
             fragmentClass = ChatsFragment.class;
         } else if (id == R.id.nav_userLogout) {
@@ -188,10 +197,13 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             e.printStackTrace();
         }
 
-
+        
         FragmentManager fragmentManager = getSupportFragmentManager();
+        // Заменяет текущий фрагмент на новый.
         fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        // Отмечает выбранный элемент меню.
         item.setChecked(true);
+        // Устанавливает заголовок для текущего фрагмента.
         setTitle(item.getTitle());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
