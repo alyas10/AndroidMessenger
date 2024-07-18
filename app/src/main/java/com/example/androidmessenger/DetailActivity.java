@@ -25,7 +25,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Активити для отображения подробной информации о конкретном шифре.
+ * @author Иван Минаев
+ * @version 2.0
+ */
 public class DetailActivity extends AppCompatActivity {
 
     private OnboardingAdapter onboardingAdapter;
@@ -36,6 +40,13 @@ public class DetailActivity extends AppCompatActivity {
     private int position; // добавлено поле position
     int cezar,cezar1;
 
+    /**
+     * Вызывается при запуске действия.
+     * Этот метод инициализирует представление активити, извлекает данные из intent и устанавливает содержимое представлений.
+     *
+     * @param savedInstanceState - Если действие повторно инициализируется после предыдущего завершения,
+     * то этот пакет содержит данные, которые оно в последний раз предоставляло в onSaveInstanceState().
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,13 +82,13 @@ public class DetailActivity extends AppCompatActivity {
                         onboardingViewPager.setCurrentItem(onboardingViewPager.getCurrentItem() + 1);
                     }
                     else {
-                        // Handle the case where the user reaches the last onboarding item
-                        String category = "Тесты по шифрованию"; // Initialize category to avoid potential null issues
-                        String title = "Тест по шифру Цезаря"; // Set a default title value
+                        //Обработка выбора последнего элемента
+                        String category = "Тесты по шифрованию"; // Инициализация категории
+                        String title = "Тест по шифру Цезаря"; 
 
-                        // Check if list is not null before accessing its elements
+                        // Проверка, что список не пустой
                         if (list != null) {
-                            int position = list.size() - 1; // Assuming you want the last element
+                            int position = list.size() - 1; 
                             category = list.get(position).getCategory();
                             title = list.get(position).getTitle();
                         }
@@ -199,10 +210,10 @@ public class DetailActivity extends AppCompatActivity {
         onboardingItems.add(itemCaesar9);
 
 
-
+    
         onboardingAdapter = new OnboardingAdapter(onboardingItems);
     }
-
+   //Загрузка нужных элементов
     private void setupOnboardingItems1() {
         List<OnboardingItem> onboardingItems = new ArrayList<>();
 
@@ -227,7 +238,15 @@ public class DetailActivity extends AppCompatActivity {
 
         onboardingAdapter = new OnboardingAdapter(onboardingItems);
     }
+    /*
+ * Настраивает индикаторы onboarding.
+ * 
+ * Этот метод создает набор индикаторов, соответствующих количеству элементов onboarding,
+ * добавляет их в `layoutOnboardingIndicators` и устанавливает начальное изображение
+ * для каждого индикатора.
+ */
     private void setupOnboardingIndicators(){
+        // Создает массив индикаторов, размер которого равен количеству элементов onboarding.
         ImageView[] indicators = new ImageView[onboardingAdapter.getItemCount()];
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT
@@ -239,25 +258,33 @@ public class DetailActivity extends AppCompatActivity {
                     getApplicationContext(),
                     R.drawable.onboarding_indicator_active
             ));
+            // Создает каждый индикатор, устанавливает его изображение и добавляет в layoutOnboardingIndicators.
             indicators[i].setLayoutParams(layoutParams);
             layoutOnboardingIndicators.addView(indicators[i]);
         }
     }
-
+    /*
+ * Устанавливает индикатор текущего элемента onboarding.
+ *
+ * @param index Индекс текущего элемента onboarding.
+ */
     private void setCurrentOnboardingIndicator(int index) {
         int childCount = layoutOnboardingIndicators.getChildCount();
         for (int i = 0; i < childCount; i++){
             ImageView imageView = (ImageView) layoutOnboardingIndicators.getChildAt(i);
             if (i==index){
+                // Устанавливает изображение неактивного индикатора для текущего элемента.
                 imageView.setImageDrawable(
                         ContextCompat.getDrawable(getApplicationContext(),R.drawable.onboarding_indicator_inactive)
                 );
             } else {
+                // Устанавливает изображение активного индикатора для остальных элементов.
                 imageView.setImageDrawable(
                         ContextCompat.getDrawable(getApplicationContext(),R.drawable.onboarding_indicator_active)
                 );
             }
         }
+        // Изменяет текст кнопки "Далее" в зависимости от того, является ли текущий элемент последним.
         if(index == onboardingAdapter.getItemCount()-1){
             buttonOnboardingAction.setText("Пройти тест");
         }
