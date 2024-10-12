@@ -28,7 +28,6 @@ public class TheoryFragment extends Fragment {
     RecyclerView recyclerView;
     List<DataClass> dataList;
     MyAdapter adapter;
-    DataClass androidData = new DataClass("Афинный шифр", R.string.afin, "Уровень 1", R.drawable.afin);
     SearchView searchView;
 
     /**
@@ -66,23 +65,36 @@ public class TheoryFragment extends Fragment {
             }
         });
 
-    GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1);
-    recyclerView.setLayoutManager(gridLayoutManager);
-    dataList = new ArrayList<>();
-    androidData = new DataClass("Шифр Цезаря", R.string.cezar, "Уровень 1", R.drawable.cezar);
-    dataList.add(androidData);
-    androidData = new DataClass("Шифр Атбаш", R.string.atbash, "Уровень 1", R.drawable.atbash);
-    dataList.add(androidData);
-    androidData = new DataClass("Шифр Виженера", R.string.vigener, "Уровень 1", R.drawable.vigener);
-    dataList.add(androidData);
-    androidData = new DataClass("Афинный шифр", R.string.afin, "Уровень 1", R.drawable.afin);
-    dataList.add(androidData);
-    androidData = new DataClass("Шифр XOR", R.string.gamma, "Уровень 2", R.drawable.gamma);
-    dataList.add(androidData);
-    androidData = new DataClass("Шифр RSA", R.string.rsa, "Уровень 3", R.drawable.rsa1);
-    dataList.add(androidData);
-    adapter = new MyAdapter(getActivity(), dataList);
-    recyclerView.setAdapter(adapter);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        dataList = new ArrayList<>();
+
+// Создание первой карточки с 1 звездочкой
+        DataClass androidData = new DataClass("Основны безопасности и анонимности в сети", R.drawable.cezar, 1);
+        dataList.add(androidData);
+
+// Создание второй карточки с 2 звездочками
+        androidData = new DataClass("Киберугрозы в современном мире", R.drawable.atbash, 2);
+        dataList.add(androidData);
+
+// Создание третьей карточки с 3 звездочками
+        androidData = new DataClass("Способы хранения информации", R.drawable.vigener, 3);
+        dataList.add(androidData);
+
+// Создание четвертой карточки с 4 звездочками
+        androidData = new DataClass("Криптография", R.drawable.afin, 4);
+        dataList.add(androidData);
+
+// Создание пятой карточки с 5 звездочками
+        androidData = new DataClass("Блок Который будет1", R.drawable.gamma, 5);
+        dataList.add(androidData);
+
+// Создание шестой карточки с 6 звездочками
+        androidData = new DataClass("Блок Который будет2", R.drawable.rsa1, 6);
+        dataList.add(androidData);
+
+        adapter = new MyAdapter(getActivity(), dataList);
+        recyclerView.setAdapter(adapter);
 
     }
     /**

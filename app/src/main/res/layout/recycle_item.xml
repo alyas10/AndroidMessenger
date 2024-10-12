@@ -1,94 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/search_bkg2"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="20dp">
 
-
     <androidx.cardview.widget.CardView
-        android:background="@color/black"
         android:id="@+id/recCard"
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
         app:cardCornerRadius="20dp"
         app:cardElevation="8dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:background="@drawable/search_bkg"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search_bkg2"
             android:orientation="vertical"
-            android:weightSum="5.5"
-            >
+            android:weightSum="5">
 
             <ImageView
                 android:id="@+id/recImage"
                 android:layout_width="wrap_content"
-                android:layout_height="5dp"
-                android:layout_weight="4"
-                android:scaleType="fitCenter"
+                android:layout_height="170dp"
+                android:layout_gravity="center_horizontal"
                 android:background="@color/black"
+                android:scaleType="fitCenter"
                 android:src="@drawable/cezar" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="70dp"
                 android:layout_weight="1.5"
                 android:background="@drawable/card_border"
-                android:weightSum="2">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:weightSum="5">
+
+                <TextView
+                    android:id="@+id/recTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Основны безопасностив сети"
+                    android:textColor="@color/green"
+                    android:textSize="20sp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.3"
-                    android:background="@color/black"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/recTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:text="Шифр Цезаря"
-                        android:textAlignment="center"
-                        android:textColor="@color/green"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/recDesc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/green"
-                        android:maxLines="0"
-                        android:text="Desc"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.7"
-                    android:background="@color/black"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
                     android:gravity="center">
 
-                    <TextView
-                        android:id="@+id/recLang"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/starImage1"
+                        android:layout_width="20dp"
                         android:layout_height="wrap_content"
-                        android:text="Уровень 1"
-                        android:textAlignment="center"
-                        android:textColor="@color/green"
-                        android:textSize="20dp"
-                        />
+                        android:contentDescription="Star icon"
+                        android:src="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/starImage2"
+                        android:layout_width="20dp"
+                        android:layout_marginStart="1dp"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Star icon"
+                        android:src="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/starImage3"
+                        android:layout_width="20dp"
+                        android:layout_marginStart="1dp"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Star icon"
+                        android:src="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/starImage4"
+                        android:layout_width="20dp"
+                        android:layout_marginStart="1dp"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Star icon"
+                        android:src="@drawable/star" />
+
+                    <ImageView
+                        android:id="@+id/starImage5"
+                        android:layout_width="20dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Star icon"
+                        android:src="@drawable/star" />
+                    <ImageView
+                        android:id="@+id/starImage6"
+                        android:layout_width="20dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Star icon"
+                        android:src="@drawable/star" />
+
+
                 </LinearLayout>
+
             </LinearLayout>
+
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
+
 </LinearLayout>

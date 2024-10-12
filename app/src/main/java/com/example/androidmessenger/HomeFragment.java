@@ -56,7 +56,12 @@ public class HomeFragment extends Fragment {
     private void LoadData() {
         binding.rcv.setLayoutManager(new LinearLayoutManager(getContext()));
         list.clear();
-        list.add(new HomeModel("Тесты по шифрованию"));
+        list.add(new HomeModel("Тесты по блоку Основны безопасности и анонимности в сети"));
+        list.add(new HomeModel("Тесты по блоку Киберугрозы в современном мире"));
+        list.add(new HomeModel("Тесты по блоку Способы хранения информации"));
+        list.add(new HomeModel("Тесты по блоку Криптография"));
+        list.add(new HomeModel("Тесты по блоку Который будет1"));
+        list.add(new HomeModel("Тесты по блоку Который будет2"));
         adapter = new HomeAdapter(getContext(), list);
         binding.rcv.setAdapter(adapter);
 

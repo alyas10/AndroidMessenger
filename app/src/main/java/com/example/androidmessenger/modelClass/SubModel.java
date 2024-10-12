@@ -62,4 +62,17 @@ public class SubModel {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    private String dataTitle;
+    private String dataDesc;
+
+
+    public String getDataTitle() {
+        return dataTitle;
+    }
+
+    public String getDataDesc() {
+        return dataDesc;
+    }
 }
+

@@ -83,84 +83,63 @@ public class ScannerActivity extends AppCompatActivity {
                     boolean allPermissionsGranted = true;
                     for (Boolean value : result.values()) {
                         allPermissionsGranted &= value;
-                    } if (allPermissionsGranted) {
-                        openCamera();
-                    } else {
-                        Toast.makeText(this, "Разрешение на использование камеры отклонено", Toast.LENGTH_SHORT).show();
+                    }
+                    if (allPermissionsGranted) {openCamera();
+                    } else { Toast.makeText(this, "Разрешение на использование камеры отклонено", Toast.LENGTH_SHORT).show();
                     }
                 });
 
-        // Инициализируем активити-лаунчер для запуска камеры
+
+// Инициализируем активити-лаунчер для запуска камеры
         cameraLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK) {
-                        // Обработка изображения, полученного из камеры
-                        Uri imageUri = (Uri) result.getData().getExtras().get("data");
-                        try {
-                            InputStream inputStream = getContentResolver().openInputStream(imageUri);
-                            imageBitmap = BitmapFactory.decodeStream(inputStream);
-                            imageIv.setImageBitmap(imageBitmap);
-                            imageIv.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                            imageIv.setAdjustViewBounds(true);
-                            recognizeTextFromImage();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK) {
+                            handleCapturedImage(result.getData());
                         }
-                    } else {
-                        Toast.makeText(this, "Не удалось сделать снимок", Toast.LENGTH_SHORT).show();
                     }
                 });
 
-        // Инициализируем активити-лаунчер для запуска галереи
-        galleryLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK) {
-                        // Обработка изображения, выбранного из галереи
-                        Uri imageUri = result.getData().getData();
-                        try {
-                            InputStream inputStream = getContentResolver().openInputStream(imageUri);
-                            imageBitmap = BitmapFactory.decodeStream(inputStream);
-                            imageIv.setImageBitmap(imageBitmap);
-                            imageIv.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                            imageIv.setAdjustViewBounds(true);
-                            recognizeTextFromImage();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        Toast.makeText(this, "Не удалось выбрать изображение", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        inputImageButton.setOnClickListener(v -> showInputImageDialog());
-
-        recognizedTextBtn.setOnClickListener(view -> {
-            if (imageBitmap != null) {
-                recognizeTextFromImage();
-            } else {
-                Toast.makeText(ScannerActivity.this, "Сначала выберите изображение...", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void showInputImageDialog() {
-        PopupMenu popupMenu = new PopupMenu(this, inputImageButton);
-        popupMenu.getMenu().add(Menu.NONE, 0, 0, "Камера");
-        popupMenu.getMenu().add(Menu.NONE, 1, 1, "Галерея");
-        popupMenu.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == 0) {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    cameraPermissionLauncher.launch(cameraPermission);
-                } else {
+        inputImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(ScannerActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     openCamera();
-                } } else if (item.getItemId() == 1) {
-                openGallery();
+                } else {
+                    cameraPermissionLauncher.launch(cameraPermission);
+                }
             }
-            return true;
         });
-        popupMenu.show();
+
+        recognizedTextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imageBitmap != null) {
+                    progressDialog.show();
+                    InputImage image = InputImage.fromBitmap(imageBitmap, 0);
+                    Task<Text> result = textRecognizer.process(image)
+                            .addOnSuccessListener(new OnSuccessListener<Text>() {
+                                @Override
+                                public void onSuccess(Text visionText) {
+                                    String recognizedText = visionText.getText();
+                                    recognizedTextEt.setText(recognizedText);
+                                    progressDialog.dismiss();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(Exception e) {
+                                    Toast.makeText(ScannerActivity.this, "Не удалось распознать текст: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+                                }
+                            });
+                } else {
+                    Toast.makeText(ScannerActivity.this, "Сначала сделайте снимок", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void openCamera() {
@@ -168,33 +147,11 @@ public class ScannerActivity extends AppCompatActivity {
         cameraLauncher.launch(cameraIntent);
     }
 
-    private void openGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        galleryLauncher.launch(galleryIntent);
-    }
-
-    private void recognizeTextFromImage() {
-        Log.d(TAG, "recognizeTextFromImage:");
-        progressDialog.setMessage("Подготовка изображения...");
-        progressDialog.show();
-
-        try {
-            InputImage inputImage = InputImage.fromBitmap(imageBitmap, 0);
-
-            progressDialog.setMessage("Распознавание текста...");
-            Task<Text> textRecognitionTask = textRecognizer.process(inputImage)
-                    .addOnSuccessListener(text -> {
-                        progressDialog.dismiss();
-                        String recognizedText = text.getText();
-                        recognizedTextEt.setText(recognizedText);
-                    })
-                    .addOnFailureListener(e -> {
-                        progressDialog.dismiss();
-                        Toast.makeText(ScannerActivity.this, "Не удалось распознать текст: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
-        } catch (Exception e) {
-            progressDialog.dismiss();
-            Toast.makeText(ScannerActivity.this, "Ошибка: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+    private void handleCapturedImage(Intent data) {
+        if (data != null && data.getExtras() != null) {
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            imageIv.setImageBitmap(bitmap);
+            imageBitmap = bitmap;
         }
     }
 }
