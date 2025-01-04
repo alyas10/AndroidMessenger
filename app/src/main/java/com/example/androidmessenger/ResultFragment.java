@@ -30,9 +30,10 @@ import java.util.ArrayList;
  */
 public class ResultFragment extends Fragment {
     FragmentResultBinding binding;
-    int right, wrong, AllQuestion, cezar, cezar1, atbash1, vigener1, afin1, gamma1, rsa1, atbash, vigener, afin, gamma, rsa;
+    int right, wrong, AllQuestion, cezar, cezar1, atbash1, vigener1, afin1, gamma1, rsa1, atbash, vigener, afin, gamma, rsa,mod1_less1_correct,mod1_less1_incorrect,mod1_less2_correct,mod1_less2_incorrect;
     // Круговая диаграмма для отображения результатов
     PieChart pieChart;
+    int mod1_less3_incorrect,mod1_less3_correct;
 
     private SharedPreferences preferences;
 
@@ -132,7 +133,7 @@ public class ResultFragment extends Fragment {
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     cezar = 0;
                     cezar1 = 0;
-                    DatabaseReference resultsRef = db.child("Result/" + "CezarCategory");
+                    DatabaseReference resultsRef = db.child("Result/" + "Cryptography/" + "Lesson 1: The Caesar Cipher");
                     // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                     TestResult testResult1 = new TestResult(cezar, cezar1);
                     // Задайте уникальный ключ для вашей категории (например, "caesarCategory")
@@ -144,7 +145,7 @@ public class ResultFragment extends Fragment {
                 case "Тест по шифру Атбаш":
                     atbash = 0;
                     atbash1 = 0;
-                    DatabaseReference resultsRef1 = db.child("Result/" + "AtbashCategory");
+                    DatabaseReference resultsRef1 = db.child("Result/" + "Cryptography/" + "Lesson 2: The Atbash Cipher");
                     String userId1 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                     TestResult testResult2 = new TestResult(atbash, AllQuestion - atbash);
@@ -157,7 +158,7 @@ public class ResultFragment extends Fragment {
                 case "Тест по шифру Виженера":
                     vigener = 0;
                     vigener1 = 0;
-                    DatabaseReference resultsRef2 = db.child("Result/" + "VigenerCategory");
+                    DatabaseReference resultsRef2 = db.child("Result/" + "Cryptography/" + "Lesson 3: The Vigener Cipher");
                     String userId2 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                     TestResult testResult3 = new TestResult(vigener, AllQuestion - vigener);
@@ -170,7 +171,7 @@ public class ResultFragment extends Fragment {
                 case "Тест по Афинному шифру":
                     afin = 0;
                     afin1 = 0;
-                    DatabaseReference resultsRef3 = db.child("Result/" + "AfinCategory");
+                    DatabaseReference resultsRef3 = db.child("Result/" + "Cryptography/" + "Lesson 4: Affine Cipher");
                     String userId3 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                     TestResult testResult4 = new TestResult(afin, AllQuestion - afin);
@@ -183,7 +184,7 @@ public class ResultFragment extends Fragment {
                 case "Тест по шифру Гаммирования":
                     gamma = 0;
                     gamma1 = 0;
-                    DatabaseReference resultsRef4 = db.child("Result/" + "GammaCategory");
+                    DatabaseReference resultsRef4 = db.child("Result/" + "Cryptography/" + "Lesson 5: The XOR Cipher");
                     String userId4 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                     TestResult testResult5 = new TestResult(gamma, AllQuestion - gamma);
@@ -196,7 +197,7 @@ public class ResultFragment extends Fragment {
                 case "Тест по шифру RSA":
                     rsa = 0;
                     rsa1 = 0;
-                    DatabaseReference resultsRef5 = db.child("Result/" + "RSACategory");
+                    DatabaseReference resultsRef5 = db.child("Result/" + "Cryptography/" + "Lesson 6: The RSA Cipher");
                     String userId5 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                     TestResult testResult6 = new TestResult(rsa, AllQuestion - rsa);
@@ -204,6 +205,47 @@ public class ResultFragment extends Fragment {
                     String RsaСategoryKey = userId5;
                     // Обновите значения для этого ключа
                     resultsRef5.child(RsaСategoryKey).setValue(testResult6);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new QuizFragment(category, title)).addToBackStack(null).commit();
+                    break;
+
+                case "Тест к уроку Как устроен интернет":
+                    mod1_less1_correct= 0;
+                    mod1_less1_incorrect = 0;
+                    DatabaseReference resultsRef_mod1_less1 = db.child("Result/" + "The basics of security and anonymity on the web/" + "Lesson 1: How the Internet works");
+                    String userId_mod1_less1 = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
+                    TestResult testResult_mod1_less1 = new TestResult(mod1_less1_correct, AllQuestion - mod1_less1_correct);
+                    // Задайте уникальный ключ для вашей категории (например, "caesarCategory")
+                    String Key_mod1_less1 = userId_mod1_less1;
+                    // Обновите значения для этого ключа
+                    resultsRef_mod1_less1.child(Key_mod1_less1).setValue(testResult_mod1_less1);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new QuizFragment(category, title)).addToBackStack(null).commit();
+                    break;
+
+                case "Тест к уроку Основы анонимности в сети":
+                    mod1_less2_correct= 0;
+                    mod1_less2_incorrect = 0;
+                    DatabaseReference resultsRef_mod1_less2 = db.child("Result/" + "The basics of security and anonymity on the web/" + "Lesson 2: The Basics of Online Anonymity");
+                    String userId_mod1_less2 = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
+                    TestResult testResult_mod1_less2 = new TestResult(mod1_less2_correct, AllQuestion - mod1_less2_correct);
+                    // Задайте уникальный ключ для вашей категории (например, "caesarCategory")
+                    String Key_mod1_less2 = userId_mod1_less2;
+                    // Обновите значения для этого ключа
+                    resultsRef_mod1_less2.child(Key_mod1_less2).setValue(testResult_mod1_less2);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new QuizFragment(category, title)).addToBackStack(null).commit();
+                    break;
+                case "Тест к уроку OSINT и Социальная инженерия":
+                    mod1_less3_correct= 0;
+                    mod1_less3_incorrect = 0;
+                    DatabaseReference resultsRef_mod1_less3 = db.child("Result/" + "The basics of security and anonymity on the web/" + "Lesson 3: OSINT and Social Engineering");
+                    String userId_mod1_less3 = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
+                    TestResult testResult_mod1_less3 = new TestResult(mod1_less3_correct, AllQuestion - mod1_less3_correct);
+                    // Задайте уникальный ключ для вашей категории (например, "caesarCategory")
+                    String Key_mod1_less3 = userId_mod1_less3;
+                    // Обновите значения для этого ключа
+                    resultsRef_mod1_less3.child(Key_mod1_less3).setValue(testResult_mod1_less3);
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new QuizFragment(category, title)).addToBackStack(null).commit();
                     break;
             }

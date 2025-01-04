@@ -1,6 +1,5 @@
 package com.example.androidmessenger.AddapterClass;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.androidmessenger.OnboardingItem;
 import com.example.androidmessenger.R;
-import com.example.androidmessenger.modelClass.OnboardingItem;
 
 import java.util.List;
 /*
@@ -22,6 +21,7 @@ import java.util.List;
 public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.OnboardingViewHolder> {
     //Список элементов
     private List<OnboardingItem> onboardingItems;
+
     /*
      * Конструктор адаптера.
      * @param onboardingItems Список элементов onboarding.
@@ -32,7 +32,7 @@ public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.On
 
     @NonNull
     @Override
-     /*
+    /*
      * Создает новый ViewHolder для элемента onboarding.
      * @param parent ViewGroup, к которому будет добавлен ViewHolder.
      * @param viewType Тип элемента.
@@ -41,13 +41,13 @@ public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.On
     public OnboardingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new OnboardingViewHolder(
                 LayoutInflater.from(parent.getContext()).inflate(
-                        R.layout.item_container_onboarding,parent, false
+                        R.layout.item_container_onboarding, parent, false
                 )
         );
     }
 
     @Override
-     /*
+    /*
      * Заполняет данные ViewHolder для элемента onboarding.
      * @param holder OnboardingViewHolder, который нужно заполнить данными.
      * @param position Позиция элемента в списке.
@@ -57,7 +57,6 @@ public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.On
     }
 
     @Override
-    
     /*
      * Возвращает количество элементов onboarding в списке.
      * @return Количество элементов.
@@ -65,7 +64,7 @@ public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.On
     public int getItemCount() {
         return onboardingItems.size();
     }
-    
+
     /*
      * ViewHolder для элемента onboarding.
      */
@@ -74,7 +73,6 @@ public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.On
         private TextView detailTitle;
         private ImageView detailImage;
 
-        
         /*
          * Конструктор ViewHolder.
          * @param itemView View, представляющая элемент onboarding.
@@ -83,16 +81,24 @@ public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.On
             super(itemView);
             detailTitle = itemView.findViewById(R.id.detailTitle);
             detailImage = itemView.findViewById(R.id.detailImage);
-            detailDesc =  itemView.findViewById(R.id.detailDesc);
+            detailDesc = itemView.findViewById(R.id.detailDesc);
         }
-         /*
+
+        /*
          * Заполняет данные ViewHolder элементом onboarding.
          * @param onboardingItem Элемент onboarding.
          */
-        void setOnboardingData(OnboardingItem onboardingItem){
+        void setOnboardingData(OnboardingItem onboardingItem) {
             detailTitle.setText(onboardingItem.getTitle());
-            detailImage.setImageResource(onboardingItem.getImage());
             detailDesc.setText(onboardingItem.getDescription());
+
+            // Проверяем, есть ли изображение в OnboardingItem
+            if (onboardingItem.getImage() != 0) {
+                detailImage.setVisibility(View.VISIBLE);
+                detailImage.setImageResource(onboardingItem.getImage());
+            } else {
+                detailImage.setVisibility(View.GONE);
+            }
         }
     }
 }

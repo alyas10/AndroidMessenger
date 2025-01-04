@@ -66,6 +66,12 @@ public class QuizFragment extends Fragment {
     public int atbash = 0;
     public int vigener = 0;
     public int vigener1 = 0;
+    public int mod1_less1_correct = 0;
+    public int mod1_less1_incorrect = 0;
+    public int mod1_less2_correct = 0;
+    public int mod1_less2_incorrect = 0;
+    public int mod1_less3_correct = 0;
+    public int mod1_less3_incorrect = 0;
 
     public int afin = 0;
     public int afin1 = 0;
@@ -87,7 +93,7 @@ public class QuizFragment extends Fragment {
      */
     public int wrong = 0;
     public int cezar1 = 0;
-    String s1,s2,s3,s4,s5,s6;
+    String s1,s2,s3,s4,s5,s6,s7,s8,s9;
     
     /**
      * Правильный ответ на вопрос (значение null по умолчанию).
@@ -156,7 +162,7 @@ public class QuizFragment extends Fragment {
         reference = FirebaseDatabase.getInstance().getReference().child("Result");
         switch (title) {
             case "Тест по шифру Цезаря":
-                reference.child("CezarCategory").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                reference.child("Cryptography").child("Lesson 1: The Caesar Cipher").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (!task.isSuccessful()) {
@@ -171,7 +177,7 @@ public class QuizFragment extends Fragment {
                             // Проверка значений cezar и cezar1 выполняется после присвоения
                             if (cezar != 0 && cezar1 != 0) {
                                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(cezar, cezar1, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
-                                    DatabaseReference resultsRef = db.child("Result/" + "CezarCategory");
+                                    DatabaseReference resultsRef = db.child("Result/" + "Cryptography/" + "Lesson 1: The Caesar Cipher");
                                     TestResult testResult1 = new TestResult(cezar, cezar1);
                                     String CaesarcategoryKey = userId;
                                     resultsRef.child(CaesarcategoryKey).setValue(testResult1);
@@ -181,7 +187,7 @@ public class QuizFragment extends Fragment {
                 });
                 break;
             case "Тест по шифру Атбаш":
-                reference.child("AtbashCategory").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                reference.child("Cryptography").child("Lesson 2: The Atbash Cipher").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (!task.isSuccessful()) {
@@ -194,7 +200,7 @@ public class QuizFragment extends Fragment {
                         }
                         if (atbash != 0 && atbash1 != 0){
                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(atbash, atbash1, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
-                            DatabaseReference resultsRef1 = db.child("Result/" + "AtbashCategory");
+                            DatabaseReference resultsRef1 = db.child("Result/" + "Cryptography/" + "Lesson 2: The Atbash Cipher");
                             String userId1 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                             TestResult testResult2 = new TestResult(atbash, AllQuestion - atbash);
@@ -207,7 +213,7 @@ public class QuizFragment extends Fragment {
                 });
                 break;
             case "Тест по шифру Виженера":
-                reference.child("VigenerCategory").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                reference.child("Cryptography").child("Lesson 3: The Vigener Cipher").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (!task.isSuccessful()) {
@@ -220,7 +226,7 @@ public class QuizFragment extends Fragment {
                         }
                         if (vigener != 0 && vigener1 != 0){
                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(vigener, vigener1, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
-                            DatabaseReference resultsRef2 = db.child("Result/" + "VigenerCategory");
+                            DatabaseReference resultsRef2 = db.child("Result/" + "Cryptography/" + "Lesson 3: The Vigener Cipher");
                             String userId2 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                             TestResult testResult3 = new TestResult(vigener, AllQuestion - vigener);
@@ -233,7 +239,7 @@ public class QuizFragment extends Fragment {
                 });
                 break;
             case "Тест по Афинному шифру":
-                reference.child("AfinCategory").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                reference.child("Cryptography").child("Lesson 4: Affine Cipher").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (!task.isSuccessful()) {
@@ -246,7 +252,7 @@ public class QuizFragment extends Fragment {
                         }
                         if (afin != 0 && afin1 != 0){
                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(afin, afin1, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
-                            DatabaseReference resultsRef3 = db.child("Result/" + "AfinCategory");
+                            DatabaseReference resultsRef3 = db.child("Result/" + "Cryptography/" + "Lesson 4: Affine Cipher");
                             String userId3 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                             TestResult testResult4 = new TestResult(afin, AllQuestion - afin);
@@ -259,7 +265,7 @@ public class QuizFragment extends Fragment {
                 });
                 break;
             case "Тест по шифру Гаммирования":
-                reference.child("GammaCategory").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                reference.child("Cryptography").child("Lesson 5: The XOR Cipher").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (!task.isSuccessful()) {
@@ -272,7 +278,7 @@ public class QuizFragment extends Fragment {
                         }
                         if (gamma != 0 && gamma1 != 0){
                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(gamma, gamma1, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
-                            DatabaseReference resultsRef4 = db.child("Result/" + "GammaCategory");
+                            DatabaseReference resultsRef4 = db.child("Result/" + "Cryptography/" + "Lesson 5: The XOR Cipher");
                             String userId4 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                             TestResult testResult5 = new TestResult(gamma, AllQuestion - gamma);
@@ -285,7 +291,7 @@ public class QuizFragment extends Fragment {
                 });
                 break;
             case "Тест по шифру RSA":
-                reference.child("RSACategory").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                reference.child("Cryptography").child("Lesson 6: The RSA Cipher").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (!task.isSuccessful()) {
@@ -298,7 +304,7 @@ public class QuizFragment extends Fragment {
                         }
                         if (rsa != 0 && rsa1 != 0){
                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(rsa, rsa1, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
-                            DatabaseReference resultsRef5 = db.child("Result/" + "RSACategory");
+                            DatabaseReference resultsRef5 = db.child("Result/" + "Cryptography/" + "Lesson 6: The RSA Cipher");
                             String userId5 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                             TestResult testResult6 = new TestResult(rsa, AllQuestion - rsa);
@@ -306,6 +312,81 @@ public class QuizFragment extends Fragment {
                             String RsaСategoryKey = userId5;
                             // Обновите значения для этого ключа
                             resultsRef5.child(RsaСategoryKey).setValue(testResult6);
+                        }
+                    }
+                });
+                break;
+            case "Тест к уроку Как устроен интернет":
+                reference.child("The basics of security and anonymity on the web").child("Lesson 1: How the Internet works").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase", "Ошибка в получении данных", task.getException());
+                        } else {
+                            s7 = String.valueOf(task.getResult().getValue());
+                            String[] s8 = s7.split(",");
+                            mod1_less1_correct = Integer.parseInt(String.valueOf(s8[0].charAt(s8[0].length() - 1)));
+                            mod1_less1_incorrect = AllQuestion - mod1_less1_correct;
+
+
+                            // Проверка значений cezar и cezar1 выполняется после присвоения
+                            if (mod1_less1_correct != 0 && mod1_less1_incorrect != 0) {
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(mod1_less1_correct, mod1_less1_incorrect, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
+                                DatabaseReference resultsRef_mod1_less1 = db.child("Result/" + "The basics of security and anonymity on the web/" + "Lesson 1: How the Internet works");
+                                TestResult testResult_mod1_less1 = new TestResult(mod1_less1_correct, mod1_less1_incorrect);
+                                String Key_mod1_less1 = userId;
+                                resultsRef_mod1_less1.child(Key_mod1_less1).setValue(testResult_mod1_less1);
+                            }
+                        }
+                    }
+                });
+                break;
+            case "Тест к уроку Основы анонимности в сети":
+                reference.child("The basics of security and anonymity on the web").child("Lesson 2: The Basics of Online Anonymity").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase", "Ошибка в получении данных", task.getException());
+                        } else {
+                            s8 = String.valueOf(task.getResult().getValue());
+                            String[] s9 = s8.split(",");
+                            mod1_less2_correct = Integer.parseInt(String.valueOf(s9[0].charAt(s9[0].length() - 1)));
+                            mod1_less2_incorrect = AllQuestion - mod1_less2_correct;
+
+
+                            // Проверка значений cezar и cezar1 выполняется после присвоения
+                            if (mod1_less2_correct != 0 && mod1_less2_incorrect != 0) {
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(mod1_less2_correct, mod1_less2_incorrect, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
+                                DatabaseReference resultsRef_mod1_less2 = db.child("Result/" + "The basics of security and anonymity on the web/" + "Lesson 2: The Basics of Online Anonymity");
+                                TestResult testResult_mod1_less2 = new TestResult(mod1_less2_correct, mod1_less2_incorrect);
+                                String Key_mod1_less2 = userId;
+                                resultsRef_mod1_less2.child(Key_mod1_less2).setValue(testResult_mod1_less2);
+                            }
+                        }
+                    }
+                });
+                break;
+            case "Тест к уроку OSINT и Социальная инженерия":
+                reference.child("The basics of security and anonymity on the web").child("Lesson 3: OSINT and Social Engineering").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase", "Ошибка в получении данных", task.getException());
+                        } else {
+                            s9 = String.valueOf(task.getResult().getValue());
+                            String[] s10 = s9.split(",");
+                            mod1_less3_correct = Integer.parseInt(String.valueOf(s10[0].charAt(s10[0].length() - 1)));
+                            mod1_less3_incorrect = AllQuestion - mod1_less3_correct;
+
+
+                            // Проверка значений cezar и cezar1 выполняется после присвоения
+                            if (mod1_less3_correct != 0 && mod1_less3_incorrect != 0) {
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(mod1_less3_correct, mod1_less3_incorrect, AllQuestion, cezar, atbash, vigener, afin, gamma, rsa, category, title)).commit();
+                                DatabaseReference resultsRef_mod1_less3 = db.child("Result/" + "The basics of security and anonymity on the web/" + "Lesson 3: OSINT and Social Engineering");
+                                TestResult testResult_mod1_less3 = new TestResult(mod1_less3_correct, mod1_less3_incorrect);
+                                String Key_mod1_less3 = userId;
+                                resultsRef_mod1_less3.child(Key_mod1_less3).setValue(testResult_mod1_less3);
+                            }
                         }
                     }
                 });
@@ -369,7 +450,6 @@ public class QuizFragment extends Fragment {
     private void LoadQuestion() {
         switch (title) {
             case "Тест по шифру Цезаря":
-
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     list.add(new QuizModel("1. Какой римский император дал название шифру, который основан на сдвиге алфавита?", "Наполеон", "Гай Юлий Цезарь", "Александр Македонский", "Юлий Цезарь", "Гай Юлий Цезарь"));
                     list.add(new QuizModel("2. Что представляет собой ключ шифра Цезаря?", "Количество повторений", "Число шагов сдвига алфавита", "Случайный текст", "Длина сообщения", "Число шагов сдвига алфавита"));
@@ -384,7 +464,7 @@ public class QuizFragment extends Fragment {
                     optionCheckUp();
                     cezar = right;
                     DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-                    DatabaseReference resultsRef = db.child("Result/" + "CezarCategory");
+                    DatabaseReference resultsRef = db.child("Result/" + "Cryptography/" + "Lesson 1: The Caesar Cipher");
                     // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                     TestResult testResult1 = new TestResult(cezar, AllQuestion - cezar);
                     // Задайте уникальный ключ для вашей категории (например, "caesarCategory")
@@ -408,7 +488,7 @@ public class QuizFragment extends Fragment {
                 optionCheckUp();
                 atbash = right;
                 db = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference resultsRef1 = db.child("Result/" + "AtbashCategory");
+                DatabaseReference resultsRef1 = db.child("Result/" + "Cryptography/" + "Lesson 2: The Atbash Cipher");
                 String userId1 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                 TestResult testResult2 = new TestResult(atbash, AllQuestion - atbash);
@@ -432,7 +512,7 @@ public class QuizFragment extends Fragment {
                 optionCheckUp();
                 vigener = right;
                 db = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference resultsRef2 = db.child("Result/" + "VigenerCategory");
+                DatabaseReference resultsRef2 = db.child("Result/" + "Cryptography/" + "Lesson 3: The Vigener Cipher");
                 String userId2 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                 TestResult testResult3 = new TestResult(vigener, AllQuestion - vigener);
@@ -457,7 +537,7 @@ public class QuizFragment extends Fragment {
                 optionCheckUp();
                 afin = right;
                 db = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference resultsRef3 = db.child("Result/" + "AfinCategory");
+                DatabaseReference resultsRef3 = db.child("Result/" + "Cryptography/" + "Lesson 4: Affine Cipher");
                 String userId3 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                 TestResult testResult4 = new TestResult(afin, AllQuestion - afin);
@@ -481,7 +561,7 @@ public class QuizFragment extends Fragment {
                 optionCheckUp();
                 gamma = right;
                 db = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference resultsRef4 = db.child("Result/" + "GammaCategory");
+                DatabaseReference resultsRef4 = db.child("Result/" + "Cryptography/" + "Lesson 5: The XOR Cipher");
                 String userId4 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                 TestResult testResult5 = new TestResult(gamma, AllQuestion - gamma);
@@ -505,7 +585,7 @@ public class QuizFragment extends Fragment {
                 optionCheckUp();
                 rsa = right;
                 db = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference resultsRef5 = db.child("Result/" + "RSACategory");
+                DatabaseReference resultsRef5 = db.child("Result/" + "Cryptography/" + "Lesson 6: The RSA Cipher");
                 String userId5 = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
                 TestResult testResult6 = new TestResult(rsa, AllQuestion - rsa);
@@ -514,6 +594,91 @@ public class QuizFragment extends Fragment {
                 // Обновите значения для этого ключа
                 resultsRef5.child(RsaСategoryKey).setValue(testResult6);
                 break;
+            case "Тест к уроку Как устроен интернет":
+                list.add(new QuizModel("1. Что такое DNS-сервер?", "Устройство, которое физически соединяет компьютеры в сеть", "Программа, преобразующая доменные имена (например, google.com) в IP-адреса", "Протокол передачи данных в сети Интернет", "Вид интернет-браузера, специализирующийся на поиске информации", "Программа, преобразующая доменные имена (например, google.com) в IP-адреса"));
+                list.add(new QuizModel("2. Какое максимальное число различных IP-адресов может быть в сети IPv4? ", "256", "65 536", "4 294 967 296", "Бесконечное количество", "4 294 967 296"));
+                list.add(new QuizModel("3. Что такое веб-архив?", "Программа для создания резервных копий файлов на компьютере", "Систематизированное хранилище информации о всех веб-страницах в Интернете", "Протокол для безопасной передачи данных", "Вид интернет-браузера, специализирующийся на работе с архивными данными", "Систематизированное хранилище информации о всех веб-страницах в Интернете"));
+                list.add(new QuizModel("4. Какая часть IP-адреса определяет сеть, а какая - конкретное устройство в этой сети?", "Первые два числа - сеть, последние два - устройство", "Первые три числа - сеть, последнее число - устройство", "Все числа определяют устройство", "Все числа определяют сеть", "Первые три числа - сеть, последнее число - устройство"));
+                list.add(new QuizModel("5. Из скольких частей (октетов) состоит IP-адрес версии IPv4?", "2", "3", "4", "8", "4"));
+                list.add(new QuizModel("6. Что означает аббревиатура IP?", "Internet Protocol (Интернет-протокол)", "Internet Page (Интернет-страница)", "Internet Provider (Поставщик интернет-услуг)", "Information Processing (Обработка информации)", "Internet Protocol (Интернет-протокол)"));
+                list.add(new QuizModel("7. Какая основная функция DNS-сервера?", "Хранение веб-страниц", "Передача данных между компьютерами", "Преобразование доменных имен в IP-адреса", "Защита от вирусов", "Преобразование доменных имен в IP-адреса"));
+                list.add(new QuizModel("8. Какое преимущество имеет протокол IPv6 перед IPv4?", "IPv6 позволяет использовать более короткие адреса", "IPv6 обеспечивает более высокую скорость передачи данных", "IPv6 позволяет подключить гораздо больше устройств к Интернету", "IPv6 используется только для мобильных устройств", "IPv6 позволяет подключить гораздо больше устройств к Интернету"));
+                list.add(new QuizModel("9. Какая технология используется веб-архивом для создания копий сайтов?", "Web scraper", "Web crawler", "Web spider", "Web indexer", "Web crawler"));
+                list.add(new QuizModel("10.  Что такое \"веб-паук\" (web crawler)?", "Программа, которая собирает и анализирует данные из Интернета", "Скрипт, который обходит сайты и проверяет, изменились ли они", "Поисковый робот, индексирующий веб-страницы", "Все вышеперечисленное", " Все вышеперечисленное"));
+                optionCheckUp();
+                mod1_less1_correct = right;
+                db = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference resultsRef_mod1_less1 = db.child("Result/" + "The basics of security and anonymity on the web/" + "Lesson 1: How the Internet works");
+                String userId_mod1_less1 = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
+                TestResult testResult_mod1_less1 = new TestResult(mod1_less1_correct, AllQuestion - mod1_less1_correct);
+                // Задайте уникальный ключ для вашей категории (например, "caesarCategory")
+                String Key_mod1_less1 = userId_mod1_less1;
+                // Обновите значения для этого ключа
+                resultsRef_mod1_less1.child(Key_mod1_less1).setValue(testResult_mod1_less1);
+                break;
+            case "Тест к уроку Основы анонимности в сети":
+                list.add(new QuizModel("1. Что такое анонимность?", "Когда имя человека неизвестно", "Когда человек не хочет раскрывать информацию о себе", "Когда человек действует без указания своей личности", "Все вышеперечисленное", "Все вышеперечисленное"));
+                list.add(new QuizModel("2. Зачем нужна анонимность в Интернете?", "Чтобы скрыть незаконную деятельность", "Чтобы защитить свою личную информацию", "Чтобы безнаказанно нарушать правила", "Чтобы избежать ответственности за свои действия", "Чтобы защитить свою личную информацию"));
+                list.add(new QuizModel("3. Как можно собрать информацию о пользователе через открытые источники?", "Используя социальные сети и поиск по имени", "Взламывая базы данных и выкрадывая личную информацию", "Устанавливая малварь(Malware) на устройства", "Все вышеперечисленное", "Используя социальные сети и поиск по имени"));
+                list.add(new QuizModel("4. Что такое \"пробив\" с помощью Telegram-бота?", "Инструмент поиска личных данных пользователей", "Функция в Telegram для отслеживания местоположения друзей", "Способ защиты личной информации в Telegram", "Сервис для взлома профилей в социальных сетях", "Инструмент поиска личных данных пользователей"));
+                list.add(new QuizModel("5. Зачем злоумышленники собирают информацию о пользователях из открытых источников?", "Чтобы создать персонализированную рекламу", "Чтобы совершить кражу или вымогательство", "Чтобы организовать фальшивые голосования", "Все вышеперечисленное", "Все вышеперечисленное"));
+                list.add(new QuizModel("6. Как можно обезопасить себя от цифрового мошенничества?", "Использовать сложные пароли и регулярно их менять", "Быть осторожным при открытии подозрительных ссылок и вложений", "Не предоставлять личную информацию на непроверенных сайтах", "Все вышеперечисленное", "Все вышеперечисленное"));
+                list.add(new QuizModel("7. Что такое анонимность в сети?", "Возможность скрывать свою личность при использовании интернета", "Способ общаться с другими людьми, не раскрывая свою настоящую личность", "Технология, позволяющая шифровать данные", "Все вышеперечисленное", "Все вышеперечисленное"));
+                list.add(new QuizModel("8. Зачем нужно удалять старые, ненужные аккаунты?", "Чтобы освободить место на устройстве", "Чтобы предотвратить взлом неиспользуемых аккаунтов", "Чтобы скрыть свою активность в прошлом", "Чтобы сэкономить на оплате аккаунтов", "Чтобы предотвратить взлом неиспользуемых аккаунтов"));
+                list.add(new QuizModel("9. Как можно защитить банковскую карту при онлайн-покупках?", "Использовать кредитную карту вместо дебетовой", "Хранить карту в специальном защищённом кошельке", "Заводить отдельную карту для онлайн-покупок", "Все вышеперечисленное", "Заводить отдельную карту для онлайн-покупок"));
+                list.add(new QuizModel("10. Какой основной принцип помогает сохранить анонимность в Интернете?", "Разделение личной и публичной информации", "Использование только подлинных данных", "Полный отказ от использования Интернета", "Размещение максимального количества личной информации", "Разделение личной и публичной информации"));
+                optionCheckUp();
+                mod1_less2_correct = right;
+                db = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference resultsRef_mod1_less2 = db.child("Result/" + "The basics of security and anonymity on the web/" + "Lesson 2: The Basics of Online Anonymity");
+                String userId_mod1_less2 = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
+                TestResult testResult_mod1_less2 = new TestResult(mod1_less2_correct, AllQuestion - mod1_less2_correct);
+                // Задайте уникальный ключ для вашей категории (например, "caesarCategory")
+                String Key_mod1_less2 = userId_mod1_less2;
+                // Обновите значения для этого ключа
+                resultsRef_mod1_less2.child(Key_mod1_less2).setValue(testResult_mod1_less2);
+                break;
+
+            case "Тест к уроку OSINT и Социальная инженерия":
+                list.add(new QuizModel("1. Что такое OSINT?", "Сбор данных из закрытых источников", "Сбор данных из социальных сетей", "Сбор данных из открытых источников", "Сбор данных с помощью взлома", "Сбор данных из открытых источников"));
+                list.add(new QuizModel("2. Является ли сбор данных методами OSINT законным?", "Да, это абсолютно легальный способ сбора информации", "Нет, это незаконный сбор персональных данных", "Зависит от того, как используются полученные данные", "Это серая зона, существует правовая неопределенность", "Да, это абсолютно легальный способ сбора информации"));
+                list.add(new QuizModel("3. Что такое социальная инженерия?", "Использование методов психологического манипулирования", "Создание фишинговых сайтов для кражи данных", "Взлом систем с помощью полученной информации", "Все вышеперечисленное", "Все вышеперечисленное"));
+                list.add(new QuizModel("4. Что такое фишинг?", "Создание поддельных сайтов для кражи личных данных", "Отправка вредоносных вложений по электронной почте", "Использование социальной инженерии для обмана", "Все вышеперечисленное", "Все вышеперечисленное"));
+                list.add(new QuizModel("5. Какие признаки могут указывать на фишинговый сайт?", "Неправильное доменное имя", "Отсутствие SSL-сертификата", "Наличие грамматических ошибок", "Все вышеперечисленное", "Все вышеперечисленное"));
+                list.add(new QuizModel("6. Почему мошенники иногда регистрируют схожие доменные имена?", "Чтобы сбить с толку пользователей", "Чтобы обойти блокировки", "Чтобы получить лицензию на домен", "Чтобы создать впечатление легитимности", "Чтобы сбить с толку пользователей"));
+                list.add(new QuizModel("7. Почему наличие ошибок в тексте может говорить о фишинговом сайте?", "Крупные компании нанимают профессиональных редакторов", "Ошибки повышают доверие пользователей", "Ошибки снижают стоимость создания сайта", "Ошибки помогают скрыть реальную личность владельца", "Крупные компании нанимают профессиональных редакторов"));
+                list.add(new QuizModel("8. Как защититься от фишинга?", "Открывать все вложения в письмах", "Вводить свои данные на всех сайтах, которые об этом просят", "Переходить по любым ссылкам, пришедшим на почту", "Проверять адрес сайта, наличие SSL сертификата, искать грамматические ошибки", "Проверять адрес сайта, наличие SSL сертификата, искать грамматические ошибки"));
+                list.add(new QuizModel("9. Какие данные чаще всего пытаются получить злоумышленники с помощью фишинга?", "Номера телефонов, пароли, данные банковских карт", "Информация о любимых фильмах и музыке", "Данные о геолокации", "Информация о родственниках и друзьях", "Номера телефонов, пароли, данные банковских карт"));
+                list.add(new QuizModel("10. Почему важно быть осторожным при использовании открытых Wi-Fi сетей?", "Потому что они могут быть медленными", "Потому что через них злоумышленники могут перехватить ваши данные", "Потому что они могут быть платными", "Потому что они могут быть недоступны", "Потому что через них злоумышленники могут перехватить ваши данные"));
+                optionCheckUp();
+                mod1_less3_correct = right;
+                db = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference resultsRef_mod1_less3 = db.child("Result/" + "The basics of security and anonymity on the web/" + "Lesson 3: OSINT and Social Engineering");
+                String userId_mod1_less3 = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                // Создайте объект TestResult (предполагается, что у вас есть класс TestResult)
+                TestResult testResult_mod1_less3 = new TestResult(mod1_less3_correct, AllQuestion - mod1_less3_correct);
+                // Задайте уникальный ключ для вашей категории (например, "caesarCategory")
+                String Key_mod1_less3 = userId_mod1_less3;
+                // Обновите значения для этого ключа
+                resultsRef_mod1_less3.child(Key_mod1_less3).setValue(testResult_mod1_less3);
+                break;
+
+
+
+                    /*case "Тест к уроку Основы анонимности в сети":
+                list.add(new QuizModel("1. ", "", "", "", "", ""));
+                list.add(new QuizModel("2. ", "", "", "", "", ""));
+                list.add(new QuizModel("3. ", "", "", "", "", ""));
+                list.add(new QuizModel("4. ", "", "", "", "", ""));
+                list.add(new QuizModel("5. ", "", "", "", "", ""));
+                list.add(new QuizModel("6. ", "", "", "", "", ""));
+                list.add(new QuizModel("7. ", "", "", "", "", ""));
+                list.add(new QuizModel("8. ", "", "", "", "", ""));
+                list.add(new QuizModel("9. ", "", "", "", "", ""));
+                list.add(new QuizModel("10. ", "", "", "", "", ""));*/
+
         }
 
         AllQuestion = 10;

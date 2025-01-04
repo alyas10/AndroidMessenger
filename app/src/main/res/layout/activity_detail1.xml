@@ -10,16 +10,16 @@
         android:id="@+id/onboardingViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomLayout"
+        android:layout_alignParentTop="true"
         tools:ignore="UnknownId" />
 
     <LinearLayout
         android:id="@+id/layoutOnboardingIndicators"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_above="@+id/buttonOnboardingAction"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="-72dp"
+        android:layout_marginBottom="-10dp"
         android:orientation="horizontal" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -34,7 +34,6 @@
         android:text="Далее"
         android:textColor="@color/black" />
 
-    <!-- Контейнер для фрагмента -->
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
