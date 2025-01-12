@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.androidmessenger">
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-
-
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -24,42 +20,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidMessenger"
         tools:targetApi="31">
+
         <activity
             android:name=".Ciphers.XORActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Ciphers.RsaActivity"
             android:exported="false" />
         <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"
-            tools:ignore="MissingClass" /> <!-- optional (needed if default theme has no action bar) -->
-        <activity
             android:name=".Ciphers.AffineCipherActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Ciphers.SpinnerFragment"
             android:exported="false" />
         <activity
             android:name=".MessageActivity"
             android:exported="false" />
         <activity
-            android:name=".Fragments.UsersFragment"
-            android:exported="false" />
-        <activity
-            android:name=".Fragments.UserProfileFragment"
-            android:exported="false" />
-        <activity
-            android:name="com.example.androidmessenger.modelClass.ScannerActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".LessonsActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".Ciphers.AtbashActivity"
             android:exported="false" />
@@ -68,7 +53,7 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="true" /> <!-- Теперь true, если это точка входа -->
         <activity
             android:name=".Ciphers.CeasesActivity"
             android:exported="false" />
@@ -76,24 +61,13 @@
             android:name=".DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ResultFragment"
-            android:exported="false" />
-        <activity
             android:name=".SplashActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
-            android:name=".RegisterActivity"
-            android:exported="false" />
+            android:name=".ScannerActivity"
+            android:exported="true"> <!-- Только ОДНО объявление ScannerActivity -->
+        </activity>
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+
     </application>
-
 </manifest>

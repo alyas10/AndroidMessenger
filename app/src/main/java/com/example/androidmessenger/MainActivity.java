@@ -25,7 +25,6 @@ import com.example.androidmessenger.Fragments.TheoryFragment;
 import com.example.androidmessenger.Fragments.UserProfileFragment;
 import com.example.androidmessenger.Fragments.UsersFragment;
 import com.example.androidmessenger.Fragments.WelcomeFragment;
-import com.example.androidmessenger.modelClass.ScannerActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -167,7 +166,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         }
         else if (id == R.id.nav_vzlom) {
             //Будущая опция для считывания текста с помощью камеры
-            Intent intent = new Intent(MainActivity.this, com.example.androidmessenger.modelClass.ScannerActivity.class);
+            Intent intent = new Intent(MainActivity.this, ScannerActivity.class);
             startActivity(intent);
             return true;
         }

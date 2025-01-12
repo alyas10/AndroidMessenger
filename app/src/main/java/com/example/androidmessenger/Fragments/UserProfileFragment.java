@@ -36,8 +36,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
+//import com.theartofdev.edmodo.cropper.CropImage;
+//import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 
@@ -211,25 +211,23 @@ public class UserProfileFragment extends Fragment {
             imageUri = data.getData();
 
             // Запуск активности обрезки изображения
-            CropImage.activity(imageUri)
+            /*CropImage.activity(imageUri)
                     .setAspectRatio(1, 1) // Установите соотношение сторон для круглого изображения
                     .setCropShape(CropImageView.CropShape.OVAL) // Установите форму обрезки как OVAL
                     .setGuidelines(CropImageView.Guidelines.ON) // Включите руководства обрезки
-                    .start(getContext(), this);
+                    .start(getContext(), this);*/
         }
 
         // Обработка результата обрезки изображения
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+        /*if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
+                Uri resultUri = result.getUri();*/
 
                 // Загрузка обрезанного изображения в Firebase
                 uploadImageToFirebase();
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+            } /*else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
-                Toast.makeText(getContext(), "Ошибка обрезки: " + error, Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+                Toast.makeText(getContext(), "Ошибка обрезки: " + error, Toast.LENGTH_SHORT).show();*/
+
 }
