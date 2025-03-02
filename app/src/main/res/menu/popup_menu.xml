@@ -3,6 +3,5 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_detailed"
-        android:theme="@style/MyCustomTheme"
         android:title="Подробнее" />
 </menu>
